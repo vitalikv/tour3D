@@ -33,7 +33,7 @@ var editorApi = (function () {
 
       if (param_ugol.file == '') {
 
-        if (window.location.hostname == 'plan1' || window.location.hostname == 'plan3' || window.location.hostname == 'webgl-editor' || window.location.hostname == 'pp.ksdev.ru') 
+        if (window.location.hostname == 'tour3d' || window.location.hostname == 'plan3' || window.location.hostname == 'webgl-editor' || window.location.hostname == 'pp.ksdev.ru') 
 		{
 
           if (1 == 2) {
@@ -49,6 +49,60 @@ var editorApi = (function () {
           }
           else {
             //loadFile('');
+			
+			var loader = new THREE.OBJLoader();
+
+			loader.load( 't/LP_RBI24.obj',
+			
+				function ( object ) 
+				{
+					//scene.add( object );
+					object.position.set(0,0,0);
+					object.rotation.set(Math.PI/2,Math.PI,Math.PI/2);
+							
+					var childrens = getAllChildrenObj(object, []);  
+					for ( var i = 0; i < childrens.length; i++ )
+					{		
+						childrens[i].obj.material.color.setHex( Math.random() * 0xffffff );
+					}
+
+					var obj = createCopyPopForm(object);
+					//scene.remove( object );
+					
+					//var obj = new THREE.Mesh( new THREE.BoxGeometry( 61, 61, 61 ), new THREE.MeshLambertMaterial( { color : 0xffffff, side: THREE.DoubleSide } ) );
+					
+					scene.add( obj );
+					
+					var path = "img/";
+					var format = '.jpg';
+					var urls = [ 
+					path + '2-1' + format, path + '2-3' + format,
+					path + '2-4' + format, path + '2-5' + format,
+					path + '2-0' + format, path + '2-2' + format
+					];
+					
+					var urls = [ 
+					path + '2-3' + format, path + '2-1' + format,
+					path + '2-5' + format, path + '2-4' + format,
+					path + '2-0' + format, path + '2-2' + format
+					];
+					
+					var reflectionCube = new THREE.CubeTextureLoader().load( urls );
+					//reflectionCube.format = THREE.RGBFormat;
+					console.log(obj);
+					obj.material.opacity = 1.0;
+					obj.material.color.setHex(0xffffff);
+					obj.material.envMap = reflectionCube;
+					
+					
+					
+					//scene.background = reflectionCube;				
+				}
+			);	
+
+		emitAction('load-project-start');
+		emitAction('load-project-end');
+		emitAction('stop-fake-loading');			
 
           }
  

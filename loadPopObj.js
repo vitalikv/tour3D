@@ -801,6 +801,7 @@ function createCopyPopForm(objPop)
 	for ( var i = 0; i < childrens.length; i++ )
 	{
 		if(!childrens[i].obj.geometry) continue;
+		if(childrens[i].obj.name== 'GeoSphere001_fake') continue;
 		
 		childrens[i].obj.userData.tag = 'obj_children';
 		childrens[i].obj.userData.parent = obj;

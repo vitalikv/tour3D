@@ -1418,7 +1418,7 @@
   >
     </div>
 <?php endif; ?>
-  <?php $vrs = '=93' ?>
+  <?php $vrs = '=94' ?>
 	
     <script>
 	var vr = "<?=$vrs ?>";
@@ -1480,7 +1480,7 @@
 	<script src="eventKey.js?<?=$vrs?>"></script>
 	
 <?php if ($withUI) : ?>
-	<!--<script src="https://threejs.org/examples/js/loaders/OBJLoader.js"></script>-->
+	<script src="https://threejs.org/examples/js/loaders/OBJLoader.js"></script>
     <script src="js/range-slider.js?<?=$vrs?>"></script>
     <script src="js/editable-input.js?<?=$vrs?>"></script>
     <script src="js/svg4everybody.min.js?<?=$vrs?>"></script>

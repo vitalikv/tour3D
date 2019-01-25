@@ -62,7 +62,7 @@ document.body.addEventListener("keydown", function (e)
 	
 	
 	
-	if (window.location.hostname == 'plan1' || window.location.hostname == 'plan3' || window.location.hostname == 'webgl-editor')
+	if (window.location.hostname == 'tour3d' || window.location.hostname == 'plan3' || window.location.hostname == 'webgl-editor')
 	{
 		
 		if(e.keyCode == 76) { loadFile(''); }
@@ -86,7 +86,7 @@ document.body.addEventListener("keydown", function (e)
 		
 		
 		if(e.keyCode == 80) 
-		{
+		{ console.log(888888)
 			var loader = new THREE.OBJLoader();
 
 			// load a resource
