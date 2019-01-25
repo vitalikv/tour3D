@@ -84,6 +84,18 @@ document.body.addEventListener("keydown", function (e)
 		}
 			
 		
+		if(e.keyCode == 103) 
+		{
+			cubeCamera.rotation.x += Math.PI/2;	console.log(cubeCamera.rotation.x,cubeCamera.rotation.y,cubeCamera.rotation.z);drawRender()
+		}
+		if(e.keyCode == 104) 
+		{
+			cubeCamera.rotation.y += Math.PI/2;	console.log(cubeCamera.rotation.x,cubeCamera.rotation.y,cubeCamera.rotation.z);drawRender()
+		}
+		if(e.keyCode == 105) 
+		{
+			cubeCamera.rotation.z += Math.PI/2; console.log(cubeCamera.rotation.x,cubeCamera.rotation.y,cubeCamera.rotation.z);drawRender()
+		}		
 		
 		if(e.keyCode == 80) 
 		{ console.log(888888)

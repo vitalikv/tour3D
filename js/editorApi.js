@@ -66,10 +66,10 @@ var editorApi = (function () {
 						childrens[i].obj.material.color.setHex( Math.random() * 0xffffff );
 					}
 
-					var obj = createCopyPopForm(object);
+					//var obj = createCopyPopForm(object);
 					//scene.remove( object );
 					
-					//var obj = new THREE.Mesh( new THREE.BoxGeometry( 61, 61, 61 ), new THREE.MeshLambertMaterial( { color : 0xffffff, side: THREE.DoubleSide } ) );
+					var obj = new THREE.Mesh( new THREE.BoxGeometry( 11, 11, 11 ), new THREE.MeshLambertMaterial( { color : 0xffffff, side: THREE.DoubleSide } ) );
 					
 					scene.add( obj );
 					
@@ -81,7 +81,7 @@ var editorApi = (function () {
 					path + '2-0' + format, path + '2-2' + format
 					];
 					
-					var urls = [ 
+					var urls2 = [ 
 					path + '2-3' + format, path + '2-1' + format,
 					path + '2-5' + format, path + '2-4' + format,
 					path + '2-0' + format, path + '2-2' + format
@@ -89,14 +89,19 @@ var editorApi = (function () {
 					
 					var reflectionCube = new THREE.CubeTextureLoader().load( urls );
 					//reflectionCube.format = THREE.RGBFormat;
-					console.log(obj);
+
+					cubeCamera.rotation.y = Math.PI;
+					//cubeCamera.rotation.x = -Math.PI;
+					
+					
+					console.log(cubeCamera.renderTarget);
 					obj.material.opacity = 1.0;
 					obj.material.color.setHex(0xffffff);
-					obj.material.envMap = reflectionCube;
+					obj.material.envMap = cubeCamera.renderTarget.texture;
 					
+					 
 					
-					
-					//scene.background = reflectionCube;				
+					scene.background = reflectionCube;				
 				}
 			);	
 

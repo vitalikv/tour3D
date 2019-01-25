@@ -63,7 +63,8 @@ for ( var i = 0; i < 0; i++ )
 	scene.add( cubes[i] ); 		 
 }
 
-var cubeCamera = new THREE.CubeCamera( 1, 100000, 512 );
+var cubeCamera = new THREE.CubeCamera( 1, 100000, 1024 );
+
 scene.add( cubeCamera );
 
 
@@ -186,10 +187,12 @@ function drawRender()
 		renderer.clear();
 		renderer.render( scene, camera );
 		renderer.render( outlineScene, outlineCamera );
-		cubeCamera.position.copy( car.position ); cubeCamera.update( renderer, scene );
+		cubeCamera.update( renderer, scene );
 	} 
 	else 
-	{ cubeCamera.rotation.copy( camera.rotation ); cubeCamera.update( renderer, scene );
+	{  
+
+		cubeCamera.update( renderer, scene );
 		renderer.autoClear = true;
 		renderer.clear();
 		renderer.render(scene, camera);
