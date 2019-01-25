@@ -69,7 +69,7 @@ var editorApi = (function () {
 					//var obj = createCopyPopForm(object);
 					//scene.remove( object );
 					
-					var obj = new THREE.Mesh( new THREE.BoxGeometry( 11, 11, 11 ), new THREE.MeshLambertMaterial( { color : 0xffffff, side: THREE.DoubleSide } ) );
+					var obj = new THREE.Mesh( new THREE.BoxGeometry( 71, 71, 71 ), new THREE.MeshLambertMaterial( { color : 0xffffff, side: THREE.BackSide } ) );
 					
 					scene.add( obj );
 					
@@ -89,8 +89,8 @@ var editorApi = (function () {
 					
 					var reflectionCube = new THREE.CubeTextureLoader().load( urls );
 					//reflectionCube.format = THREE.RGBFormat;
-
-					cubeCamera.rotation.y = Math.PI;
+cubeCamera.renderTarget.texture.mapping = THREE.CubeRefractionMapping;
+					//cubeCamera.rotation.y = Math.PI;
 					//cubeCamera.rotation.x = -Math.PI;
 					
 					
