@@ -63,6 +63,30 @@ for ( var i = 0; i < 0; i++ )
 	scene.add( cubes[i] ); 		 
 }
 
+var cubeCamera = new THREE.CubeCamera( 1, 100000, 512 );
+scene.add( cubeCamera );
+
+				var path = "https://threejs.org/examples/textures/cube/SwedishRoyalCastle/";
+				var format = '.jpg';
+				var urls = [ 
+					path + 'px' + format, path + 'nx' + format,
+					path + 'py' + format, path + 'ny' + format,
+					path + 'pz' + format, path + 'nz' + format
+				];
+				var reflectionCube = new THREE.CubeTextureLoader().load( urls );
+reflectionCube.format = THREE.RGBFormat;
+// Create car
+var chromeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff, envMap: reflectionCube, lightMap : lightMap_1, side: THREE.DoubleSide} );
+var car = new THREE.Mesh( new THREE.CylinderGeometry( 50, 50, 50, 32 ), chromeMaterial );
+scene.add( car );
+
+// Update the render target cube
+
+
+
+
+// Render the scene
+
 
 
 // показать все переменные
@@ -157,9 +181,10 @@ function drawRender()
 		renderer.clear();
 		renderer.render( scene, camera );
 		renderer.render( outlineScene, outlineCamera );
+		cubeCamera.position.copy( car.position ); cubeCamera.update( renderer, scene );
 	} 
 	else 
-	{
+	{ cubeCamera.rotation.copy( camera.rotation ); cubeCamera.update( renderer, scene );
 		renderer.autoClear = true;
 		renderer.clear();
 		renderer.render(scene, camera);
@@ -298,8 +323,8 @@ var circle = createCircleSpline();
 var p_tool = createToolPoint();
 var d_tool = createToolDoorPoint();
 // createGrid();
-var pointGrid = createPointGrid(100);
-
+//var pointGrid = createPointGrid(100);
+var pointGrid = {visible : true};
 
 
 var planeMath = createPlaneMath();

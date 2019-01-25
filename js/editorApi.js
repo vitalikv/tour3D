@@ -48,7 +48,7 @@ var editorApi = (function () {
             createForm('level_2');
           }
           else {
-            loadFile('');
+            //loadFile('');
 
           }
  
