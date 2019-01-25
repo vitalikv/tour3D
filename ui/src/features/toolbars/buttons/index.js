@@ -1,0 +1,10 @@
+export const SET_VIEW_2D = 'SET_VIEW_2D';
+export const SET_VIEW_3D = 'SET_VIEW_3D';
+export const SET_WALK_MODE = 'SET_WALK_MODE';
+export const CENTER_VIEW = 'CENTER_VIEW';
+export const CAMERA_ZOOM = 'CAMERA_ZOOM';
+export const SHOW_CUSTOM_CAMERAS = 'SHOW_CUSTOM_CAMERAS';
+export const SET_SUN = 'SET_SUN';
+export const SHOW_GRID = 'SHOW_GRID';
+export const GET_INFO_FOR_BUG_REPORT = 'GET_INFO_FOR_BUG_REPORT';
+export const SHOW_HELP = 'SHOW_HELP';

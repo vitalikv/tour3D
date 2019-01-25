@@ -1,0 +1,44 @@
+.pagination {
+  display: flex;
+  list-style-type: none;
+  padding-left: 0;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  user-select: none;
+  &__page {
+    margin: 2px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all .2s;
+    background-color: white;
+    user-select: none;
+    box-shadow: 0 10px 30px 0 rgba(55, 55, 55, 0.2);
+    border: 1px solid transparent;
+    a {
+      display: block;
+      padding: 2px 7px;
+    }
+    a:active,
+    a:focus {
+      outline: none;
+    }
+    &:hover {
+      border: 1px solid @border; // background-color: @light-grey;
+    }
+  }
+  &__next,
+  &__prev {
+    display: none;
+  }
+  &__active {
+    background-color: @blue;
+    color: white;
+    &:hover {
+      background-color: @blue;
+      color: white;
+    }
+  }
+}

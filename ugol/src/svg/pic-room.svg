@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="320" height="201" viewBox="0 0 320 201">
+    <defs>
+        <linearGradient id="b" x1="0%" x2="49.702%" y1="0%" y2="99.404%">
+            <stop offset="0%" stop-color="#FFF" stop-opacity=".51"/>
+            <stop offset="100%" stop-color="#4A90E2" stop-opacity=".8"/>
+        </linearGradient>
+        <rect id="a" width="320" height="188" rx="4"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g transform="translate(10 6)">
+            <rect width="280" height="188" x="10" y="7" fill="#F3F3F3" rx="4"/>
+            <rect width="300" height="188" fill="#E8E8E8" rx="4"/>
+        </g>
+        <g>
+            <use fill="#F8F9FA" xlink:href="#a"/>
+            <use fill="url(#b)" xlink:href="#a"/>
+            <rect width="319" height="187" x=".5" y=".5" stroke="#E8E8E8" rx="4"/>
+        </g>
+        <path stroke="#4A90E2" stroke-width="2" d="M78.35 95.065L92 111.641V149h138V41H92v40.414L78.35 95.065z" opacity=".6"/>
+        <path fill="#FFF" d="M126.1 137V52.04h20.16V86.6h.36l30.36-34.56h25.68l-36.6 39.12L204.82 137h-26.76L146.5 97.88h-.24V137z"/>
+    </g>
+</svg>

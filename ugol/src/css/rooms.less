@@ -1,0 +1,31 @@
+
+.rooms {
+  .r-select {
+    display: flex;
+    font-size: 15px;
+    color: @dark-grey;
+    &__option {
+      padding: .4em .8em;
+      background: white;
+      border: 1px solid @dots;
+      border-left: none;
+      transition: all .1s;
+      &:first-child {
+        border-left: 1px solid @dots;
+        border-top-left-radius: @br;
+        border-bottom-left-radius: @br;
+      }
+      &:last-child {
+        border-top-right-radius: @br;
+        border-bottom-right-radius: @br;
+      }
+      &_active,
+      &:hover {
+        background: @pink;
+        color: white;
+        cursor: pointer;
+        border-color: @pink;
+      }
+    }
+  }
+}

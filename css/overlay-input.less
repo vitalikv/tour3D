@@ -1,0 +1,67 @@
+.overlay-input {
+  position: relative;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  background-color: @light-grey;
+  border-radius: 50px;
+  text-align: center;
+  padding: 5px 10px;
+  height: 34px;
+  width: initial;
+  min-height: 34px;
+  box-sizing: border-box;
+  margin: 3px;
+  transition: background-color .3s, transform .1s, margin .2s;
+  justify-content: center;
+  display: none;
+  align-items: center;
+  font-weight: 600;
+  &:hover {
+    background-color:  @light-grey;
+    cursor: auto;
+  }
+  &__input {
+    max-width: 100%;
+    background-color: @light-grey;
+    color: @dark-grey;
+    border: none;
+    height: 26px;
+    border-radius: 26px;  
+    box-sizing: border-box;
+    font-size: 15px;
+    font-weight: 600;
+    color: @dark-grey;
+    transition: background-color .2s;
+    padding: 2px 4px;
+    padding-right: 0;
+    width: 40px;
+    font-family: "AvenirNextCyr", sans-serif;
+    box-sizing: border-box;
+    &:active,
+    &:focus {
+      outline: none;
+      background-color: #fff;
+      color: @medium-grey;
+      width: 50px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+  &.on {
+    display: block;
+  }
+  &.off {
+    display: none !important;
+  }
+}
+
+.resizable-buffer {
+  position: absolute;
+  top: -1000px;
+  left: -1000px;
+  visibility: hidden;
+  white-space: nowrap;
+  font-weight: 600;
+  font-size: 15px;
+  font-family: "AvenirNextCyr", sans-serif;
+  box-sizing: border-box;
+}

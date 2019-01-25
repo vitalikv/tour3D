@@ -1,0 +1,96 @@
+.texture-select {
+  position: relative;
+  width: 78px;
+  height: 50px;
+  &__wrap {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    min-height: 52px;
+  }
+  &--open {
+    .texture-select__selected {
+      opacity: 0;
+    }
+    .texture-select__options {
+      display: block;
+    }
+  }
+  &__selected {
+    display: flex;
+    width: 78px;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    transition: opacity .2s;
+    opacity: 1;
+    position: absolute;
+    bottom: 0;
+  }
+  &__icon {
+    cursor: pointer;
+  }
+  &__open-button {
+    width: 26px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  &__selected-text {
+    padding-bottom: 2px;
+    padding-right: 2px;
+  }
+  .texture-select &__button-icon {
+    transform: rotate(180deg);
+    height: 8px;
+  }
+  &__options {
+    display: none;
+    animation-duration: 0.2s;
+    animation-fill-mode: both;
+    animation-name: fadeUp;
+  }
+  &__back {
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    left: 5px;
+    right: 0;
+    background-color: @dark-grey;
+    border-radius: 8px;
+    z-index: -1;
+  }
+  &__option {
+    width: 78px;
+    height: 52px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+  &__icon {
+    width: 52px;
+    height: 52px;
+    border: 1px solid @dark-grey;
+    box-sizing: border-box;
+    border-radius: 4px;
+    background-color: #ffffff;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgdmlld0JveD0iMCAwIDUwIDUwIj4gICAgPGRlZnM+ICAgICAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImEiIHgxPSIxMDAlIiB4Mj0iMCUiIHkxPSI3NS43MjklIiB5Mj0iMjQuMjM5JSI+ICAgICAgICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzY2QTZGRiIvPiAgICAgICAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzg5RjdGRSIvPiAgICAgICAgPC9saW5lYXJHcmFkaWVudD4gICAgPC9kZWZzPiAgICA8cmVjdCB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIGZpbGw9InVybCgjYSkiIGZpbGwtcnVsZT0ibm9uemVybyIgcng9IjMiLz48L3N2Zz4=);    
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+}

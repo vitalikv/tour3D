@@ -1,0 +1,53 @@
+@import './fonts.less';
+@import './modal.less';
+@import './startModal.less';
+@import './categories.less';
+@import './products.less';
+@import './product.less';
+@import './filter.less';
+@import './tutorial.less';
+@import './preloader.less';
+@import './pagination.less';
+@import './slideButton.less';
+@import './warning.less';
+@import './catalogButtons.less';
+@dark-grey  : #4a4a4a;
+@light-grey : #f2f2f2;
+@medium-grey: #979797;
+@hover      : #e9ecff;
+@active     : #f4f4ff;
+@accent     : #FF8A55;
+@blue       : #6491fc;
+@text-color : #4e4e55;
+@border     : #d6d6d6;
+@br         : 4px;
+@pink       : #ef2a5a;
+@pop        : #498ffb;
+html,
+body {
+  margin: 0;
+  font-family: 'GraphikLCG';
+  color: @dark-grey;
+}
+
+#app {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.ic-rub {
+  height: .8em;
+  width: .6em;
+  display: inline-block;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDE0IDIwIj4gICAgPHBhdGggZmlsbD0iIzRBNEE0QSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNLjIzMiA5LjI0NGgyLjAyVi4xNjdoNS4yMDdjLjk2OCAwIDEuODUuMTA5IDIuNjQ3LjMyNy43OTYuMjE4IDEuNDguNTUgMi4wNDguOTk2YTQuNjIgNC42MiAwIDAgMSAxLjMzOCAxLjY5M2MuMzIyLjY4My40ODQgMS40OTkuNDg0IDIuNDQ3IDAgLjk0OS0uMTcxIDEuNzc0LS41MTMgMi40NzZhNC45NjIgNC45NjIgMCAwIDEtMS4zOTQgMS43NSA1Ljk0IDUuOTQgMCAwIDEtMi4wNzcgMS4wMzggOS4zOTMgOS4zOTMgMCAwIDEtMi41OS4zNDJINC41Mjh2Mi44NzRIOS4xMXYxLjg3OEg0LjUyOFYyMEgyLjI1MnYtNC4wMTJILjIzMlYxNC4xMWgyLjAydi0yLjg3NEguMjMyVjkuMjQ0em03LjIyNyAwYzEuMzEgMCAyLjMzOC0uMjk5IDMuMDg4LS44OTYuNzUtLjU5OCAxLjEyNC0xLjUwNCAxLjEyNC0yLjcxOHMtLjM3NS0yLjA5Ni0xLjEyNC0yLjY0NmMtLjc1LS41NS0xLjc3OS0uODI1LTMuMDg4LS44MjVINC41M3Y3LjA4NWgyLjkzeiIvPjwvc3ZnPg==);
+  background-repeat: no-repeat;
+  background-size: contain;
+}

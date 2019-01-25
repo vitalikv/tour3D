@@ -1,0 +1,30 @@
+.slide-button {
+  background-color: @blue;
+  max-width: 140px;
+  min-width: 54px;
+  display: inline-flex;
+  align-items: center;
+  color: #ffffff;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.5);
+  font-size: 13px;
+  cursor: pointer;
+  &__icon {
+    display: inline-block;
+    padding: 11px;
+    width: 54px;
+    height: 54px;
+    box-sizing: border-box;
+  }
+  &__caption {
+    display: inline-block;
+    overflow: hidden;
+    width: 0;
+    transition: width .2s;
+    text-align: left;
+  }
+  &:hover &__caption {
+    width: 100px;
+  }
+}

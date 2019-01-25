@@ -1,0 +1,81 @@
+.input-with-select {
+  position: relative;
+  width: 80px;
+  height: 26px;
+  &__input {
+    padding-right: 26px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+  }
+  button.input-with-select__button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 26px;
+    border: none;
+    background-color: transparent;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSI5IiB2aWV3Qm94PSIwIDAgMTQgOSI+ICAgIDxkZWZzPiAgICAgICAgPGZpbHRlciBpZD0iYSIgd2lkdGg9IjE4MC4yJSIgaGVpZ2h0PSIxMDEuMSUiIHg9IjAlIiB5PSIwJSIgZmlsdGVyVW5pdHM9Im9iamVjdEJvdW5kaW5nQm94Ij4gICAgICAgICAgICA8ZmVHYXVzc2lhbkJsdXIgaW49IlNvdXJjZUdyYXBoaWMiLz4gICAgICAgIDwvZmlsdGVyPiAgICA8L2RlZnM+ICAgIDxwYXRoIGZpbGw9IiM0QTRBNEEiIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTcgNi40NjNsLjc2Ljg4NmExIDEgMCAwIDEgLjAxMSAxLjI4OGwtLjAxMi4wMTRhMS4wMTQgMS4wMTQgMCAwIDEtLjI1OC4yMTUgMS4wMDIgMS4wMDIgMCAwIDEtMS4yNzItLjIyOUwuMjQxIDEuNjUxQTEgMSAwIDEgMSAxLjc1OS4zNDlMNyA2LjQ2MyAxMi4yNC4zNWExIDEgMCAwIDEgMS41MiAxLjMwMkw3Ljc3IDguNjM3eiIgZmlsdGVyPSJ1cmwoI2EpIi8+PC9zdmc+);
+    background-repeat: no-repeat;
+    background-position: center center;
+    transition: transform .1s, opacity .2s;
+    transform: rotate(0deg);
+    opacity: .6;
+    &:focus {
+      outline: none;
+    }
+    &:hover {
+      opacity: 1;
+    }
+  }
+  &--open {
+    button.input-with-select__button {
+      transform: rotate(180deg);
+    }
+    .input-with-select__options-wrap {
+      display: block;
+    }
+  }
+  &__options-wrap {
+    display: none;
+    position: absolute;
+    width: 138px;
+    bottom: 31px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.5);
+    background-color: #f2f2f2;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  &__options {
+    height: 220px;
+    overflow: hidden;
+  }
+  &__options-list {
+    list-style-type: none;
+    margin: 0;
+    padding-left: 0;
+    li {
+      padding-left: 12px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      color: @dark-grey;
+      &:hover {
+        background-color: #e9ecff;
+      }
+    }
+  }
+  &__option {
+    font-weight: 500;
+    font-size: 15px;
+    color: #4e4e55;
+  }
+  &__option-desc {
+    color: #979797;
+    font-size: 12px;
+    font-weight: 400;
+    pointer-events: none;
+  }
+}

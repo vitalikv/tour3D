@@ -1,0 +1,84 @@
+{
+  "id": 1325,
+  "name": "Дизайны",
+  "categories": [
+    {
+      "id": 5786,
+      "name": "Дизайн-проекты",
+      "color": "",
+      "filters": "",
+      "hidden": "false",
+      "lotsCount": 0,
+      "lotsId": "",
+      "type": "None",
+      "categories": [
+        {
+          "id": 5779,
+          "name": "Гостиная",
+          "color": "",
+          "filters": "",
+          "hidden": "false",
+          "lotsCount": 6,
+          "lotsId": "73685,73679,73673,73667",
+          "type": "Object3D",
+          "categories": ""
+        },
+        {
+          "id": 5780,
+          "name": "Туалет",
+          "color": "",
+          "filters": "",
+          "hidden": "false",
+          "lotsCount": 5,
+          "lotsId": "73684,73678,73672,73666",
+          "type": "Object3D",
+          "categories": ""
+        },
+        {
+          "id": 5781,
+          "name": "Кухня",
+          "color": "",
+          "filters": "",
+          "hidden": "false",
+          "lotsCount": 5,
+          "lotsId": "73686,73680,73674,73668",
+          "type": "Object3D",
+          "categories": ""
+        },
+        {
+          "id": 5782,
+          "name": "Ванная",
+          "color": "",
+          "filters": "",
+          "hidden": "false",
+          "lotsCount": 5,
+          "lotsId": "73681,73675,73669,73663",
+          "type": "Object3D",
+          "categories": ""
+        },
+        {
+          "id": 5783,
+          "name": "Детская",
+          "color": "",
+          "filters": "",
+          "hidden": "false",
+          "lotsCount": 5,
+          "lotsId": "73683,73677,73671,73665",
+          "type": "Object3D",
+          "categories": ""
+        },
+        {
+          "id": 5784,
+          "name": "Спальня",
+          "color": "",
+          "filters": "",
+          "hidden": "false",
+          "lotsCount": 5,
+          "lotsId": "73682,73676,73670,73664",
+          "type": "Object3D",
+          "categories": ""
+        }
+      ]
+    }
+  ]
+}
