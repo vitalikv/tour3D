@@ -310,7 +310,7 @@ function emitAction(action, value, $source, stage) {
     else if (action == 'load-project-end') { /*UI.updateProgressBar('projectLoader', 100, 100);*/ UIInvokeFunction('ProjectLoadEnd'); initUIButtons(editorButtons); }
     else if (action == 'stop-fake-loading') { UI.stopFakeLoading('projectLoader') }
     else if (action == 'load_error') { sendMessage('EDITOR.ERROR', { code: value.code, key: getErrorKey(value.code) }); }
-    else if (action == 'camera-angle') { camera3D.fov = value / 2 + 25; camera3D.updateProjectionMatrix(); }
+    else if (action == 'camera-angle') { camera3D.fov = value / 2 + 35; camera3D.updateProjectionMatrix(); }
     else if (action == 'camera-height') { changeHeightCameraFirst(value); }
     else if (action == 'delete-plinth') { deletePlinths(clickO.last_obj, false); UI('plinth-preview').val(''); UI.setObjectCaption('', 'plinth'); }
     else if (action == 'apply-to-all-walls') { assignTextureOnAllWall(); }

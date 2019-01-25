@@ -24,7 +24,7 @@ cameraTop.userData.tag = 'cameraTop';
 
 
 //----------- camera3D
-var camera3D = new THREE.PerspectiveCamera( 65, w_w / w_h, 0.2, 1000 );  
+var camera3D = new THREE.PerspectiveCamera( 95, w_w / w_h, 0.2, 1000 );  
 camera3D.rotation.order = 'YZX';		//'ZYX'
 camera3D.position.set(5, 7, 5);
 camera3D.lookAt(scene.position);

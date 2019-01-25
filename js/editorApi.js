@@ -58,7 +58,7 @@ var editorApi = (function () {
 				{
 					//scene.add( object );
 					object.position.set(0,0,0);
-					object.rotation.set(Math.PI/2,Math.PI,Math.PI/2);
+					object.rotation.set(Math.PI/2,Math.PI,-Math.PI/2);
 							
 					var childrens = getAllChildrenObj(object, []);  
 					for ( var i = 0; i < childrens.length; i++ )
@@ -66,10 +66,10 @@ var editorApi = (function () {
 						childrens[i].obj.material.color.setHex( Math.random() * 0xffffff );
 					}
 
-					//var obj = createCopyPopForm(object);
+					var obj = createCopyPopForm(object);
 					//scene.remove( object );
 					
-					var obj = new THREE.Mesh( new THREE.BoxGeometry( 71, 71, 71 ), new THREE.MeshLambertMaterial( { color : 0xffffff, side: THREE.BackSide } ) );
+					//var obj = new THREE.Mesh( new THREE.BoxGeometry( 71, 71, 71 ), new THREE.MeshLambertMaterial( { color : 0xffffff, side: THREE.BackSide } ) );
 					
 					scene.add( obj );
 					

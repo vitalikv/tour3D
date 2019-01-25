@@ -15,25 +15,25 @@ function updateKeyDown()
 	{
 		if ( keys[ 87 ] || keys[ 38 ] ) 
 		{
-			camera.position.z -= 0.1;
+			camera.position.z -= 0.03;
 			newCameraPosition = null;
 			flag = true;
 		}
 		else if ( keys[ 83 ] || keys[ 40 ] ) 
 		{
-			camera.position.z += 0.1;
+			camera.position.z += 0.03;
 			newCameraPosition = null;
 			flag = true;
 		}
 		if ( keys[ 65 ] || keys[ 37 ] ) 
 		{
-			camera.position.x -= 0.1;
+			camera.position.x -= 0.03;
 			newCameraPosition = null;
 			flag = true;
 		}
 		else if ( keys[ 68 ] || keys[ 39 ] ) 
 		{
-			camera.position.x += 0.1;
+			camera.position.x += 0.03;
 			newCameraPosition = null;
 			flag = true;
 		}
@@ -45,7 +45,7 @@ function updateKeyDown()
 			var x = Math.sin( camera.rotation.y );
 			var z = Math.cos( camera.rotation.y );
 			var dir = new THREE.Vector3( -x, 0, -z );
-			dir = new THREE.Vector3().addScaledVector( dir, 0.1 );
+			dir = new THREE.Vector3().addScaledVector( dir, 0.03 );
 			camera.position.add( dir );
 			centerCam.add( dir );
 			newCameraPosition = null;
@@ -56,7 +56,7 @@ function updateKeyDown()
 			var x = Math.sin( camera.rotation.y );
 			var z = Math.cos( camera.rotation.y );
 			var dir = new THREE.Vector3( x, 0, z );
-			dir = new THREE.Vector3().addScaledVector( dir, 0.1 );
+			dir = new THREE.Vector3().addScaledVector( dir, 0.03 );
 			dir.addScalar( 0.0001 );
 			camera.position.add( dir );
 			centerCam.add( dir );
@@ -68,7 +68,7 @@ function updateKeyDown()
 			var x = Math.sin( camera.rotation.y - 1.5707963267948966 );
 			var z = Math.cos( camera.rotation.y - 1.5707963267948966 );
 			var dir = new THREE.Vector3( x, 0, z );
-			dir = new THREE.Vector3().addScaledVector( dir, 0.1 );
+			dir = new THREE.Vector3().addScaledVector( dir, 0.03 );
 			dir.addScalar( 0.0001 );
 			camera.position.add( dir );
 			centerCam.add( dir );
@@ -80,7 +80,7 @@ function updateKeyDown()
 			var x = Math.sin( camera.rotation.y + 1.5707963267948966 );
 			var z = Math.cos( camera.rotation.y + 1.5707963267948966 );
 			var dir = new THREE.Vector3( x, 0, z );
-			dir = new THREE.Vector3().addScaledVector( dir, 0.1 );
+			dir = new THREE.Vector3().addScaledVector( dir, 0.03 );
 			dir.addScalar( 0.0001 );
 			camera.position.add( dir );
 			centerCam.add( dir );
@@ -90,7 +90,7 @@ function updateKeyDown()
 		if ( keys[ 88 ] ) 
 		{
 			var dir = new THREE.Vector3( 0, 1, 0 );
-			dir = new THREE.Vector3().addScaledVector( dir, -0.1 );
+			dir = new THREE.Vector3().addScaledVector( dir, -0.03 );
 			dir.addScalar( 0.0001 );
 			camera.position.add( dir );
 			centerCam.add( dir );
@@ -100,7 +100,7 @@ function updateKeyDown()
 		else if ( keys[ 67 ] ) 
 		{
 			var dir = new THREE.Vector3( 0, 1, 0 );
-			dir = new THREE.Vector3().addScaledVector( dir, 0.1 );
+			dir = new THREE.Vector3().addScaledVector( dir, 0.03 );
 			dir.addScalar( 0.0001 );
 			camera.position.add( dir );
 			centerCam.add( dir );
