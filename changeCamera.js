@@ -108,7 +108,7 @@ function changeCamera(cam)
 		hideRuleCameraWall();
 	
 
-if(1==1)
+if(1==2)
 {
 camera3D.userData.camera.type = 'first';	
 camera3D.position.x = 2.488135205055217;

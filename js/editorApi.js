@@ -78,13 +78,13 @@ var editorApi = (function () {
 					
 					if(1==1)
 					{
-						
+
 						//var obj = createCopyPopForm(object);
 						//scene.remove( object );
 						
 						var obj = new THREE.Mesh( new THREE.SphereGeometry( 10, 32, 32 ), new THREE.MeshLambertMaterial( { color : 0xffffff, side: THREE.BackSide } ) );
 						//upUvs_1( obj )						
-						scene.add( obj );
+						//scene.add( obj );
 						
 						var path = "img/";
 						var format = '.jpg';
@@ -107,19 +107,33 @@ var editorApi = (function () {
 						reflectionCube2.mapping = THREE.CubeRefractionMapping;
 						
 										
-					
+	var arrP = [new THREE.Vector3(-3,0,-3), new THREE.Vector3(-3,0,0), new THREE.Vector3(0,0,3), new THREE.Vector3(3,0,3), new THREE.Vector3(3,0,-3)]; 
+	
+	
+	for ( var i = 0; i < arrP.length; i++ ) { createPoint( arrP[i], 0 ); }
+	
+	for ( var i = 0; i < obj_point.length; i++ )
+	{
+		var i2 = (i == obj_point.length - 1) ? 0 : i + 1;		
+		createOneWall3( obj_point[i], obj_point[i2], width_wall, {} );
+	}
 
+	for ( var i = 0; i < obj_point.length; i++ ) { upLineYY(obj_point[i]); }	
+	detectRoomZone(nameRoomDef);
+	upLabelPlan_1(obj_line);						
+
+	
+	for ( var i = 0; i < obj_line.length; i++ )
+	{
+		obj_line[i].material[1].envMap = reflectionCube;
+		obj_line[i].material[2].envMap = reflectionCube;		
+	}	
 						
-						obj.material.lightMap = lightMap_1;
-						obj.material.opacity = 1.0;
-						obj.material.color.setHex(0xffffff);
-						obj.material.envMap = reflectionCube;
-						
-						cubObj = obj; 
+	room[0].material.envMap = reflectionCube;					 
 						
 					}
 					
-					UI.setView('3D');				
+									
 				}
 			);	
 
