@@ -59,7 +59,8 @@ var editorApi = (function () {
 					//scene.add( object );
 					object.position.set(0,0,0);
 					object.rotation.set(Math.PI/2,Math.PI,-Math.PI/2);
-							
+					object.scale.set(1,1,1);
+					
 					var childrens = getAllChildrenObj(object, []);  
 					for ( var i = 0; i < childrens.length; i++ )
 					{		
@@ -93,8 +94,18 @@ cubeCamera.renderTarget.texture.mapping = THREE.CubeRefractionMapping;
 					//cubeCamera.rotation.y = Math.PI;
 					//cubeCamera.rotation.x = -Math.PI;
 					
+					UI.setView('3D');
 					
-					console.log(cubeCamera.renderTarget);
+			for ( var i = 0; i < cubeCamera.children.length; i++ )
+			{		
+				cubeCamera.children[i].fov = 90; 
+				cubeCamera.children[i].updateProjectionMatrix();
+			}					
+					
+					
+					console.log(camera3D);
+					console.log(cubeCamera);
+					obj.material.lightMap = lightMap_1;
 					obj.material.opacity = 1.0;
 					obj.material.color.setHex(0xffffff);
 					obj.material.envMap = cubeCamera.renderTarget.texture;

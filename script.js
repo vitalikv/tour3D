@@ -191,7 +191,7 @@ function drawRender()
 	} 
 	else 
 	{  
-
+		
 		cubeCamera.update( renderer, scene );
 		renderer.autoClear = true;
 		renderer.clear();

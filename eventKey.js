@@ -86,11 +86,32 @@ document.body.addEventListener("keydown", function (e)
 		
 		if(e.keyCode == 103) 
 		{
-			cubeCamera.rotation.x += Math.PI/2;	console.log(cubeCamera.rotation.x,cubeCamera.rotation.y,cubeCamera.rotation.z);drawRender()
+			//cubeCamera.rotation.x += Math.PI/2;	console.log(cubeCamera.rotation.x,cubeCamera.rotation.y,cubeCamera.rotation.z);
+			//camera3D.fov += 5; camera3D.updateProjectionMatrix();
+			
+			for ( var i = 0; i < cubeCamera.children.length; i++ )
+			{		
+				cubeCamera.children[i].fov += 5; 
+				cubeCamera.children[i].updateProjectionMatrix();
+			}						
+
+	
+			drawRender()
 		}
 		if(e.keyCode == 104) 
 		{
-			cubeCamera.rotation.y += Math.PI/2;	console.log(cubeCamera.rotation.x,cubeCamera.rotation.y,cubeCamera.rotation.z);drawRender()
+			//cubeCamera.rotation.y += Math.PI/2;	console.log(cubeCamera.rotation.x,cubeCamera.rotation.y,cubeCamera.rotation.z);
+			//camera3D.fov -= 5; camera3D.updateProjectionMatrix();
+			
+			for ( var i = 0; i < cubeCamera.children.length; i++ )
+			{		
+				cubeCamera.children[i].fov -= 5; 
+				cubeCamera.children[i].updateProjectionMatrix();				
+			}			
+
+			
+			console.log(cubeCamera.children[0].position.y)
+			drawRender()
 		}
 		if(e.keyCode == 105) 
 		{
