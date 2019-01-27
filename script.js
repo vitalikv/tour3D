@@ -63,9 +63,10 @@ for ( var i = 0; i < 0; i++ )
 	scene.add( cubes[i] ); 		 
 }
 
-var cubeCamera = new THREE.CubeCamera( 1, 100000, 1024 );
 
-scene.add( cubeCamera );
+var cubObj = null;
+var reflectionCube = null;
+var reflectionCube2 = null;
 
 
 if(1==2)
@@ -187,12 +188,12 @@ function drawRender()
 		renderer.clear();
 		renderer.render( scene, camera );
 		renderer.render( outlineScene, outlineCamera );
-		cubeCamera.update( renderer, scene );
+		
 	} 
 	else 
 	{  
 		
-		cubeCamera.update( renderer, scene );
+		
 		renderer.autoClear = true;
 		renderer.clear();
 		renderer.render(scene, camera);
@@ -314,7 +315,7 @@ infProject.scene.type = {}
 
 var clippingMaskWall = new THREE.Plane( new THREE.Vector3( 0, 1, 0 ), 1 );	// маска для стены   
 var lightMap_1 = new THREE.TextureLoader().load('img/lightMap_1.png');
-
+var grid_Sm = new THREE.TextureLoader().load('img/UV_Grid_Sm.jpg');
 
 // cutoff боковые отсечки для линеек
 // format_1 линейки для отображения длины/высоты стены в режиме cameraWall

@@ -61,58 +61,65 @@ var editorApi = (function () {
 					object.rotation.set(Math.PI/2,Math.PI,-Math.PI/2);
 					object.scale.set(1,1,1);
 					
+					
+					var obj = object;
+					
 					var childrens = getAllChildrenObj(object, []);  
 					for ( var i = 0; i < childrens.length; i++ )
 					{		
-						childrens[i].obj.material.color.setHex( Math.random() * 0xffffff );
-					}
+						//childrens[i].obj.material.color.setHex( Math.random() * 0xffffff );
+						childrens[i].obj.material.lightMap = lightMap_1;
+						childrens[i].obj.material.map = grid_Sm;
+						childrens[i].obj.material.needsUpdate = true;
+					}						
+						
+						console.log(object);					
 
-					var obj = createCopyPopForm(object);
-					//scene.remove( object );
 					
-					//var obj = new THREE.Mesh( new THREE.BoxGeometry( 71, 71, 71 ), new THREE.MeshLambertMaterial( { color : 0xffffff, side: THREE.BackSide } ) );
+					if(1==1)
+					{
+						
+						//var obj = createCopyPopForm(object);
+						//scene.remove( object );
+						
+						var obj = new THREE.Mesh( new THREE.SphereGeometry( 10, 32, 32 ), new THREE.MeshLambertMaterial( { color : 0xffffff, side: THREE.BackSide } ) );
+						//upUvs_1( obj )						
+						scene.add( obj );
+						
+						var path = "img/";
+						var format = '.jpg';
+						var urls = [ 
+						path + '2-1' + format, path + '2-3' + format,
+						path + '2-4' + format, path + '2-5' + format,
+						path + '2-0' + format, path + '2-2' + format
+						];
+						
+						var urls2 = [ 
+						path + '1-1' + format, path + '1-3' + format,
+						path + '1-4' + format, path + '1-5' + format,
+						path + '1-0' + format, path + '1-2' + format
+						];
+						
+						reflectionCube = new THREE.CubeTextureLoader().load( urls );
+						reflectionCube.mapping = THREE.CubeRefractionMapping;
+						
+						reflectionCube2 = new THREE.CubeTextureLoader().load( urls2 );
+						reflectionCube2.mapping = THREE.CubeRefractionMapping;
+						
+										
 					
-					scene.add( obj );
+
+						
+						obj.material.lightMap = lightMap_1;
+						obj.material.opacity = 1.0;
+						obj.material.color.setHex(0xffffff);
+						obj.material.envMap = reflectionCube;
+						
+						cubObj = obj; 
+						
+					}
 					
-					var path = "img/";
-					var format = '.jpg';
-					var urls = [ 
-					path + '2-1' + format, path + '2-3' + format,
-					path + '2-4' + format, path + '2-5' + format,
-					path + '2-0' + format, path + '2-2' + format
-					];
-					
-					var urls2 = [ 
-					path + '2-3' + format, path + '2-1' + format,
-					path + '2-5' + format, path + '2-4' + format,
-					path + '2-0' + format, path + '2-2' + format
-					];
-					
-					var reflectionCube = new THREE.CubeTextureLoader().load( urls );
-					//reflectionCube.format = THREE.RGBFormat;
-cubeCamera.renderTarget.texture.mapping = THREE.CubeRefractionMapping;
-					//cubeCamera.rotation.y = Math.PI;
-					//cubeCamera.rotation.x = -Math.PI;
-					
-					UI.setView('3D');
-					
-			for ( var i = 0; i < cubeCamera.children.length; i++ )
-			{		
-				cubeCamera.children[i].fov = 90; 
-				cubeCamera.children[i].updateProjectionMatrix();
-			}					
-					
-					
-					console.log(camera3D);
-					console.log(cubeCamera);
-					obj.material.lightMap = lightMap_1;
-					obj.material.opacity = 1.0;
-					obj.material.color.setHex(0xffffff);
-					obj.material.envMap = cubeCamera.renderTarget.texture;
-					
-					 
-					
-					scene.background = reflectionCube;				
+					UI.setView('3D');				
 				}
 			);	
 
