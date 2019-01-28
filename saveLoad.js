@@ -1088,7 +1088,17 @@ function createWallsNewFile(arr)
 			EditorInvokeFunction('SetView', '3d');
 			UIInvokeFunction('SetView', '3d');			
 		}
+	}
+
+
+
+	for ( var i = 0; i < obj_line.length; i++ )
+	{
+		obj_line[i].material[1].envMap = reflectionCube;
+		obj_line[i].material[2].envMap = reflectionCube;		
 	}	
+						
+	room[0].material.envMap = reflectionCube;	
 
 	return { json : wall, obj : arrW };
 }
@@ -1283,7 +1293,11 @@ function createObjNewFile(arr, lotid)
 		 
 		loadPopObj_1({ lotid : obj_pop[i].lotid, id : id, pos : obj_pop[i].pos, rot : rot, size : obj_pop[i].size, material : material });
 	}	
-	// объекты	
+	// объекты
+
+
+	
+						
 }
  
 

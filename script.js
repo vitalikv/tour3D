@@ -68,6 +68,26 @@ var cubObj = null;
 var reflectionCube = null;
 var reflectionCube2 = null;
 
+var path = "img/";
+var format = '.jpg';
+var urls = [ 
+path + '2-1' + format, path + '2-3' + format,
+path + '2-4' + format, path + '2-5' + format,
+path + '2-0' + format, path + '2-2' + format
+];
+
+var urls2 = [ 
+path + '1-1' + format, path + '1-3' + format,
+path + '1-4' + format, path + '1-5' + format,
+path + '1-0' + format, path + '1-2' + format
+];
+
+reflectionCube = new THREE.CubeTextureLoader().load( urls );
+reflectionCube.mapping = THREE.CubeRefractionMapping;
+
+reflectionCube2 = new THREE.CubeTextureLoader().load( urls2 );
+reflectionCube2.mapping = THREE.CubeRefractionMapping;
+
 
 if(1==2)
 {

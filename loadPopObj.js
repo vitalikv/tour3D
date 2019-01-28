@@ -555,6 +555,19 @@ function loaderObjPop(cdm, json)
 			popChangeMaxAnisotropy(obj);
 			obj3D.add( obj ); 
 			
+			console.log(333333, obj);
+	
+
+var childrens = getAllChildrenObj(obj, []);
+
+	for ( var i = 0; i < childrens.length; i++ )
+	{
+		if(!childrens[i].obj.material) continue;
+		childrens[i].obj.material.map = null;
+		childrens[i].obj.material.envMap = reflectionCube;
+	}	
+	
+			
 			// ковертируем с помощью Math.PI
 			if(obj.userData.version == "2.0" || obj.userData.version == 2.0) { obj3D.rotation.set(rot.x, -rot.y, rot.z); obj3D.userData.version = obj.userData.version; }
 			else { obj3D.rotation.set(rot.x + Math.PI, rot.y, rot.z + Math.PI); }	
@@ -801,7 +814,7 @@ function createCopyPopForm(objPop)
 	for ( var i = 0; i < childrens.length; i++ )
 	{
 		if(!childrens[i].obj.geometry) continue;
-		if(childrens[i].obj.name== 'GeoSphere001_fake') continue;
+		//if(childrens[i].obj.name== 'GeoSphere001_fake') continue;
 		
 		childrens[i].obj.userData.tag = 'obj_children';
 		childrens[i].obj.userData.parent = obj;

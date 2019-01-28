@@ -48,98 +48,10 @@ var editorApi = (function () {
             createForm('level_2');
           }
           else {
-            //loadFile('');
+            loadFile('');
 			
-			var loader = new THREE.OBJLoader();
-
-			loader.load( 't/LP_RBI24.obj',
+	
 			
-				function ( object ) 
-				{
-					//scene.add( object );
-					object.position.set(0,0,0);
-					object.rotation.set(Math.PI/2,Math.PI,-Math.PI/2);
-					object.scale.set(1,1,1);
-					
-					
-					var obj = object;
-					
-					var childrens = getAllChildrenObj(object, []);  
-					for ( var i = 0; i < childrens.length; i++ )
-					{		
-						//childrens[i].obj.material.color.setHex( Math.random() * 0xffffff );
-						childrens[i].obj.material.lightMap = lightMap_1;
-						childrens[i].obj.material.map = grid_Sm;
-						childrens[i].obj.material.needsUpdate = true;
-					}						
-						
-						console.log(object);					
-
-					
-					if(1==1)
-					{
-
-						//var obj = createCopyPopForm(object);
-						//scene.remove( object );
-						
-						var obj = new THREE.Mesh( new THREE.SphereGeometry( 10, 32, 32 ), new THREE.MeshLambertMaterial( { color : 0xffffff, side: THREE.BackSide } ) );
-						//upUvs_1( obj )						
-						//scene.add( obj );
-						
-						var path = "img/";
-						var format = '.jpg';
-						var urls = [ 
-						path + '2-1' + format, path + '2-3' + format,
-						path + '2-4' + format, path + '2-5' + format,
-						path + '2-0' + format, path + '2-2' + format
-						];
-						
-						var urls2 = [ 
-						path + '1-1' + format, path + '1-3' + format,
-						path + '1-4' + format, path + '1-5' + format,
-						path + '1-0' + format, path + '1-2' + format
-						];
-						
-						reflectionCube = new THREE.CubeTextureLoader().load( urls );
-						reflectionCube.mapping = THREE.CubeRefractionMapping;
-						
-						reflectionCube2 = new THREE.CubeTextureLoader().load( urls2 );
-						reflectionCube2.mapping = THREE.CubeRefractionMapping;
-						
-										
-	var arrP = [new THREE.Vector3(-3,0,-3), new THREE.Vector3(-3,0,0), new THREE.Vector3(0,0,3), new THREE.Vector3(3,0,3), new THREE.Vector3(3,0,-3)]; 
-	
-	
-	for ( var i = 0; i < arrP.length; i++ ) { createPoint( arrP[i], 0 ); }
-	
-	for ( var i = 0; i < obj_point.length; i++ )
-	{
-		var i2 = (i == obj_point.length - 1) ? 0 : i + 1;		
-		createOneWall3( obj_point[i], obj_point[i2], width_wall, {} );
-	}
-
-	for ( var i = 0; i < obj_point.length; i++ ) { upLineYY(obj_point[i]); }	
-	detectRoomZone(nameRoomDef);
-	upLabelPlan_1(obj_line);						
-
-	
-	for ( var i = 0; i < obj_line.length; i++ )
-	{
-		obj_line[i].material[1].envMap = reflectionCube;
-		obj_line[i].material[2].envMap = reflectionCube;		
-	}	
-						
-	room[0].material.envMap = reflectionCube;					 
-						
-					}
-					
-									
-				}
-			);	
-
-		emitAction('load-project-start');
-		emitAction('load-project-end');
-		emitAction('stop-fake-loading');			
 
           }
  
