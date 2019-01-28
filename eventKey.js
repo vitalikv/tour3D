@@ -86,28 +86,32 @@ document.body.addEventListener("keydown", function (e)
 		
 		if(e.keyCode == 103) 
 		{
-			//cubObj.material.envMap = reflectionCube2;
+			cubObj.material.envMap = reflectionCube2;
+
+			drawRender()
+		}
+		if(e.keyCode == 104) 
+		{
+			cubObj.material.envMap = reflectionCube;
+
+			drawRender()
+		}
+		if(e.keyCode == 105) 
+		{
+			var n1 = cubObj.material.opacity;
+			var n2 = cubObj2.material.opacity;
+			n1 = (n1-0.1<0) ? 0 : n1-0.1; 
+			n2 = (n2+0.1>1) ? 1 : n2+0.1;
+			cubObj.material.opacity = n1;
+			cubObj2.material.opacity = n2;			
+			
 			var n2 = cubObj.material.opacity;
 			var n1 = cubObj2.material.opacity;
 			n1 = (n1-0.1<0) ? 0 : n1-0.1; 
 			n2 = (n2+0.1>1) ? 1 : n2+0.1;
 			cubObj.material.opacity = n2;
 			cubObj2.material.opacity = n1;
-			drawRender()
-		}
-		if(e.keyCode == 104) 
-		{
-			//cubObj.material.envMap = reflectionCube;
-			var n1 = cubObj.material.opacity;
-			var n2 = cubObj2.material.opacity;
-			n1 = (n1-0.1<0) ? 0 : n1-0.1; 
-			n2 = (n2+0.1>1) ? 1 : n2+0.1;
-			cubObj.material.opacity = n1;
-			cubObj2.material.opacity = n2;
-			drawRender()
-		}
-		if(e.keyCode == 105) 
-		{
+			
 			cubeCamera.rotation.z += Math.PI/2; console.log(cubeCamera.rotation.x,cubeCamera.rotation.y,cubeCamera.rotation.z);drawRender()
 		}		
 		console.log(cubObj.material.opacity, cubObj2.material.opacity);
