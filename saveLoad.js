@@ -1109,9 +1109,8 @@ function createWallsNewFile(arr)
 
 	for ( var i = 0; i < room.length; i++ )
 	{
-		room[i].material.map = null;	
-		room[i].material.envMap = reflectionCube;
-		room[i].material.color.setHex( 0xffffff );
+		room[i].material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube } );
+		ceiling[i].material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube } );
 	}			
 
 	return { json : wall, obj : arrW };
@@ -1147,7 +1146,7 @@ function loadFilePL(arr, cdm)
 	// устанавливаем окна/двери
 	var wall = cdm.json;
 	var arrW = cdm.obj;
-	for ( var i = 0; i < wall.length; i++ )
+	for ( var i = 0; i < 0; i++ )
 	{ 
 		var obj = arrW[i];
 		
