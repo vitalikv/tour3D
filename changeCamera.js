@@ -113,7 +113,7 @@ if(1==2)
 camera3D.userData.camera.type = 'first';	
 camera3D.position.x = 2.488135205055217;
 camera3D.position.y = 1.2254803937655514;
-camera3D.position.z = -0.7403517919618064;			
+camera3D.position.z = -0.7403517919618064;		
 		
 camera3D.rotation.x = -0.03739320810967875;
 camera3D.rotation.y = 1.757398163397449;

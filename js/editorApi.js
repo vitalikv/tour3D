@@ -50,8 +50,8 @@ var editorApi = (function () {
           else {
             loadFile('');
 			//setstart()
-	
 			
+			camera3D.updateProjectionMatrix();
 
           }
  

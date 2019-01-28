@@ -89,7 +89,7 @@ reflectionCube.mapping = THREE.CubeRefractionMapping;
 reflectionCube2 = new THREE.CubeTextureLoader().load( urls2 );
 reflectionCube2.mapping = THREE.CubeRefractionMapping;
 
-
+console.log(7777, reflectionCube);
 
 function setstart()
 {
@@ -1111,8 +1111,8 @@ function createOneWall3( point1, point2, width, cdm )
 	var p2 = point2.position;	
 	var d = p1.distanceTo( p2 );
 	
-	var material = new THREE.MeshLambertMaterial( { color : 0xedded4, clippingPlanes : [ clippingMaskWall ], lightMap : lightMap_1 } );		
-	var materials = [ new THREE.MeshLambertMaterial( { color: 0x808080, clippingPlanes: [ clippingMaskWall ], lightMap : lightMap_1 } ), material.clone(), material.clone() ];		
+	var material = new THREE.MeshPhongMaterial( { color : 0xedded4, clippingPlanes : [ clippingMaskWall ], lightMap : lightMap_1 } );		
+	var materials = [ new THREE.MeshPhongMaterial( { color: 0x808080, clippingPlanes: [ clippingMaskWall ], lightMap : lightMap_1 } ), material.clone(), material.clone() ];		
 	var geometry = createGeometryWall(d, height, width, offsetZ);	
 	var wall = obj_line[obj_line.length] = new THREE.Mesh( geometry, materials ); 
  	

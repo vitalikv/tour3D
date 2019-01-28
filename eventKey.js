@@ -86,24 +86,37 @@ document.body.addEventListener("keydown", function (e)
 		
 		if(e.keyCode == 103) 
 		{
-			cubObj.material.envMap = reflectionCube2;
+			console.log(888888, camera);
 			
-	
+			camera3D.userData.camera.type = 'first';	
+			camera3D.position.x = 0.7470925800412034;
+			camera3D.position.y = 1.3959025405496628;
+			camera3D.position.z = 3.236176418332588;		
+						
+
+			camera3D.rotation.x = -0.2799345149927956;
+			camera3D.rotation.y = 0.824121364087264;
+			camera3D.rotation.z = 0;			
+
+			camera3D.updateProjectionMatrix();
+			
 			drawRender()
 		}
 		if(e.keyCode == 104) 
 		{
-			cubObj.material.envMap = reflectionCube;
-			
+			camera3D.zoom += 0.1;
+camera3D.updateProjectionMatrix();
 			drawRender()
 		}
 		if(e.keyCode == 105) 
 		{
-			cubeCamera.rotation.z += Math.PI/2; console.log(cubeCamera.rotation.x,cubeCamera.rotation.y,cubeCamera.rotation.z);drawRender()
+			camera3D.zoom -= 0.1;
+			camera3D.updateProjectionMatrix();
+			drawRender()
 		}		
 		
 		if(e.keyCode == 80) 
-		{ console.log(888888)
+		{ 
 			var loader = new THREE.OBJLoader();
 
 			// load a resource

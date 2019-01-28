@@ -563,9 +563,8 @@ var childrens = getAllChildrenObj(obj, []);
 	for ( var i = 0; i < childrens.length; i++ )
 	{
 		if(!childrens[i].obj.material) continue;
-		childrens[i].obj.material.map = null;
-		childrens[i].obj.material.color.setHex( 0xffffff );
-		childrens[i].obj.material.envMap = reflectionCube;
+
+		childrens[i].obj.material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube } );
 	}	
 	
 			
