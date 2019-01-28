@@ -564,6 +564,7 @@ var childrens = getAllChildrenObj(obj, []);
 	{
 		if(!childrens[i].obj.material) continue;
 		childrens[i].obj.material.map = null;
+		childrens[i].obj.material.color.setHex( 0xffffff );
 		childrens[i].obj.material.envMap = reflectionCube;
 	}	
 	

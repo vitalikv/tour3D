@@ -424,7 +424,12 @@ function jsonSaveObjPop()
 			furn[i].colors[i2].containerID = (!child.userData.material.containerID) ? '---' : child.userData.material.containerID;
 			furn[i].colors[i2].lot = (!isNumeric(child.userData.material.lotid)) ? { id : "default" } : { id : child.userData.material.lotid };
 
-			var color = { r : Number(arr[i2].obj.material.color.r), g : Number(arr[i2].obj.material.color.g), b : Number(arr[i2].obj.material.color.b), a : 1 };
+			var color = { r : 1, g : 1, b : 1, a : 1 };
+			
+			if(arr[i2].obj.material.color)
+			{
+				color = { r : Number(arr[i2].obj.material.color.r), g : Number(arr[i2].obj.material.color.g), b : Number(arr[i2].obj.material.color.b), a : 1 };
+			}
 			
 			furn[i].colors[i2].matMod = { colorsets : [{ color : color }] };
 			furn[i].colors[i2].matMod.texScal = new THREE.Vector2(1,1);

@@ -71,9 +71,10 @@ var reflectionCube2 = null;
 var path = "img/";
 var format = '.jpg';
 var urls = [ 
-path + 'front' + format, path + 'back' + format,
+
+path + 'left' + format, path + 'right' + format,
 path + 'up' + format, path + 'down' + format,
-path + 'left' + format, path + 'right' + format
+path + 'back' + format, path + 'front' + format,
 ];
 
 var urls2 = [ 
@@ -87,6 +88,67 @@ reflectionCube.mapping = THREE.CubeRefractionMapping;
 
 reflectionCube2 = new THREE.CubeTextureLoader().load( urls2 );
 reflectionCube2.mapping = THREE.CubeRefractionMapping;
+
+
+
+function setstart()
+{
+	var loader = new THREE.OBJLoader();
+
+	loader.load( 't/LP_RBI24.obj',
+	
+		function ( object ) 
+		{
+			//scene.add( object );
+			object.position.set(0,0,0);
+			object.rotation.set(Math.PI/2,Math.PI,-Math.PI/2);
+			object.scale.set(1,1,1);
+			
+			
+			var obj = object;
+			
+			var childrens = getAllChildrenObj(object, []);  
+			for ( var i = 0; i < childrens.length; i++ )
+			{		
+				//childrens[i].obj.material.color.setHex( Math.random() * 0xffffff );
+				childrens[i].obj.material.lightMap = lightMap_1;
+				childrens[i].obj.material.map = grid_Sm;
+				childrens[i].obj.material.needsUpdate = true;
+			}						
+				
+									
+
+			
+			if(1==1)
+			{
+				
+				//var obj = createCopyPopForm(object);
+				//scene.remove( object );
+				
+				var obj = new THREE.Mesh( new THREE.SphereGeometry( 50, 32, 32 ), new THREE.MeshLambertMaterial( { color : 0xffffff, side: THREE.BackSide, lightMap : lightMap_1, transparent: true, opacity: 1 } ) );
+				//upUvs_1( obj )						
+				scene.add( obj );				
+				
+								
+			console.log(reflectionCube);
+
+				reflectionCube.rotation = 1;
+				obj.material.lightMap = lightMap_1;
+				obj.material.opacity = 1.0;
+				obj.material.color.setHex(0xffffff);
+				obj.material.envMap = reflectionCube;
+				
+				cubObj = obj; 
+			}
+			
+							
+		}
+	);	
+
+emitAction('load-project-start');
+emitAction('load-project-end');
+emitAction('stop-fake-loading');	
+}
 
 
 if(1==2)

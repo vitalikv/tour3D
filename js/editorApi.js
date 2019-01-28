@@ -49,7 +49,7 @@ var editorApi = (function () {
           }
           else {
             loadFile('');
-			
+			//setstart()
 	
 			
 
