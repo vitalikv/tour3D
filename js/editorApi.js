@@ -82,7 +82,7 @@ var editorApi = (function () {
 						//var obj = createCopyPopForm(object);
 						//scene.remove( object );
 						
-						var obj = new THREE.Mesh( new THREE.SphereGeometry( 10, 32, 32 ), new THREE.MeshLambertMaterial( { color : 0xffffff, side: THREE.BackSide, lightMap : lightMap_1, transparent: true, opacity: 1 } ) );
+						var obj = new THREE.Mesh( new THREE.SphereGeometry( 20, 32, 32 ), new THREE.MeshLambertMaterial( { color : 0xffffff, side: THREE.BackSide, lightMap : lightMap_1, transparent: true, opacity: 1 } ) );
 						//upUvs_1( obj )						
 						scene.add( obj );
 						
@@ -106,7 +106,7 @@ var editorApi = (function () {
 						reflectionCube2 = new THREE.CubeTextureLoader().load( urls2 );
 						reflectionCube2.mapping = THREE.CubeRefractionMapping;
 						
-										
+										reflectionCube.anisotropy = 7;
 					console.log(reflectionCube);
 
 						
@@ -117,10 +117,10 @@ var editorApi = (function () {
 						
 						cubObj = obj; 
 						
-						var obj = new THREE.Mesh( new THREE.SphereGeometry( 10, 32, 32 ), new THREE.MeshLambertMaterial( { color : 0xffffff, side: THREE.BackSide, lightMap : lightMap_1, transparent: true, opacity: 0 } ) );
+						var obj = new THREE.Mesh( new THREE.SphereGeometry( 20, 32, 32 ), new THREE.MeshLambertMaterial( { color : 0xffffff, side: THREE.BackSide, lightMap : lightMap_1, transparent: true, opacity: 0 } ) );
 						//upUvs_1( obj )						
 						scene.add( obj );
-obj.position.set(-2,0,0);
+
 						obj.material.lightMap = lightMap_1;
 						obj.material.opacity = 1.0;
 						obj.material.color.setHex(0xffffff);
