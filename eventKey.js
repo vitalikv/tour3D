@@ -86,15 +86,17 @@ document.body.addEventListener("keydown", function (e)
 		
 		if(e.keyCode == 103) 
 		{
-			cubObj.material.envMap = reflectionCube2;
-			
+			//cubObj.material.envMap = reflectionCube2;
+			cubObj.material.opacity +=0.1;
+			cubObj2.material.opacity -=0.1;			
 	
 			drawRender()
 		}
 		if(e.keyCode == 104) 
 		{
-			cubObj.material.envMap = reflectionCube;
-			
+			//cubObj.material.envMap = reflectionCube;
+			cubObj.material.opacity -=0.1;
+			cubObj2.material.opacity +=0.1;
 			drawRender()
 		}
 		if(e.keyCode == 105) 

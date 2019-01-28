@@ -65,6 +65,7 @@ for ( var i = 0; i < 0; i++ )
 
 
 var cubObj = null;
+var cubObj2 = null;
 var reflectionCube = null;
 var reflectionCube2 = null;
 
