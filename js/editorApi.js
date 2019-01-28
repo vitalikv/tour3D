@@ -48,10 +48,45 @@ var editorApi = (function () {
             createForm('level_2');
           }
           else {
-            loadFile('');
+            
 			//setstart()
-			
-			camera3D.updateProjectionMatrix();
+if(1==1)
+{
+	loadFile('');
+}	
+else
+{
+	new THREE.TextureLoader().load( 'img/panorama.jpg', function ( texture ) {
+		
+		texture.mapping = THREE.UVMapping;
+		
+		var options = {
+			resolution: 1024,
+			generateMipmaps: true,
+			minFilter: THREE.LinearMipMapLinearFilter,
+			magFilter: THREE.LinearFilter
+		};
+		reflectionCube = new THREE.CubemapGenerator( renderer ).fromEquirectangular( texture, options );	 
+		reflectionCube.mapping = THREE.CubeRefractionMapping;
+		loadFile('');
+		
+		
+		var obj = new THREE.Mesh( new THREE.SphereGeometry( 50, 32, 32 ), new THREE.MeshLambertMaterial( { color : 0xffffff, side: THREE.BackSide, lightMap : lightMap_1, transparent: true, opacity: 1 } ) );
+		//upUvs_1( obj )						
+		scene.add( obj );				
+		
+						
+		console.log(reflectionCube);
+
+		reflectionCube.rotation = 1;
+		obj.material.lightMap = lightMap_1;
+		obj.material.opacity = 1.0;
+		obj.material.color.setHex(0xffffff);
+		obj.material.envMap = reflectionCube;
+					
+	} );
+	
+}
 
           }
  

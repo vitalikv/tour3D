@@ -89,6 +89,11 @@ reflectionCube.mapping = THREE.CubeRefractionMapping;
 reflectionCube2 = new THREE.CubeTextureLoader().load( urls2 );
 reflectionCube2.mapping = THREE.CubeRefractionMapping;
 
+
+
+
+
+
 console.log(7777, reflectionCube);
 
 function setstart()

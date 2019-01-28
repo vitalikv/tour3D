@@ -1481,6 +1481,9 @@
 	
 <?php if ($withUI) : ?>
 	<script src="https://threejs.org/examples/js/loaders/OBJLoader.js"></script>
+	
+	<script src="js/EquirectangularToCubeGenerator.js"></script>
+	
     <script src="js/range-slider.js?<?=$vrs?>"></script>
     <script src="js/editable-input.js?<?=$vrs?>"></script>
     <script src="js/svg4everybody.min.js?<?=$vrs?>"></script>
