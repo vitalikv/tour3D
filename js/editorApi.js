@@ -79,10 +79,10 @@ var editorApi = (function () {
 					if(1==1)
 					{
 						
-						//var obj = createCopyPopForm(object);
+						var obj = createCopyPopForm(object);
 						//scene.remove( object );
 						
-						var obj = new THREE.Mesh( new THREE.SphereGeometry( 10, 32, 32 ), new THREE.MeshLambertMaterial( { color : 0xffffff, side: THREE.BackSide } ) );
+						//var obj = new THREE.Mesh( new THREE.SphereGeometry( 10, 32, 32 ), new THREE.MeshLambertMaterial( { color : 0xffffff, side: THREE.BackSide, lightMap : lightMap_1 } ) );
 						//upUvs_1( obj )						
 						scene.add( obj );
 						
@@ -95,9 +95,9 @@ var editorApi = (function () {
 						];
 						
 						var urls2 = [ 
-						path + '1-1' + format, path + '1-3' + format,
-						path + '1-4' + format, path + '1-5' + format,
-						path + '1-0' + format, path + '1-2' + format
+						path + '3-1' + format, path + '3-3' + format,
+						path + '3-4' + format, path + '3-5' + format,
+						path + '3-0' + format, path + '3-2' + format
 						];
 						
 						reflectionCube = new THREE.CubeTextureLoader().load( urls );
