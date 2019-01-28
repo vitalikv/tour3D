@@ -71,9 +71,9 @@ var reflectionCube2 = null;
 var path = "img/";
 var format = '.jpg';
 var urls = [ 
-path + '2-1' + format, path + '2-3' + format,
-path + '2-4' + format, path + '2-5' + format,
-path + '2-0' + format, path + '2-2' + format
+path + 'front' + format, path + 'back' + format,
+path + 'up' + format, path + 'down' + format,
+path + 'left' + format, path + 'right' + format
 ];
 
 var urls2 = [ 

@@ -1094,11 +1094,20 @@ function createWallsNewFile(arr)
 
 	for ( var i = 0; i < obj_line.length; i++ )
 	{
+		obj_line[i].material[1].map = null;
+		obj_line[i].material[2].map = null;		
 		obj_line[i].material[1].envMap = reflectionCube;
-		obj_line[i].material[2].envMap = reflectionCube;		
-	}	
-						
-	room[0].material.envMap = reflectionCube;	
+		obj_line[i].material[2].envMap = reflectionCube;
+		obj_line[i].material[1].color.setHex( 0xffffff );
+		obj_line[i].material[2].color.setHex( 0xffffff );
+	}
+
+	for ( var i = 0; i < room.length; i++ )
+	{
+		room[i].material.map = null;	
+		room[i].material.envMap = reflectionCube;
+		room[i].material.color.setHex( 0xffffff );
+	}			
 
 	return { json : wall, obj : arrW };
 }
