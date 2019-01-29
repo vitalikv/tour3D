@@ -793,7 +793,7 @@ function loaderWD(cdm, json)
 // создаем один объект из нескольких дочерних (объединяем)
 function createCopyPopForm(objPop)
 { 
-	var obj = new THREE.Mesh( new THREE.Geometry(), new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube } ) );
+	var obj = new THREE.Mesh( new THREE.Geometry() );
 	
 	var childrens = getAllChildrenObj(objPop, []);
 	
