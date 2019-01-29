@@ -78,9 +78,9 @@ path + 'back' + format, path + 'front' + format,
 ];
 
 var urls2 = [ 
-path + '1-1' + format, path + '1-3' + format,
-path + '1-4' + format, path + '1-5' + format,
-path + '1-0' + format, path + '1-2' + format
+path + 'left2' + format, path + 'right2' + format,
+path + 'up2' + format, path + 'down2' + format,
+path + 'back2' + format, path + 'front2' + format,
 ];
 
 reflectionCube = new THREE.CubeTextureLoader().load( urls );

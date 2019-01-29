@@ -67,21 +67,7 @@ document.body.addEventListener("keydown", function (e)
 		
 		if(e.keyCode == 76) { loadFile(''); }
 		
-		
-		if(e.keyCode == 13 && 1==2)
-		{
-			var obj = clickO.last_obj;			
-			
-			var lightMap_0 = obj.children[0].children[0].material.lightMap.clone();
-			var lightMap_1 = obj.children[0].children[1].material.lightMap.clone();
-			
-			obj.children[0].children[0].material.copy( new THREE.MeshLambertMaterial( { color : 0xff0000, lightMap : lightMap_0 } ));
-			obj.children[0].children[1].material.copy( new THREE.MeshLambertMaterial( { color : 0xff0000, lightMap : lightMap_1 } ));
-			
-			
-			
-			renderCamera();
-		}
+
 			
 		
 		if(e.keyCode == 103) 
@@ -94,8 +80,8 @@ document.body.addEventListener("keydown", function (e)
 			camera3D.position.z = -0.3119;		
 						
 
-			camera3D.rotation.x = -0.2799345149927956;
-			camera3D.rotation.y = 0.824121364087264;
+			camera3D.rotation.x = -0.4;
+			camera3D.rotation.y = -3.12;
 			camera3D.rotation.z = 0;			
 camera3D.fov = 90.5;
 			camera3D.updateProjectionMatrix();
@@ -104,14 +90,60 @@ camera3D.fov = 90.5;
 		}
 		if(e.keyCode == 104) 
 		{
-			camera3D.zoom += 0.1;
-camera3D.updateProjectionMatrix();
+			for ( var i = 0; i < obj_line.length; i++ )
+			{
+				obj_line[i].material[1].map = null;
+				obj_line[i].material[2].map = null;		
+				obj_line[i].material[1].envMap = reflectionCube;
+				obj_line[i].material[2].envMap = reflectionCube;
+				obj_line[i].material[1].color.setHex( 0xffffff );
+				obj_line[i].material[2].color.setHex( 0xffffff );
+			}
+
+			for ( var i = 0; i < room.length; i++ )
+			{
+				room[i].material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube } );
+				ceiling[i].material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube } );
+			}	
+
+			for ( var i = 0; i < arr_obj.length; i++ )
+			{
+				arr_obj[i].material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube } );
+			}			
+
+			camera3D.position.x = 2.9090;
+			camera3D.position.y = 1.500;
+			camera3D.position.z = -0.3119;				
+	
 			drawRender()
 		}
 		if(e.keyCode == 105) 
 		{
-			camera3D.zoom -= 0.1;
-			camera3D.updateProjectionMatrix();
+			for ( var i = 0; i < obj_line.length; i++ )
+			{
+				obj_line[i].material[1].map = null;
+				obj_line[i].material[2].map = null;		
+				obj_line[i].material[1].envMap = reflectionCube2;
+				obj_line[i].material[2].envMap = reflectionCube2;
+				obj_line[i].material[1].color.setHex( 0xffffff );
+				obj_line[i].material[2].color.setHex( 0xffffff );
+			}
+
+			for ( var i = 0; i < room.length; i++ )
+			{ 
+				room[i].material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube2 } );
+				ceiling[i].material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube2 } );
+			}	
+			
+			for ( var i = 0; i < arr_obj.length; i++ )
+			{
+				arr_obj[i].material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube2 } );
+			}				
+
+			camera3D.position.x = 1.6303;
+			camera3D.position.y = 1.5;
+			camera3D.position.z = 0.0097;				
+	
 			drawRender()
 		}		
 		
