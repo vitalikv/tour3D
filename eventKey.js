@@ -89,15 +89,15 @@ document.body.addEventListener("keydown", function (e)
 			console.log(888888, camera);
 			
 			camera3D.userData.camera.type = 'first';	
-			camera3D.position.x = 0.6862;
-			camera3D.position.y = 1.3500;
-			camera3D.position.z = 3.2084;		
+			camera3D.position.x = 2.9090;
+			camera3D.position.y = 1.500;
+			camera3D.position.z = -0.3119;		
 						
 
 			camera3D.rotation.x = -0.2799345149927956;
 			camera3D.rotation.y = 0.824121364087264;
 			camera3D.rotation.z = 0;			
-camera3D.fov = 64.5;
+camera3D.fov = 90.5;
 			camera3D.updateProjectionMatrix();
 			
 			drawRender()
