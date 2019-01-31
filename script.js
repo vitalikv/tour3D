@@ -222,6 +222,7 @@ function animate()
 	previewRender360();
 	cameraZoomTopLoop();	
 	moveCameraToNewPosition();
+	moveOnPoint();
 	offsetTexture();
 	
 	//renderer.clearDepth();
@@ -1506,6 +1507,49 @@ var openFileImage = function (strData, filename)
  
 
 
+var tour3D = resetTour();
+function resetTour()
+{
+	return { o : false, pos : new THREE.Vector3(), envMap : reflectionCube };
+}
+
+function moveOnPoint()
+{
+	if ( !tour3D.o ) return;
+	
+	camera3D.position.lerp(tour3D.pos, 0.01);
+	
+	if(comparePos(camera3D.position, tour3D.pos)) 
+	{ 
+		tour3D.o = false;
+
+		for ( var i = 0; i < obj_line.length; i++ )
+		{
+			obj_line[i].material[1].map = null;
+			obj_line[i].material[2].map = null;		
+			obj_line[i].material[1].envMap = tour3D.envMap;
+			obj_line[i].material[2].envMap = tour3D.envMap;
+			obj_line[i].material[1].color.setHex( 0xffffff );
+			obj_line[i].material[2].color.setHex( 0xffffff );
+		}
+
+		for ( var i = 0; i < room.length; i++ )
+		{ 
+			room[i].material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : tour3D.envMap } );
+			ceiling[i].material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : tour3D.envMap } );
+		}	
+		
+		for ( var i = 0; i < arr_obj.length; i++ )
+		{
+			arr_obj[i].material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : tour3D.envMap } );
+		}			
+	}
+	
+	
+	
+	renderCamera();
+}	
+ 
 	 
 //https://catalog.planoplan.com/api/v2.1/search/?keys[0]=92da6c1f72c1ebca456a86d978af1dfc7db1bcb24d658d710c5c8ae25d98ba52&id[0]=13256&lang=ru
 //https://catalog.planoplan.com/lots/search/?keys[0]=92da6c1f72c1ebca456a86d978af1dfc7db1bcb24d658d710c5c8ae25d98ba52&id[0]=9337&lang=ru

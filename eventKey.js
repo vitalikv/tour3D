@@ -90,59 +90,19 @@ camera3D.fov = 90.5;
 		}
 		if(e.keyCode == 104) 
 		{
-			for ( var i = 0; i < obj_line.length; i++ )
-			{
-				obj_line[i].material[1].map = null;
-				obj_line[i].material[2].map = null;		
-				obj_line[i].material[1].envMap = reflectionCube;
-				obj_line[i].material[2].envMap = reflectionCube;
-				obj_line[i].material[1].color.setHex( 0xffffff );
-				obj_line[i].material[2].color.setHex( 0xffffff );
-			}
-
-			for ( var i = 0; i < room.length; i++ )
-			{
-				room[i].material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube } );
-				ceiling[i].material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube } );
-			}	
-
-			for ( var i = 0; i < arr_obj.length; i++ )
-			{
-				arr_obj[i].material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube } );
-			}			
-
-			camera3D.position.x = 2.9090;
-			camera3D.position.y = 1.500;
-			camera3D.position.z = -0.3119;				
-	
+			tour3D.o = true;
+			tour3D.pos = new THREE.Vector3(2.9090, 1.500, -0.3119);
+			tour3D.envMap = reflectionCube;
+			moveOnPoint();
+			
 			drawRender()
 		}
 		if(e.keyCode == 105) 
 		{
-			for ( var i = 0; i < obj_line.length; i++ )
-			{
-				obj_line[i].material[1].map = null;
-				obj_line[i].material[2].map = null;		
-				obj_line[i].material[1].envMap = reflectionCube2;
-				obj_line[i].material[2].envMap = reflectionCube2;
-				obj_line[i].material[1].color.setHex( 0xffffff );
-				obj_line[i].material[2].color.setHex( 0xffffff );
-			}
-
-			for ( var i = 0; i < room.length; i++ )
-			{ 
-				room[i].material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube2 } );
-				ceiling[i].material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube2 } );
-			}	
-			
-			for ( var i = 0; i < arr_obj.length; i++ )
-			{
-				arr_obj[i].material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube2 } );
-			}				
-
-			camera3D.position.x = 1.6303;
-			camera3D.position.y = 1.5;
-			camera3D.position.z = 0.0097;				
+			tour3D.o = true;
+			tour3D.pos = new THREE.Vector3(1.6303, 1.500, 0.0097);	
+			tour3D.envMap = reflectionCube2;
+			moveOnPoint();			
 	
 			drawRender()
 		}		
