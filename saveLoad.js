@@ -1099,18 +1099,14 @@ function createWallsNewFile(arr)
 
 	for ( var i = 0; i < obj_line.length; i++ )
 	{
-		obj_line[i].material[1].map = null;
-		obj_line[i].material[2].map = null;		
-		obj_line[i].material[1].envMap = reflectionCube;
-		obj_line[i].material[2].envMap = reflectionCube;
-		obj_line[i].material[1].color.setHex( 0xffffff );
-		obj_line[i].material[2].color.setHex( 0xffffff );
+		obj_line[i].material[1] = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube, refractionRatio:1, clippingPlanes : [ clippingMaskWall ] } );
+		obj_line[i].material[2] = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube, refractionRatio:1, clippingPlanes : [ clippingMaskWall ] } );
 	}
 
 	for ( var i = 0; i < room.length; i++ )
 	{
-		room[i].material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube } );
-		ceiling[i].material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube } );
+		room[i].material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube, refractionRatio:1 } );
+		ceiling[i].material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube, refractionRatio:1 } );
 	}			
 
 	return { json : wall, obj : arrW };
