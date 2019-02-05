@@ -86,23 +86,39 @@ document.body.addEventListener("keydown", function (e)
 camera3D.fov = 90.5;
 			camera3D.updateProjectionMatrix();
 			
+			cubeCamera.position.copy(camera3D.position);
+			//cubeCamera.rotation.copy(camera3D.rotation);
+			console.log(cubeCamera.rotation);
 			drawRender()
 		}
 		if(e.keyCode == 104) 
 		{
-			tour3D.o = true;
-			tour3D.pos = new THREE.Vector3(2.9090, 1.500, -0.3119);
-			tour3D.envMap = reflectionCube;
-			moveOnPoint();
+			cubeCamera.position.y += 1;
+			for ( var i = 0; i < obj_line.length; i++ )
+			{
+				obj_line[i].position.x += 0.5;
+			}
+
+			for ( var i = 0; i < room.length; i++ )
+			{
+				room[i].position.x += 0.5;
+				ceiling[i].position.x += 0.5;
+			}	
 			
 			drawRender()
 		}
 		if(e.keyCode == 105) 
 		{
-			tour3D.o = true;
-			tour3D.pos = new THREE.Vector3(1.6303, 1.500, 0.0097);	
-			tour3D.envMap = reflectionCube2;
-			moveOnPoint();			
+			for ( var i = 0; i < obj_line.length; i++ )
+			{
+				obj_line[i].position.x -= 0.5;
+			}
+
+			for ( var i = 0; i < room.length; i++ )
+			{
+				room[i].position.x -= 0.5;
+				ceiling[i].position.x -= 0.5;
+			}		
 	
 			drawRender()
 		}		

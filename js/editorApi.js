@@ -53,6 +53,8 @@ var editorApi = (function () {
 if(1==1)
 {
 	loadFile('');
+	
+	
 }	
 else
 {

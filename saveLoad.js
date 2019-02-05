@@ -1099,14 +1099,16 @@ function createWallsNewFile(arr)
 
 	for ( var i = 0; i < obj_line.length; i++ )
 	{
-		obj_line[i].material[1] = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube, refractionRatio:1, clippingPlanes : [ clippingMaskWall ] } );
-		obj_line[i].material[2] = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube, refractionRatio:1, clippingPlanes : [ clippingMaskWall ] } );
+		//obj_line[i].material[0] = idealScreenMat;
+		obj_line[i].material[1] = idealScreenMat;
+		obj_line[i].material[2] = idealScreenMat;
+		obj_line[i].updateMatrixWorld();
 	}
 
 	for ( var i = 0; i < room.length; i++ )
 	{
-		room[i].material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube, refractionRatio:1 } );
-		ceiling[i].material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube, refractionRatio:1 } );
+		room[i].material = idealScreenMat;
+		ceiling[i].material = idealScreenMat;
 	}			
 
 	return { json : wall, obj : arrW };

@@ -1429,10 +1429,40 @@
 	else { var typeUI = 'planoplan'; }
 	  
     </script>
+	
+	
+
+	
+	<!--<script src="https://eliashasle.github.io/three.js-master/build/three.js?<?=$vrs?>"></script>-->
     <script src="js/three.min.js?<?=$vrs?>"></script>
     <script src="js/jquery.js"></script>
     <script src="js/url-polyfill.min.js"></script>
-    <script src="js/ThreeCSG.js"></script>    
+    <script src="js/ThreeCSG.js"></script>   
+
+
+<script id="vertexShader" type="x-shader/x-vertex">
+varying vec3 vWorldPosition;
+uniform vec3 uPosition1;
+
+void main() 
+{
+    vWorldPosition = ( modelMatrix * vec4( position, 1.0 ) ).xyz;	
+    gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+}
+</script>	
+
+
+<script id="fragmentShader" type="x-shader/x-fragment">
+uniform samplerCube tCube;
+uniform float tFlip;
+uniform float opacity;
+varying vec3 vWorldPosition;
+void main() 
+{
+	gl_FragColor = textureCube( tCube, normalize(vWorldPosition.xyz) );
+	gl_FragColor.a *= opacity;
+}
+</script>	
     
     <script src="stats.min.js?<?=$vrs?>"></script>
     <script src="units.js?<?=$vrs?>"></script>

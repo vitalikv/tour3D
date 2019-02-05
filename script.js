@@ -91,6 +91,58 @@ reflectionCube2.mapping = THREE.CubeRefractionMapping;
 
 
 
+var path = "img/";
+var format = '.jpg';
+var urls = [ 
+path + 'left' + format, path + 'right' + format,
+path + 'up' + format, path + 'down' + format,
+path + 'back' + format, path + 'front' + format,
+];
+
+var textureCube = new THREE.CubeTextureLoader().load( urls );
+textureCube.mapping = THREE.CubeRefractionMapping;	
+		
+
+
+
+
+
+
+
+    //Cubecamera setup
+    var cubeCamera = new THREE.CubeCamera(1, 1000, 900);
+    //cubeCamera.position.set(0,50,0);    
+    //cubeCamera.rotation.z = -0.25*Math.PI;
+    scene.add(cubeCamera);
+      
+	
+    
+    let cubeShader = THREE.ShaderLib.cube;
+    cubeShader.uniforms.tCube.value =  cubeCamera.renderTarget.texture;
+	cubeShader.uniforms.uPosition1 = {type: "v3", value: new THREE.Vector3()};
+	
+    let idealScreenMat = new THREE.ShaderMaterial({
+        uniforms: cubeShader.uniforms,
+		vertexShader: document.getElementById( 'vertexShader' ).textContent,
+		fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
+        //depthWrite: false,
+        side: THREE.BackSide});  
+//cubeShader.uniforms.tCube.value.generateMipmaps = true;
+//idealScreenMat.uniforms.tCube.value.mapping = THREE.CubeRefractionMapping;	
+console.log(idealScreenMat);
+var lightMap_1 = new THREE.TextureLoader().load('img/lightMap_1.png');
+		
+var cube = new THREE.Mesh( new THREE.BoxGeometry( 100, 100, 100 ), new THREE.MeshLambertMaterial( { color : 0xffffff, side: THREE.DoubleSide, lightMap : lightMap_1 } ) );
+//scene.add( cube ); 
+cube.position.y = 4;
+
+
+//cubeCamera.rotation.copy(camera3D.rotation);
+//cubeCamera.position.copy(camera3D.position);
+
+
+scene.background = textureCube;
+
 
 
 
@@ -280,8 +332,12 @@ function drawRender()
 	} 
 	else 
 	{  
-		
-		
+
+//cubeCamera.rotation.copy(camera3D.rotation);
+//cubeCamera.rotation.z = Math.PI/2;
+//cubeCamera.position.copy(camera3D.position);
+		cubeCamera.updateMatrixWorld();
+		cubeCamera.update(renderer, scene);
 		renderer.autoClear = true;
 		renderer.clear();
 		renderer.render(scene, camera);
@@ -402,7 +458,7 @@ infProject.scene.type = {}
 
 
 var clippingMaskWall = new THREE.Plane( new THREE.Vector3( 0, 1, 0 ), 1 );	// маска для стены   
-var lightMap_1 = new THREE.TextureLoader().load('img/lightMap_1.png');
+
 var grid_Sm = new THREE.TextureLoader().load('img/UV_Grid_Sm.jpg');
 
 // cutoff боковые отсечки для линеек
@@ -1519,27 +1575,7 @@ function moveOnPoint()
 	
 	camera3D.position.lerp(tour3D.pos, 0.01);
 	
-	if(comparePos(camera3D.position, tour3D.pos)) 
-	{ 
-		tour3D.o = false;
-
-		for ( var i = 0; i < obj_line.length; i++ )
-		{	
-			obj_line[i].material[1].envMap = tour3D.envMap;
-			obj_line[i].material[2].envMap = tour3D.envMap;
-		}
-
-		for ( var i = 0; i < room.length; i++ )
-		{ 
-			room[i].material.envMap = tour3D.envMap;
-			ceiling[i].material.envMap = tour3D.envMap;
-		}	
-		
-		for ( var i = 0; i < arr_obj.length; i++ )
-		{
-			arr_obj[i].material.envMap = tour3D.envMap;
-		}			
-	}
+	cubeCamera.position.copy(camera3D.position);
 	
 	
 	

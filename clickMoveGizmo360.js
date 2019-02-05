@@ -134,9 +134,7 @@ function clippingGizmo360( objPop )
 	//plane.applyMatrix4(mx);	
 	plane.applyMatrix4(group.matrixWorld);	
 	
-	toolHandle.rotate.children[0].children[0].material.clippingPlanes[0].copy(plane);
-	toolHandle.rotate.children[1].children[0].material.clippingPlanes[0].copy(plane);
-	toolHandle.rotate.children[2].children[0].material.clippingPlanes[0].copy(plane);	
+	
 	
 	//showHelperNormal(objPop)
 

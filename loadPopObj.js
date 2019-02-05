@@ -557,8 +557,8 @@ function loaderObjPop(cdm, json)
 			
 			console.log(333333, obj);
 	
-			obj3D.material = new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, envMap : reflectionCube, refractionRatio:1 } );
-			
+			obj3D.material = idealScreenMat;
+			//obj3D.material = new THREE.MeshLambertMaterial( { color : 0xff0000, lightMap : lightMap_1 } )
 	
 	
 			
