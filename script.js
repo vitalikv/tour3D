@@ -3,7 +3,7 @@ var w_h = window.innerHeight;
 var aspect = w_w/w_h;
 var d = 5;
 
-var renderer = new THREE.WebGLRenderer({ preserveDrawingBuffer: true, /*antialias : true*/});
+var renderer = new THREE.WebGLRenderer({ preserveDrawingBuffer: true, antialias : false});
 renderer.localClippingEnabled = true;
 //renderer.autoClear = false;
 renderer.setPixelRatio( window.devicePixelRatio );
@@ -353,12 +353,7 @@ function drawRender()
 		
 	} 
 	else 
-	{  
-
-//idealScreenMat.uniforms.posCam.value = camera.position;
-idealScreenMat.uniforms['tCubePosition0'].value = camera.getWorldDirection();
-idealScreenMat.uniforms['tCubePosition1'].value = camera.getWorldDirection();  
-	
+	{  	
 		idealScreenMat.needsUpdate = true;
 
 		renderer.autoClear = true;
@@ -1596,11 +1591,27 @@ function moveOnPoint()
 {
 	if ( !tour3D.o ) return;
 	
-	camera3D.position.lerp(tour3D.pos, 0.02);
-	//idealScreenMat.uniforms.posCam.value = camera.position.clone();
+	camera3D.position.lerp(tour3D.pos, 0.04);
+
+	var d = camera3D.position.distanceTo( tour3D.pos );
+	if(d < 0.4 && !tour3D.type)
+	{		
+		idealScreenMat.uniforms['mixAlpha'].value = d;
+		idealScreenMat.uniforms.posCam.value = camera.position.clone();
+	}
+	if(d < 0.4 && tour3D.type)
+	{
+		console.log(1-d);
+		idealScreenMat.uniforms['mixAlpha'].value = 1-d/10;
+		idealScreenMat.uniforms.posCam.value = camera.position.clone();
+	}
+	
+	uniforms['tCubePosition0'].value = new THREE.Vector3();
+	uniforms['tCubePosition1'].value = new THREE.Vector3();	
+	
 	if(comparePos(camera3D.position, tour3D.pos)) 
 	{ 
-		goToNextScene(false);
+		goToNextScene();
 		tour3D = resetTour(); 
 		console.log('STOP'); 
 	};
@@ -1641,7 +1652,7 @@ function goToNextScene2(isDirUp){
 	}
 }
 
-function goToNextScene(isDirUp){
+function goToNextScene(){
 	if(isTransitioning == false)
 	{
 			
@@ -1652,11 +1663,10 @@ function goToNextScene(isDirUp){
 			idealScreenMat.uniforms['tCubePosition1'].value = new THREE.Vector3();
 			idealScreenMat.uniforms.posCam.value = camera.position.clone();
 			// set alpha
-			var val = isDirUp ? 1: 0;
-			idealScreenMat.uniforms['mixAlpha'].value = 0;
-			idealScreenMat.uniforms['scale0'].value = 0.2;
-			//if(isDirUp){ camera.position.x = 0.009040603384497425; }
-			//else { camera.position.x = 1.0; }
+			
+			idealScreenMat.uniforms['mixAlpha'].value = tour3D.type;
+			idealScreenMat.uniforms['scale0'].value = 0;
+
 			idealScreenMat.needsUpdate = true;
 			console.log(idealScreenMat.uniforms['mixAlpha'], idealScreenMat.uniforms['scale0'].value);
 			isTransitioning = false;

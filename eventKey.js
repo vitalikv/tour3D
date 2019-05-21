@@ -30,28 +30,43 @@ document.body.addEventListener("keydown", function (e)
 	
 	if(e.keyCode == 51)
 	{
-		camera.position.set(4.7267, 1.5, -3.2833);
-		
-		idealScreenMat.uniforms.posCam.value = camera.position.clone();
-		idealScreenMat.uniforms['mixAlpha'].value = 1;
-		idealScreenMat.uniforms['scale0'].value = 0;
-		idealScreenMat.needsUpdate = true;
+		if(1==2)
+		{
+			camera.position.set(4.7267, 1.5, -3.2833);
+			
+			idealScreenMat.uniforms.posCam.value = camera.position.clone();
+			idealScreenMat.uniforms['mixAlpha'].value = 1;
+			idealScreenMat.uniforms['scale0'].value = 0;
+			idealScreenMat.needsUpdate = true;			
+		}
+		else
+		{
+			tour3D.o = true;
+			tour3D.pos.set(4.7267, 1.5, -3.2833);
+			tour3D.type = 1;			
+		}
 		
 		renderCamera();
 	}
 	
 	if(e.keyCode == 52)
 	{
-		//tour3D.o = true;
-		//tour3D.pos.set(2.6768, 1.5, -3.2384);
 		
-		
-		camera.position.set(2.6768, 1.5, -3.2384);
-		
-		idealScreenMat.uniforms.posCam.value = camera.position.clone();
-		idealScreenMat.uniforms['mixAlpha'].value = 0;
-		idealScreenMat.uniforms['scale0'].value = 0;
-		idealScreenMat.needsUpdate = true;		
+		if(1==2)
+		{
+			camera.position.set(2.6768, 1.5, -3.2384);
+			
+			idealScreenMat.uniforms.posCam.value = camera.position.clone();
+			idealScreenMat.uniforms['mixAlpha'].value = 0;
+			idealScreenMat.uniforms['scale0'].value = 0;
+			idealScreenMat.needsUpdate = true;					
+		}
+		else
+		{
+			tour3D.o = true;
+			tour3D.pos.set(2.6768, 1.5, -3.2384);
+			tour3D.type = 0;			
+		}
 		
 		renderCamera();
 	}
