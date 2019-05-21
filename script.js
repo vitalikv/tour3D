@@ -148,7 +148,7 @@ console.log(idealScreenMat, camera.getWorldDirection());
 				
 var path = "img/";
 var format = '.jpg';
-if(ind==1){format = '2.jpg';}
+if(ind==1){format = '_2.jpg';}
 var urls = [ 
 path + 'left' + format, path + 'right' + format,
 path + 'up' + format, path + 'down' + format,
@@ -1597,62 +1597,72 @@ function moveOnPoint()
 	if ( !tour3D.o ) return;
 	
 	camera3D.position.lerp(tour3D.pos, 0.02);
-	idealScreenMat.uniforms.posCam.value = camera.position.clone();
-	if(comparePos(camera3D.position, tour3D.pos)) { tour3D = resetTour(); console.log('STOP'); };
+	//idealScreenMat.uniforms.posCam.value = camera.position.clone();
+	if(comparePos(camera3D.position, tour3D.pos)) 
+	{ 
+		goToNextScene(false);
+		tour3D = resetTour(); 
+		console.log('STOP'); 
+	};
 	
 	renderCamera();
 }
 var isTransitioning = false;
 
 function goToNextScene2(isDirUp){
-		if(isTransitioning == false){
+	if(isTransitioning == false)
+	{
+			
+			isTransitioning = true;
+			// set position
+			camera.updateMatrixWorld();
+			idealScreenMat.uniforms['tCubePosition0'].value = new THREE.Vector3();
+			idealScreenMat.uniforms['tCubePosition1'].value = new THREE.Vector3();
+			idealScreenMat.uniforms.posCam.value = camera.position.clone();
+			
+			// set alpha
+			var val = isDirUp ? 1: 0;
+			
+			//if(isDirUp){ camera.position.x = 0.009040603384497425; }
+			//else { camera.position.x = 1.0; }
+			
+			var tween = new TWEEN.Tween(idealScreenMat.uniforms['mixAlpha']).to({value: val}, 500).onStart(function()
+			{
 				
-				isTransitioning = true;
-				// set position
-				camera.updateMatrixWorld();
-				idealScreenMat.uniforms['tCubePosition0'].value = new THREE.Vector3();
-				idealScreenMat.uniforms['tCubePosition1'].value = new THREE.Vector3();
-				idealScreenMat.needsUpdate = true;
-				// set alpha
-				var val = isDirUp ? 1: 0;
-				
-				//if(isDirUp){ camera.position.x = 0.009040603384497425; }
-				//else { camera.position.x = 1.0; }
-				
-				console.log(isDirUp, camera.position.clone());
-				
-				var tween = new TWEEN.Tween(idealScreenMat.uniforms['mixAlpha']).to({value: val}, 500).onStart(function()
-				{
-					
-						  new TWEEN.Tween(idealScreenMat.uniforms['scale0']).to({ value:0.2 }, 500).start(); 
-				})
-						.easing(TWEEN.Easing.Cubic.In) //http://sole.github.io/tween.js/examples/03_graphs.html
-						.start();
-				setTimeout(function(){isTransitioning = false;},500);
-		}
+					  new TWEEN.Tween(idealScreenMat.uniforms['scale0']).to({ value:0.2 }, 500).start(); 
+			})
+					.easing(TWEEN.Easing.Cubic.In) //http://sole.github.io/tween.js/examples/03_graphs.html
+					.start();
+			setTimeout(function(){isTransitioning = false;},500);
+			
+			idealScreenMat.needsUpdate = true;
+			
+			console.log(idealScreenMat.uniforms['mixAlpha'], idealScreenMat.uniforms['scale0'].value);
+	}
 }
 
-		function goToNextScene(isDirUp){
-				if(isTransitioning == false){
-						
-						isTransitioning = true;
-						// set position
-						camera.updateMatrixWorld();
-						idealScreenMat.uniforms['tCubePosition0'].value = new THREE.Vector3();
-						idealScreenMat.uniforms['tCubePosition1'].value = new THREE.Vector3();
-						
-						// set alpha
-						var val = isDirUp ? 1: 0;
-						idealScreenMat.uniforms['mixAlpha'].value = val;
-						idealScreenMat.uniforms['scale0'].value = (val == 1) ? 0.2 : 0;
-						//if(isDirUp){ camera.position.x = 0.009040603384497425; }
-						//else { camera.position.x = 1.0; }
-						idealScreenMat.needsUpdate = true;
-						console.log(isDirUp, camera.position.clone());
-						isTransitioning = false;
+function goToNextScene(isDirUp){
+	if(isTransitioning == false)
+	{
+			
+			isTransitioning = true;
+			// set position
+			camera.updateMatrixWorld();
+			idealScreenMat.uniforms['tCubePosition0'].value = new THREE.Vector3();
+			idealScreenMat.uniforms['tCubePosition1'].value = new THREE.Vector3();
+			idealScreenMat.uniforms.posCam.value = camera.position.clone();
+			// set alpha
+			var val = isDirUp ? 1: 0;
+			idealScreenMat.uniforms['mixAlpha'].value = 0;
+			idealScreenMat.uniforms['scale0'].value = 0.2;
+			//if(isDirUp){ camera.position.x = 0.009040603384497425; }
+			//else { camera.position.x = 1.0; }
+			idealScreenMat.needsUpdate = true;
+			console.log(idealScreenMat.uniforms['mixAlpha'], idealScreenMat.uniforms['scale0'].value);
+			isTransitioning = false;
 
-				}
-		}	
+	}
+}	
  
 	 
 //https://catalog.planoplan.com/api/v2.1/search/?keys[0]=92da6c1f72c1ebca456a86d978af1dfc7db1bcb24d658d710c5c8ae25d98ba52&id[0]=13256&lang=ru
