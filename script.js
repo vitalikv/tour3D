@@ -124,7 +124,7 @@ var lightMap_1 = new THREE.TextureLoader().load('img/lightMap_1.png');
                						 tCubePosition1: {type: "v3", value: new THREE.Vector3(3, 3, 3)},
                						 tCube0: {type: "t", value: 'CubeTexture'}, tCube1: {type: "t", value: 'CubeTexture'},
 									 tFlip: {type: "f", value: -1},
-									posCam : {type: "v3", value: new THREE.Vector3(2.9791, 1.5, -0.1018)} }
+									posCam : {type: "v3", value: new THREE.Vector3(4.7267, 1.5, -3.2833)} }
 			uniforms[ "tCube0" ].value = getTextureCube(1);
 			uniforms[ "tCube1" ].value = getTextureCube(0);
 			
@@ -134,7 +134,7 @@ var lightMap_1 = new THREE.TextureLoader().load('img/lightMap_1.png');
 					vertexShader: vertexShader,
 					uniforms: uniforms,
 					//side: THREE.BackSide,
-					//transparent: true
+					transparent: true
 			});
 			
 
@@ -1596,10 +1596,63 @@ function moveOnPoint()
 {
 	if ( !tour3D.o ) return;
 	
-	camera3D.position.lerp(tour3D.pos, 0.01);
+	camera3D.position.lerp(tour3D.pos, 0.02);
+	idealScreenMat.uniforms.posCam.value = camera.position.clone();
+	if(comparePos(camera3D.position, tour3D.pos)) { tour3D = resetTour(); console.log('STOP'); };
 	
 	renderCamera();
-}	
+}
+var isTransitioning = false;
+
+function goToNextScene2(isDirUp){
+		if(isTransitioning == false){
+				
+				isTransitioning = true;
+				// set position
+				camera.updateMatrixWorld();
+				idealScreenMat.uniforms['tCubePosition0'].value = new THREE.Vector3();
+				idealScreenMat.uniforms['tCubePosition1'].value = new THREE.Vector3();
+				idealScreenMat.needsUpdate = true;
+				// set alpha
+				var val = isDirUp ? 1: 0;
+				
+				//if(isDirUp){ camera.position.x = 0.009040603384497425; }
+				//else { camera.position.x = 1.0; }
+				
+				console.log(isDirUp, camera.position.clone());
+				
+				var tween = new TWEEN.Tween(idealScreenMat.uniforms['mixAlpha']).to({value: val}, 500).onStart(function()
+				{
+					
+						  new TWEEN.Tween(idealScreenMat.uniforms['scale0']).to({ value:0.2 }, 500).start(); 
+				})
+						.easing(TWEEN.Easing.Cubic.In) //http://sole.github.io/tween.js/examples/03_graphs.html
+						.start();
+				setTimeout(function(){isTransitioning = false;},500);
+		}
+}
+
+		function goToNextScene(isDirUp){
+				if(isTransitioning == false){
+						
+						isTransitioning = true;
+						// set position
+						camera.updateMatrixWorld();
+						idealScreenMat.uniforms['tCubePosition0'].value = new THREE.Vector3();
+						idealScreenMat.uniforms['tCubePosition1'].value = new THREE.Vector3();
+						
+						// set alpha
+						var val = isDirUp ? 1: 0;
+						idealScreenMat.uniforms['mixAlpha'].value = val;
+						idealScreenMat.uniforms['scale0'].value = (val == 1) ? 0.2 : 0;
+						//if(isDirUp){ camera.position.x = 0.009040603384497425; }
+						//else { camera.position.x = 1.0; }
+						idealScreenMat.needsUpdate = true;
+						console.log(isDirUp, camera.position.clone());
+						isTransitioning = false;
+
+				}
+		}	
  
 	 
 //https://catalog.planoplan.com/api/v2.1/search/?keys[0]=92da6c1f72c1ebca456a86d978af1dfc7db1bcb24d658d710c5c8ae25d98ba52&id[0]=13256&lang=ru

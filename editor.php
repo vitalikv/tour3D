@@ -1438,7 +1438,7 @@
     <script src="js/jquery.js"></script>
     <script src="js/url-polyfill.min.js"></script>
     <script src="js/ThreeCSG.js"></script>   
-
+<script src="http://appogeddon.com/sample3/js/Tween.min.js"></script>
 
 		<script id="2d-fragment-shader" type="x-shader/x-fragment">
 			uniform samplerCube tCube0;
@@ -1461,8 +1461,8 @@
 				//vec3 vWorldPositionScaled0 = vWorldPosition + scale0 * tCubePosition0;
 				vec3 vWorldPositionScaled1 = mix(vWorldPosition, tCubePosition1, scale1); //vWorldPosition + scale1 * tCubePosition1;
 				vec4 tex0, tex1;
-	     		tex0 = textureCube(tCube0, vec3( tFlip * vWorldPositionScaled0.x + posCam.x, vWorldPositionScaled0.y - posCam.y, vWorldPositionScaled0.z + posCam.z ));
-	     		tex1 = textureCube(tCube1, vec3( tFlip * vWorldPositionScaled1.x + posCam.x, vWorldPositionScaled1.y - posCam.y, vWorldPositionScaled0.z + posCam.z ));
+	     		tex0 = textureCube(tCube0, vec3( tFlip * vWorldPositionScaled0.x + posCam.x, vWorldPositionScaled0.y - posCam.y, vWorldPositionScaled0.z - posCam.z ));
+	     		tex1 = textureCube(tCube1, vec3( tFlip * vWorldPositionScaled1.x + posCam.x, vWorldPositionScaled1.y - posCam.y, vWorldPositionScaled0.z - posCam.z ));
 				gl_FragColor = mix(tex0, tex1, mixAlpha);
 			}
 		</script>

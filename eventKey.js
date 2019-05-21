@@ -28,7 +28,28 @@ document.body.addEventListener("keydown", function (e)
 	if (e.keyCode == 89 && e.ctrlKey) { setInfoEvent1( 'redo' ); renderCamera(); }
 	if (e.keyCode == 72 && e.ctrlKey) { showHash(); }	
 	
-	if(e.keyCode == 13 && camera)camera.position.set(2.9791, 1.5,  -0.1018);
+	if(e.keyCode == 51)
+	{
+		camera.position.set(4.7267, 1.5, -3.2833);
+		
+		idealScreenMat.uniforms.posCam.value = camera.position.clone();
+		idealScreenMat.needsUpdate = true;
+		
+		renderCamera();
+	}
+	
+	if(e.keyCode == 52)
+	{
+		tour3D.o = true;
+		tour3D.pos.set(2.6768, 1.5, -3.2384);
+		//camera.position.set(2.6768, 1.5, -3.2384);
+		
+		//idealScreenMat.uniforms.posCam.value = camera.position.clone();
+		//idealScreenMat.needsUpdate = true;		
+		
+		renderCamera();
+	}
+	
 	if(UI.activeInput) 
 	{  
 		if(e.keyCode == 13)
