@@ -1440,29 +1440,43 @@
     <script src="js/ThreeCSG.js"></script>   
 
 
-<script id="vertexShader" type="x-shader/x-vertex">
-varying vec3 vWorldPosition;
-uniform vec3 uPosition1;
+		<script id="2d-fragment-shader" type="x-shader/x-fragment">
+			uniform samplerCube tCube0;
+			uniform samplerCube tCube1;
+			uniform vec3 tCubePosition0;
+			uniform vec3 tCubePosition1;
+			uniform vec3 posCam;
+			uniform float scale0;
+			uniform float scale1;
+			uniform float tFlip;
+			uniform float opacity;
+			uniform float mixAlpha;
+			varying vec3 vWorldPosition;
+			#include <common>
 
-void main() 
-{
-    vWorldPosition = ( modelMatrix * vec4( position, 1.0 ) ).xyz;	
-    gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-}
-</script>	
+			void main() {
+				vec3 vWorldPositionScaled0 = mix(vWorldPosition, tCubePosition0, scale0);  
+				// Also tried:
+				//vec3 vWorldPositionScaled0 = normalize(vWorldPosition) + scale0 * tCubePosition0;
+				//vec3 vWorldPositionScaled0 = vWorldPosition + scale0 * tCubePosition0;
+				vec3 vWorldPositionScaled1 = mix(vWorldPosition, tCubePosition1, scale1); //vWorldPosition + scale1 * tCubePosition1;
+				vec4 tex0, tex1;
+	     		tex0 = textureCube(tCube0, vec3( tFlip * vWorldPositionScaled0.x + posCam.x, vWorldPositionScaled0.y - posCam.y, vWorldPositionScaled0.z + posCam.z ));
+	     		tex1 = textureCube(tCube1, vec3( tFlip * vWorldPositionScaled1.x + posCam.x, vWorldPositionScaled1.y - posCam.y, vWorldPositionScaled0.z + posCam.z ));
+				gl_FragColor = mix(tex0, tex1, mixAlpha);
+			}
+		</script>
+		<script id="2d-vertex-shader" type="x-shader/x-vertex">
+			varying vec3 vWorldPosition;
+			
+			void main() {
+				vWorldPosition = ( modelMatrix * vec4( position, 1.0 ) ).xyz;
 
-
-<script id="fragmentShader" type="x-shader/x-fragment">
-uniform samplerCube tCube;
-uniform float tFlip;
-uniform float opacity;
-varying vec3 vWorldPosition;
-void main() 
-{
-	gl_FragColor = textureCube( tCube, normalize(vWorldPosition.xyz) );
-	gl_FragColor.a *= opacity;
-}
-</script>	
+				gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+			}
+			
+			
+		</script>	
     
     <script src="stats.min.js?<?=$vrs?>"></script>
     <script src="units.js?<?=$vrs?>"></script>

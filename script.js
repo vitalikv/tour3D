@@ -99,51 +99,73 @@ path + 'up' + format, path + 'down' + format,
 path + 'back' + format, path + 'front' + format,
 ];
 
-var textureCube = new THREE.CubeTextureLoader().load( urls );
-textureCube.mapping = THREE.CubeRefractionMapping;	
+
 		
 
 
 
 
+var camera = cameraTop;
 
-
-
-    //Cubecamera setup
-    var cubeCamera = new THREE.CubeCamera(1, 1000, 900);
-    //cubeCamera.position.set(0,50,0);    
-    //cubeCamera.rotation.z = -0.25*Math.PI;
-    scene.add(cubeCamera);
       
-	
+	//2.9791, vWorldPositionScaled0.y - 1.5, vWorldPositionScaled0.z -0.1018
     
-    let cubeShader = THREE.ShaderLib.cube;
-    cubeShader.uniforms.tCube.value =  cubeCamera.renderTarget.texture;
-	cubeShader.uniforms.uPosition1 = {type: "v3", value: new THREE.Vector3()};
-	
-    let idealScreenMat = new THREE.ShaderMaterial({
-        uniforms: cubeShader.uniforms,
-		vertexShader: document.getElementById( 'vertexShader' ).textContent,
-		fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
-        //depthWrite: false,
-        side: THREE.BackSide});  
-//cubeShader.uniforms.tCube.value.generateMipmaps = true;
-//idealScreenMat.uniforms.tCube.value.mapping = THREE.CubeRefractionMapping;	
-console.log(idealScreenMat);
+
 var lightMap_1 = new THREE.TextureLoader().load('img/lightMap_1.png');
-		
-var cube = new THREE.Mesh( new THREE.BoxGeometry( 100, 100, 100 ), new THREE.MeshLambertMaterial( { color : 0xffffff, side: THREE.DoubleSide, lightMap : lightMap_1 } ) );
-//scene.add( cube ); 
-cube.position.y = 4;
 
 
-//cubeCamera.rotation.copy(camera3D.rotation);
-//cubeCamera.position.copy(camera3D.position);
+			var fragmentShader = document.getElementById('2d-fragment-shader').text;
+			var vertexShader = document.getElementById('2d-vertex-shader').text;
+			var uniforms = { mixAlpha: {type: "f", value: 1},
+									 opacity: {type: "f", value: 1},
+									 scale0: {type: "f", value: 0}, 
+									 scale1: {type: "f", value: 0},
+									 tCubePosition0: {type: "v3", value: new THREE.Vector3(3, 3, 3)},
+               						 tCubePosition1: {type: "v3", value: new THREE.Vector3(3, 3, 3)},
+               						 tCube0: {type: "t", value: 'CubeTexture'}, tCube1: {type: "t", value: 'CubeTexture'},
+									 tFlip: {type: "f", value: -1},
+									posCam : {type: "v3", value: new THREE.Vector3(2.9791, 1.5, -0.1018)} }
+			uniforms[ "tCube0" ].value = getTextureCube(1);
+			uniforms[ "tCube1" ].value = getTextureCube(0);
+			
+			
+			var idealScreenMat = new THREE.ShaderMaterial({
+					fragmentShader: fragmentShader,
+					vertexShader: vertexShader,
+					uniforms: uniforms,
+					//side: THREE.BackSide,
+					//transparent: true
+			});
+			
+
+console.log(idealScreenMat, camera.getWorldDirection());
 
 
-scene.background = textureCube;
+		function getTextureCube(ind){//testing THREE.CubeTextureLoader
+				
+				var loader = new THREE.CubeTextureLoader();
 
-
+				
+var path = "img/";
+var format = '.jpg';
+if(ind==1){format = '2.jpg';}
+var urls = [ 
+path + 'left' + format, path + 'right' + format,
+path + 'up' + format, path + 'down' + format,
+path + 'back' + format, path + 'front' + format,
+];
+				
+				//loader.setCrossOrigin('anonymous');
+				//loader.setCrossOrigin('');
+				var textureCube = loader.load(urls, function(texture){
+							console.log('done loading texture', texture);
+					}, function ( xhr ) {
+							console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+					}, function ( xhr ) {
+							console.log( 'An error happened' );
+					});
+				return textureCube;
+		}
 
 
 console.log(7777, reflectionCube);
@@ -333,11 +355,12 @@ function drawRender()
 	else 
 	{  
 
-//cubeCamera.rotation.copy(camera3D.rotation);
-//cubeCamera.rotation.z = Math.PI/2;
-//cubeCamera.position.copy(camera3D.position);
-		cubeCamera.updateMatrixWorld();
-		cubeCamera.update(renderer, scene);
+//idealScreenMat.uniforms.posCam.value = camera.position;
+idealScreenMat.uniforms['tCubePosition0'].value = camera.getWorldDirection();
+idealScreenMat.uniforms['tCubePosition1'].value = camera.getWorldDirection();  
+	
+		idealScreenMat.needsUpdate = true;
+
 		renderer.autoClear = true;
 		renderer.clear();
 		renderer.render(scene, camera);
@@ -421,7 +444,7 @@ var resolutionD_h = window.screen.availHeight;
 
 var kof_rd = 1440 / resolutionD_h;
 
-var camera = cameraTop;
+
 
 var infProject = { settings : {}, scene : {} };
 var fileInfo = { last : {cam : { obj : camera, type : '', pos : new THREE.Vector3(), rot : new THREE.Vector3() }} }; 
@@ -1574,10 +1597,6 @@ function moveOnPoint()
 	if ( !tour3D.o ) return;
 	
 	camera3D.position.lerp(tour3D.pos, 0.01);
-	
-	cubeCamera.position.copy(camera3D.position);
-	
-	
 	
 	renderCamera();
 }	

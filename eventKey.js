@@ -28,9 +28,9 @@ document.body.addEventListener("keydown", function (e)
 	if (e.keyCode == 89 && e.ctrlKey) { setInfoEvent1( 'redo' ); renderCamera(); }
 	if (e.keyCode == 72 && e.ctrlKey) { showHash(); }	
 	
-	
+	if(e.keyCode == 13 && camera)camera.position.set(2.9791, 1.5,  -0.1018);
 	if(UI.activeInput) 
-	{ 
+	{  
 		if(e.keyCode == 13)
 		{
 			if(UI.activeInput == 'ceiling-height') { changeHeightWall( $('[data-action="ceiling-height"]').val() ); }
