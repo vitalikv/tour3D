@@ -114,28 +114,24 @@ var camera = cameraTop;
 var lightMap_1 = new THREE.TextureLoader().load('img/lightMap_1.png');
 
 
-			var fragmentShader = document.getElementById('2d-fragment-shader').text;
-			var vertexShader = document.getElementById('2d-vertex-shader').text;
-			var uniforms = { mixAlpha: {type: "f", value: 1},
-									 opacity: {type: "f", value: 1},
-									 scale0: {type: "f", value: 0}, 
-									 scale1: {type: "f", value: 0},
-									 tCubePosition0: {type: "v3", value: new THREE.Vector3(3, 3, 3)},
-               						 tCubePosition1: {type: "v3", value: new THREE.Vector3(3, 3, 3)},
-               						 tCube0: {type: "t", value: 'CubeTexture'}, tCube1: {type: "t", value: 'CubeTexture'},
-									 tFlip: {type: "f", value: -1},
-									posCam : {type: "v3", value: new THREE.Vector3(4.7267, 1.5, -3.2833)} }
-			uniforms[ "tCube0" ].value = getTextureCube(1);
-			uniforms[ "tCube1" ].value = getTextureCube(0);
+var fragmentShader = document.getElementById('2d-fragment-shader').text;
+var vertexShader = document.getElementById('2d-vertex-shader').text;
+var uniforms = 
+{ 
+	mixAlpha: {type: "f", value: 1},
+	uBoxPosition1: {type: "v3", value: new THREE.Vector3(4.7267, 1.5, -3.2833)},
+	uBoxPosition0: {type: "v3", value: new THREE.Vector3(2.6768, 1.5, -3.2384)},
+	uBoxMatrix0: {type: "mat4", value: new THREE.Matrix4()},
+	uBoxMatrix1: {type: "mat4", value: new THREE.Matrix4()},
+	tCube0: {type: "t", value: 'CubeTexture'}, 
+	tCube1: {type: "t", value: 'CubeTexture'},
+}
+
+uniforms[ "tCube0" ].value = getTextureCube(1);
+uniforms[ "tCube1" ].value = getTextureCube(0);
 			
 			
-			var idealScreenMat = new THREE.ShaderMaterial({
-					fragmentShader: fragmentShader,
-					vertexShader: vertexShader,
-					uniforms: uniforms,
-					//side: THREE.BackSide,
-					transparent: true
-			});
+var idealScreenMat = new THREE.ShaderMaterial({ fragmentShader: fragmentShader, vertexShader: vertexShader, uniforms: uniforms, transparent: true, /*side: THREE.BackSide,*/});
 			
 
 console.log(idealScreenMat, camera.getWorldDirection());
@@ -1594,20 +1590,21 @@ function moveOnPoint()
 	camera3D.position.lerp(tour3D.pos, 0.04);
 
 	var d = camera3D.position.distanceTo( tour3D.pos );
-	if(d < 0.4 && !tour3D.type)
+		
+	
+	if(!tour3D.type && 1==2)
 	{		
-		idealScreenMat.uniforms['mixAlpha'].value = d;
-		idealScreenMat.uniforms.posCam.value = camera.position.clone();
+		idealScreenMat.uniforms['mixAlpha'].value = 0;  
+		//idealScreenMat.uniforms.posCam.value = tour3D.pos.clone();			
+		
+		//if(d < 0.35) tour3D = resetTour();
 	}
-	if(d < 0.4 && tour3D.type)
-	{
-		console.log(1-d);
-		idealScreenMat.uniforms['mixAlpha'].value = 1-d/10;
-		idealScreenMat.uniforms.posCam.value = camera.position.clone();
+	if(tour3D.type && 1==2)
+	{		
+		idealScreenMat.uniforms['mixAlpha'].value = 1;	
+		//idealScreenMat.uniforms.posCam.value = tour3D.pos.clone();		
 	}
 	
-	uniforms['tCubePosition0'].value = new THREE.Vector3();
-	uniforms['tCubePosition1'].value = new THREE.Vector3();	
 	
 	if(comparePos(camera3D.position, tour3D.pos)) 
 	{ 
@@ -1618,60 +1615,21 @@ function moveOnPoint()
 	
 	renderCamera();
 }
-var isTransitioning = false;
 
-function goToNextScene2(isDirUp){
-	if(isTransitioning == false)
-	{
-			
-			isTransitioning = true;
-			// set position
-			camera.updateMatrixWorld();
-			idealScreenMat.uniforms['tCubePosition0'].value = new THREE.Vector3();
-			idealScreenMat.uniforms['tCubePosition1'].value = new THREE.Vector3();
-			idealScreenMat.uniforms.posCam.value = camera.position.clone();
-			
-			// set alpha
-			var val = isDirUp ? 1: 0;
-			
-			//if(isDirUp){ camera.position.x = 0.009040603384497425; }
-			//else { camera.position.x = 1.0; }
-			
-			var tween = new TWEEN.Tween(idealScreenMat.uniforms['mixAlpha']).to({value: val}, 500).onStart(function()
-			{
-				
-					  new TWEEN.Tween(idealScreenMat.uniforms['scale0']).to({ value:0.2 }, 500).start(); 
-			})
-					.easing(TWEEN.Easing.Cubic.In) //http://sole.github.io/tween.js/examples/03_graphs.html
-					.start();
-			setTimeout(function(){isTransitioning = false;},500);
-			
-			idealScreenMat.needsUpdate = true;
-			
-			console.log(idealScreenMat.uniforms['mixAlpha'], idealScreenMat.uniforms['scale0'].value);
-	}
-}
 
-function goToNextScene(){
-	if(isTransitioning == false)
-	{
-			
-			isTransitioning = true;
-			// set position
-			camera.updateMatrixWorld();
-			idealScreenMat.uniforms['tCubePosition0'].value = new THREE.Vector3();
-			idealScreenMat.uniforms['tCubePosition1'].value = new THREE.Vector3();
-			idealScreenMat.uniforms.posCam.value = camera.position.clone();
-			// set alpha
-			
-			idealScreenMat.uniforms['mixAlpha'].value = tour3D.type;
-			idealScreenMat.uniforms['scale0'].value = 0;
 
-			idealScreenMat.needsUpdate = true;
-			console.log(idealScreenMat.uniforms['mixAlpha'], idealScreenMat.uniforms['scale0'].value);
-			isTransitioning = false;
 
-	}
+function goToNextScene()
+{
+	// set position
+	camera.updateMatrixWorld();
+	//idealScreenMat.uniforms.posCam.value = camera.position.clone();
+	// set alpha
+	
+	idealScreenMat.uniforms['mixAlpha'].value = tour3D.type;
+
+	idealScreenMat.needsUpdate = true;
+	//console.log(idealScreenMat.uniforms['mixAlpha'], idealScreenMat.uniforms['scale0'].value);
 }	
  
 	 

@@ -1438,45 +1438,101 @@
     <script src="js/jquery.js"></script>
     <script src="js/url-polyfill.min.js"></script>
     <script src="js/ThreeCSG.js"></script>   
-<script src="http://appogeddon.com/sample3/js/Tween.min.js"></script>
 
-		<script id="2d-fragment-shader" type="x-shader/x-fragment">
-			uniform samplerCube tCube0;
-			uniform samplerCube tCube1;
-			uniform vec3 tCubePosition0;
-			uniform vec3 tCubePosition1;
-			uniform vec3 posCam;
-			uniform float scale0;
-			uniform float scale1;
-			uniform float tFlip;
-			uniform float opacity;
-			uniform float mixAlpha;
-			varying vec3 vWorldPosition;
-			#include <common>
 
-			void main() {
-				vec3 vWorldPositionScaled0 = mix(vWorldPosition, tCubePosition0, scale0);  
-				// Also tried:
-				//vec3 vWorldPositionScaled0 = normalize(vWorldPosition) + scale0 * tCubePosition0;
-				//vec3 vWorldPositionScaled0 = vWorldPosition + scale0 * tCubePosition0;
-				vec3 vWorldPositionScaled1 = mix(vWorldPosition, tCubePosition1, scale1); //vWorldPosition + scale1 * tCubePosition1;
-				vec4 tex0, tex1;
-	     		tex0 = textureCube(tCube0, vec3( tFlip * vWorldPositionScaled0.x + posCam.x, vWorldPositionScaled0.y - posCam.y, vWorldPositionScaled0.z - posCam.z ));
-	     		tex1 = textureCube(tCube1, vec3( tFlip * vWorldPositionScaled1.x + posCam.x, vWorldPositionScaled1.y - posCam.y, vWorldPositionScaled0.z - posCam.z ));
-				gl_FragColor = mix(tex0, tex1, mixAlpha);
-			}
-		</script>
-		<script id="2d-vertex-shader" type="x-shader/x-vertex">
-			varying vec3 vWorldPosition;
-			
-			void main() {
-				vWorldPosition = ( modelMatrix * vec4( position, 1.0 ) ).xyz;
+<script id="2d-fragment-shader-2" type="x-shader/x-fragment">
+	uniform samplerCube tCube0;
+	uniform samplerCube tCube1;
+	uniform vec3 tCubePosition0;
+	uniform vec3 tCubePosition1;
+	uniform vec3 posCam;
+	uniform float scale0;
+	uniform float scale1;
+	uniform float tFlip;
+	uniform float mixAlpha;
 
-				gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-			}
-			
-			
-		</script>	
+varying vec3 vWorldPosition0;
+varying vec3 vWorldPosition1;
+varying vec2 vUv;
+
+
+	
+
+void main() 
+{
+	vec4 colorFromBox0 = textureCube(tCube0, vWorldPosition0.xyz);
+	vec4 colorFromBox1 = textureCube(tCube1, vWorldPosition1.xyz);
+	gl_FragColor = mix(colorFromBox0, colorFromBox1, mixAlpha);
+
+}
+
+
+</script>
+
+<script id="2d-vertex-shader-2" type="x-shader/x-vertex">
+uniform vec3 uBoxPosition0;
+uniform vec3 uBoxPosition1;
+uniform mat4 uBoxMatrix0;
+uniform mat4 uBoxMatrix1;
+varying vec2 vUv;
+varying vec3 vWorldPosition0;
+varying vec3 vWorldPosition1;
+
+void main() 
+{		
+	vec4 worldPosition = modelMatrix * vec4(position, 1.0);
+	vec3 vBoxCenterPosition0 = worldPosition.xyz - uBoxPosition0;
+	vWorldPosition0 = (vec4(vBoxCenterPosition0, 1.0) * uBoxMatrix0).xyz;
+	vWorldPosition0.x *= -1.0;
+	vec3 vBoxCenterPosition1 = worldPosition.xyz - uBoxPosition1;
+	vWorldPosition1 = (vec4(vBoxCenterPosition1, 1.0) * uBoxMatrix1).xyz;
+	vWorldPosition1.x *= -1.0;
+	gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);	
+}		
+</script>
+
+<script id="2d-fragment-shader" type="x-shader/x-fragment">
+uniform samplerCube tCube0;
+uniform samplerCube tCube1;
+uniform float mixAlpha;
+
+varying vec3 vWorldPosition0;
+varying vec3 vWorldPosition1;
+
+void main() 
+{
+	vec4 colorFromBox0 = textureCube(tCube0, vWorldPosition0.xyz);
+	vec4 colorFromBox1 = textureCube(tCube1, vWorldPosition1.xyz);
+	gl_FragColor = mix(colorFromBox0, colorFromBox1, mixAlpha);
+}
+</script>
+	
+
+
+<script id="2d-vertex-shader" type="x-shader/x-vertex">
+uniform vec3 uBoxPosition0;
+uniform vec3 uBoxPosition1;
+uniform mat4 uBoxMatrix0;
+uniform mat4 uBoxMatrix1;
+varying vec3 vWorldPosition0;
+varying vec3 vWorldPosition1;
+
+void main() 
+{
+	vec4 worldPosition = modelMatrix * vec4(position, 1.0);
+	
+	vec3 vBoxCenterPosition0 = worldPosition.xyz - uBoxPosition0;
+	vWorldPosition0 = (vec4(vBoxCenterPosition0, 1.0) * uBoxMatrix0).xyz;	
+	vWorldPosition0.x *= -1.0;
+	 
+	vec3 vBoxCenterPosition1 = worldPosition.xyz - uBoxPosition1;
+	vWorldPosition1 = (vec4(vBoxCenterPosition1, 1.0) * uBoxMatrix1).xyz;
+	vWorldPosition1.x *= -1.0;
+	
+	gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+}	
+</script>
+
     
     <script src="stats.min.js?<?=$vrs?>"></script>
     <script src="units.js?<?=$vrs?>"></script>
