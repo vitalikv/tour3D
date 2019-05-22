@@ -1592,17 +1592,15 @@ function moveOnPoint()
 	var d = camera3D.position.distanceTo( tour3D.pos );
 		
 	
-	if(!tour3D.type && 1==2)
+	if(!tour3D.type && 1==1)
 	{		
-		idealScreenMat.uniforms['mixAlpha'].value = 0;  
-		//idealScreenMat.uniforms.posCam.value = tour3D.pos.clone();			
+		idealScreenMat.uniforms['mixAlpha'].value = d/tour3D.dist;  			
 		
 		//if(d < 0.35) tour3D = resetTour();
 	}
-	if(tour3D.type && 1==2)
+	if(tour3D.type && 1==1)
 	{		
-		idealScreenMat.uniforms['mixAlpha'].value = 1;	
-		//idealScreenMat.uniforms.posCam.value = tour3D.pos.clone();		
+		idealScreenMat.uniforms['mixAlpha'].value = 1-d/tour3D.dist;			
 	}
 	
 	

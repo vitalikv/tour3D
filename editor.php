@@ -1440,57 +1440,6 @@
     <script src="js/ThreeCSG.js"></script>   
 
 
-<script id="2d-fragment-shader-2" type="x-shader/x-fragment">
-	uniform samplerCube tCube0;
-	uniform samplerCube tCube1;
-	uniform vec3 tCubePosition0;
-	uniform vec3 tCubePosition1;
-	uniform vec3 posCam;
-	uniform float scale0;
-	uniform float scale1;
-	uniform float tFlip;
-	uniform float mixAlpha;
-
-varying vec3 vWorldPosition0;
-varying vec3 vWorldPosition1;
-varying vec2 vUv;
-
-
-	
-
-void main() 
-{
-	vec4 colorFromBox0 = textureCube(tCube0, vWorldPosition0.xyz);
-	vec4 colorFromBox1 = textureCube(tCube1, vWorldPosition1.xyz);
-	gl_FragColor = mix(colorFromBox0, colorFromBox1, mixAlpha);
-
-}
-
-
-</script>
-
-<script id="2d-vertex-shader-2" type="x-shader/x-vertex">
-uniform vec3 uBoxPosition0;
-uniform vec3 uBoxPosition1;
-uniform mat4 uBoxMatrix0;
-uniform mat4 uBoxMatrix1;
-varying vec2 vUv;
-varying vec3 vWorldPosition0;
-varying vec3 vWorldPosition1;
-
-void main() 
-{		
-	vec4 worldPosition = modelMatrix * vec4(position, 1.0);
-	vec3 vBoxCenterPosition0 = worldPosition.xyz - uBoxPosition0;
-	vWorldPosition0 = (vec4(vBoxCenterPosition0, 1.0) * uBoxMatrix0).xyz;
-	vWorldPosition0.x *= -1.0;
-	vec3 vBoxCenterPosition1 = worldPosition.xyz - uBoxPosition1;
-	vWorldPosition1 = (vec4(vBoxCenterPosition1, 1.0) * uBoxMatrix1).xyz;
-	vWorldPosition1.x *= -1.0;
-	gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);	
-}		
-</script>
-
 <script id="2d-fragment-shader" type="x-shader/x-fragment">
 uniform samplerCube tCube0;
 uniform samplerCube tCube1;
