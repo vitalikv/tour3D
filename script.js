@@ -56,38 +56,6 @@ directionalLight.lookAt(scene.position);
 //----------- Light
 
 
-var cubes = [];
-for ( var i = 0; i < 0; i++ )
-{
-	cubes[i] = new THREE.Mesh( createGeometryCube(0.07, 0.07, 0.07), new THREE.MeshLambertMaterial( { color : 0xff0000, transparent: true, opacity: 1, depthTest: false } ) );
-	scene.add( cubes[i] ); 		 
-}
-
-
-var cubObj = null;
-var reflectionCube = null;
-var reflectionCube2 = null;
-
-var path = "img/";
-var format = '.jpg';
-var urls = [ 
-
-path + 'left' + format, path + 'right' + format,
-path + 'up' + format, path + 'down' + format,
-path + 'back' + format, path + 'front' + format,
-];
-
-var urls2 = [ 
-path + 'left2' + format, path + 'right2' + format,
-path + 'up2' + format, path + 'down2' + format,
-path + 'back2' + format, path + 'front2' + format,
-];
-
-reflectionCube = new THREE.CubeTextureLoader().load( urls );
-reflectionCube.mapping = THREE.CubeRefractionMapping;
-
-reflectionCube2 = new THREE.CubeTextureLoader().load( urls2 );
-reflectionCube2.mapping = THREE.CubeRefractionMapping;
 
 
 
@@ -137,119 +105,31 @@ var idealScreenMat = new THREE.ShaderMaterial({ fragmentShader: fragmentShader, 
 console.log(idealScreenMat, camera.getWorldDirection());
 
 
-		function getTextureCube(ind){//testing THREE.CubeTextureLoader
-				
-				var loader = new THREE.CubeTextureLoader();
-
-				
-var path = "img/";
-var format = '.jpg';
-if(ind==1){format = '_2.jpg';}
-var urls = [ 
-path + 'left' + format, path + 'right' + format,
-path + 'up' + format, path + 'down' + format,
-path + 'back' + format, path + 'front' + format,
-];
-				
-				//loader.setCrossOrigin('anonymous');
-				//loader.setCrossOrigin('');
-				var textureCube = loader.load(urls, function(texture){
-							console.log('done loading texture', texture);
-					}, function ( xhr ) {
-							console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
-					}, function ( xhr ) {
-							console.log( 'An error happened' );
-					});
-				return textureCube;
-		}
-
-
-console.log(7777, reflectionCube);
-
-function setstart()
-{
-	var loader = new THREE.OBJLoader();
-
-	loader.load( 't/LP_RBI24.obj',
-	
-		function ( object ) 
-		{
-			//scene.add( object );
-			object.position.set(0,0,0);
-			object.rotation.set(Math.PI/2,Math.PI,-Math.PI/2);
-			object.scale.set(1,1,1);
-			
-			
-			var obj = object;
-			
-			var childrens = getAllChildrenObj(object, []);  
-			for ( var i = 0; i < childrens.length; i++ )
-			{		
-				//childrens[i].obj.material.color.setHex( Math.random() * 0xffffff );
-				childrens[i].obj.material.lightMap = lightMap_1;
-				childrens[i].obj.material.map = grid_Sm;
-				childrens[i].obj.material.needsUpdate = true;
-			}						
-				
-									
-
-			
-			if(1==1)
-			{
-				
-				//var obj = createCopyPopForm(object);
-				//scene.remove( object );
-				
-				var obj = new THREE.Mesh( new THREE.SphereGeometry( 50, 32, 32 ), new THREE.MeshLambertMaterial( { color : 0xffffff, side: THREE.BackSide, lightMap : lightMap_1, transparent: true, opacity: 1 } ) );
-				//upUvs_1( obj )						
-				scene.add( obj );				
-				
-								
-			console.log(reflectionCube);
-
-				reflectionCube.rotation = 1;
-				obj.material.lightMap = lightMap_1;
-				obj.material.opacity = 1.0;
-				obj.material.color.setHex(0xffffff);
-				obj.material.envMap = reflectionCube;
-				
-				cubObj = obj; 
-			}
-			
-							
-		}
-	);	
-
-emitAction('load-project-start');
-emitAction('load-project-end');
-emitAction('stop-fake-loading');	
-}
-
-
-if(1==2)
-{
-	var path = "https://threejs.org/examples/textures/cube/SwedishRoyalCastle/";
+function getTextureCube(ind)
+{	
+	var path = "img/";
 	var format = '.jpg';
-	var urls = [ 
-	path + 'px' + format, path + 'nx' + format,
-	path + 'ny' + format, path + 'py' + format,
-	path + 'pz' + format, path + 'nz' + format
-	];
-	var reflectionCube = new THREE.CubeTextureLoader().load( urls );
-	reflectionCube.format = THREE.RGBFormat;
-	// Create car
-	var chromeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff, envMap: reflectionCube, lightMap : lightMap_1, side: THREE.DoubleSide} );
-	var car = new THREE.Mesh( new THREE.BoxGeometry( 121, 61, 71 ), chromeMaterial );
-	scene.add( car );
+	if(ind==1){format = '_2.jpg';}
 	
+	var urls = 
+	[ 
+		path + 'left' + format, path + 'right' + format,
+		path + 'up' + format, path + 'down' + format,
+		path + 'back' + format, path + 'front' + format,
+	];
+		
+	var loader = new THREE.CubeTextureLoader();	
+	//loader.setCrossOrigin('anonymous');
+	//loader.setCrossOrigin('');
+	var textureCube = loader.load(urls, function(texture){ console.log('done loading texture', texture); });
+	
+	console.log(7777, textureCube);
+
+	return textureCube;
 }
 
-// Update the render target cube
 
 
-
-
-// Render the scene
 
 
 
@@ -474,6 +354,7 @@ infProject.scene.type = {}
 var clippingMaskWall = new THREE.Plane( new THREE.Vector3( 0, 1, 0 ), 1 );	// маска для стены   
 
 var grid_Sm = new THREE.TextureLoader().load('img/UV_Grid_Sm.jpg');
+
 
 // cutoff боковые отсечки для линеек
 // format_1 линейки для отображения длины/высоты стены в режиме cameraWall
@@ -1580,7 +1461,7 @@ var openFileImage = function (strData, filename)
 var tour3D = resetTour();
 function resetTour()
 {
-	return { o : false, pos : new THREE.Vector3(), envMap : reflectionCube };
+	return { o : false, pos : new THREE.Vector3() };
 }
 
 function moveOnPoint()
