@@ -42,7 +42,7 @@ document.body.addEventListener("keydown", function (e)
 		else
 		{
 			tour3D.o = true;
-			tour3D.pos.set(4.7267, 1.5, -3.2833);
+			tour3D.pos.set(-0.9165, 1.3500, 8.7597);
 			tour3D.type = 1;
 			tour3D.dist = camera.position.distanceTo( tour3D.pos );
 		}
@@ -65,7 +65,7 @@ document.body.addEventListener("keydown", function (e)
 		else
 		{
 			tour3D.o = true;
-			tour3D.pos.set(2.6768, 1.5, -3.2384);
+			tour3D.pos.set(-1.0092, 1.3500, 6.0727);
 			tour3D.type = 0;
 			tour3D.dist = camera.position.distanceTo( tour3D.pos );
 		}

@@ -119,16 +119,16 @@ var vertexShader = document.getElementById('2d-vertex-shader').text;
 var uniforms = 
 { 
 	mixAlpha: {type: "f", value: 1},
-	uBoxPosition1: {type: "v3", value: new THREE.Vector3(4.7267, 1.5, -3.2833)},
-	uBoxPosition0: {type: "v3", value: new THREE.Vector3(2.6768, 1.5, -3.2384)},
+	uBoxPosition0: {type: "v3", value: new THREE.Vector3(-1.0092, 1.3500, 6.0727)},
+	uBoxPosition1: {type: "v3", value: new THREE.Vector3(-0.9165, 1.3500, 8.7597)},
 	uBoxMatrix0: {type: "mat4", value: new THREE.Matrix4()},
 	uBoxMatrix1: {type: "mat4", value: new THREE.Matrix4()},
 	tCube0: {type: "t", value: 'CubeTexture'}, 
 	tCube1: {type: "t", value: 'CubeTexture'},
 }
 
-uniforms[ "tCube0" ].value = getTextureCube(1);
-uniforms[ "tCube1" ].value = getTextureCube(0);
+uniforms[ "tCube0" ].value = getTextureCube(0);
+uniforms[ "tCube1" ].value = getTextureCube(1);
 			
 			
 var idealScreenMat = new THREE.ShaderMaterial({ fragmentShader: fragmentShader, vertexShader: vertexShader, uniforms: uniforms, transparent: true, /*side: THREE.BackSide,*/});
