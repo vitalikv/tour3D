@@ -1440,6 +1440,7 @@
     <script src="js/ThreeCSG.js"></script>   
 
 
+
 <script id="2d-fragment-shader" type="x-shader/x-fragment">
 uniform samplerCube tCube0;
 uniform samplerCube tCube1;
@@ -1483,6 +1484,8 @@ void main()
 </script>
 
     
+	<script src="panorama360/panorama360.js?<?=$vrs?>"></script>
+	
     <script src="stats.min.js?<?=$vrs?>"></script>
     <script src="units.js?<?=$vrs?>"></script>
     <script src="rulerWin.js?<?=$vrs?>"></script>
