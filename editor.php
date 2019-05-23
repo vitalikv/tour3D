@@ -1460,8 +1460,8 @@ void main()
 
 
 <script id="2d-vertex-shader" type="x-shader/x-vertex">
-uniform vec3 uBoxPosition0;
-uniform vec3 uBoxPosition1;
+uniform vec3 tCubePosition0;
+uniform vec3 tCubePosition1;
 uniform mat4 uBoxMatrix0;
 uniform mat4 uBoxMatrix1;
 varying vec3 vWorldPosition0;
@@ -1471,11 +1471,11 @@ void main()
 {
 	vec4 worldPosition = modelMatrix * vec4(position, 1.0);
 	
-	vec3 vBoxCenterPosition0 = worldPosition.xyz - uBoxPosition0;
+	vec3 vBoxCenterPosition0 = worldPosition.xyz - tCubePosition0;
 	vWorldPosition0 = (vec4(vBoxCenterPosition0, 1.0) * uBoxMatrix0).xyz;	
 	vWorldPosition0.x *= -1.0;
 	 
-	vec3 vBoxCenterPosition1 = worldPosition.xyz - uBoxPosition1;
+	vec3 vBoxCenterPosition1 = worldPosition.xyz - tCubePosition1;
 	vWorldPosition1 = (vec4(vBoxCenterPosition1, 1.0) * uBoxMatrix1).xyz;
 	vWorldPosition1.x *= -1.0;
 	

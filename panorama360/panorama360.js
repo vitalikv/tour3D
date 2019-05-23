@@ -18,8 +18,8 @@ function createShaderPanorama360()
 	var uniforms = 
 	{ 
 		mixAlpha: {type: "f", value: 1},
-		uBoxPosition0: {type: "v3", value: new THREE.Vector3(-1.0092, 1.3500, 6.0727)},
-		uBoxPosition1: {type: "v3", value: new THREE.Vector3(-0.9165, 1.3500, 8.7597)},
+		tCubePosition0: {type: "v3", value: new THREE.Vector3(0.7945, 1.3500, 3.9354)},
+		tCubePosition1: {type: "v3", value: new THREE.Vector3(1.1068, 1.3500, 2.1951)},
 		uBoxMatrix0: {type: "mat4", value: new THREE.Matrix4()},
 		uBoxMatrix1: {type: "mat4", value: new THREE.Matrix4()},
 		tCube0: {type: "t", value: 'CubeTexture'}, 
@@ -40,7 +40,7 @@ function createShaderPanorama360()
 // загружаем изображение для панорамы
 function getTextureCube(ind)
 {	
-	var path = "img/";
+	var path = "panorama360/img/";
 	var format = '.jpg';
 	if(ind==1){format = '_2.jpg';}
 	

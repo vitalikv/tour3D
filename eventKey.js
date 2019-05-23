@@ -30,47 +30,18 @@ document.body.addEventListener("keydown", function (e)
 	
 	if(e.keyCode == 51)
 	{
-		if(1==2)
-		{
-			camera.position.set(4.7267, 1.5, -3.2833);
-			
-			idealScreenMat.uniforms.posCam.value = camera.position.clone();
-			idealScreenMat.uniforms['mixAlpha'].value = 1;
-			idealScreenMat.uniforms['scale0'].value = 0;
-			idealScreenMat.needsUpdate = true;			
-		}
-		else
-		{
-			tour3D.o = true;
-			tour3D.pos.set(-0.9165, 1.3500, 8.7597);
-			tour3D.type = 1;
-			tour3D.dist = camera.position.distanceTo( tour3D.pos );
-		}
-		
-		renderCamera();
+		tour3D.o = true;
+		tour3D.pos.set(0.7945, 1.3500, 3.9354);
+		tour3D.type = 0;
+		tour3D.dist = camera.position.distanceTo( tour3D.pos );
 	}
 	
 	if(e.keyCode == 52)
 	{
-		
-		if(1==2)
-		{
-			camera.position.set(2.6768, 1.5, -3.2384);
-			
-			idealScreenMat.uniforms.posCam.value = camera.position.clone();
-			idealScreenMat.uniforms['mixAlpha'].value = 0;
-			idealScreenMat.uniforms['scale0'].value = 0;
-			idealScreenMat.needsUpdate = true;					
-		}
-		else
-		{
-			tour3D.o = true;
-			tour3D.pos.set(-1.0092, 1.3500, 6.0727);
-			tour3D.type = 0;
-			tour3D.dist = camera.position.distanceTo( tour3D.pos );
-		}
-		
-		renderCamera();
+		tour3D.o = true;
+		tour3D.pos.set(1.1068, 1.3500, 2.1951);
+		tour3D.type = 1;
+		tour3D.dist = camera.position.distanceTo( tour3D.pos );
 	}
 	
 	if(UI.activeInput) 
