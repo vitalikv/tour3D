@@ -121,15 +121,45 @@ function getTextureCube(ind)
 	var loader = new THREE.CubeTextureLoader();	
 	//loader.setCrossOrigin('anonymous');
 	//loader.setCrossOrigin('');
-	var textureCube = loader.load(urls, function(texture){ console.log('done loading texture', texture); });
+	var textureCube = loader.load(urls, function(texture)
+	{ 
+		textureCube.image[2] = rotateCanvasImagePanorame(textureCube.image[2]);
+		textureCube.image[3] = rotateCanvasImagePanorame(textureCube.image[3]);	
+	});
 	
-	console.log(7777, textureCube);
+
 
 	return textureCube;
 }
 
-
-
+function rotateCanvasImagePanorame(img)
+{
+	var canvas = document.createElement("canvas");
+	var ctx = canvas.getContext("2d");	
+	var imgNew = new Image();
+	
+	canvas.width = img.width;
+	canvas.height = img.height;
+	
+	var ang = 180; //angle
+	var cache = img; //cache the local copy of image element for future reference
+	
+	ctx.save(); //saves the state of canvas
+	ctx.fillStyle = 'rgba(255,255,255,1)';
+	ctx.fillRect(0, 0, canvas.width, canvas.height);	
+	ctx.translate(img.width, img.height); //let translate
+	ctx.rotate(Math.PI / 180 * ang); //increment the angle and rotate the image 
+	ctx.drawImage(img, 0, 0, img.width, img.height); //draw the image ;)
+	ctx.restore(); //restore the state of canvas	
+	
+	
+	imgNew.src = img.src; //img	
+	
+	var texture = new THREE.Texture(canvas);
+	texture.needsUpdate = true;		
+	
+	return texture.image;
+}
 
 
 
