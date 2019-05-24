@@ -1144,7 +1144,7 @@ function loadFilePL(arr, cdm)
 	// устанавливаем окна/двери
 	var wall = cdm.json;
 	var arrW = cdm.obj;
-	for ( var i = 0; i < 0; i++ )
+	for ( var i = 0; i < arrW.length; i++ )
 	{ 
 		var obj = arrW[i];
 		
@@ -1221,7 +1221,11 @@ function loadFilePL(arr, cdm)
 	
 	changeSizePoint();
 	centerCamera2D(false);
-	centerStartCamera3D();
+	//centerStartCamera3D();
+	
+	EditorInvokeFunction('SetView', '3d');
+	UI.setViewMode('man');
+	camera3D.position.copy(listTextureCube[0].p);
 	
 	if(param_ugol.camera)
 	{

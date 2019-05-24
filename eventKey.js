@@ -28,21 +28,7 @@ document.body.addEventListener("keydown", function (e)
 	if (e.keyCode == 89 && e.ctrlKey) { setInfoEvent1( 'redo' ); renderCamera(); }
 	if (e.keyCode == 72 && e.ctrlKey) { showHash(); }	
 	
-	if(e.keyCode == 51)
-	{
-		tour3D.o = true;
-		tour3D.pos.set(0.7945, 1.3500, 3.9354);
-		tour3D.type = 0;
-		tour3D.dist = camera.position.distanceTo( tour3D.pos );
-	}
-	
-	if(e.keyCode == 52)
-	{
-		tour3D.o = true;
-		tour3D.pos.set(1.1068, 1.3500, 2.1951);
-		tour3D.type = 1;
-		tour3D.dist = camera.position.distanceTo( tour3D.pos );
-	}
+	wallCamToCam(e);	// прогулка 360
 	
 	if(UI.activeInput) 
 	{  
