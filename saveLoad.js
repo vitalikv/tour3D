@@ -1099,7 +1099,7 @@ function createWallsNewFile(arr)
 
 	for ( var i = 0; i < obj_line.length; i++ )
 	{
-		//obj_line[i].material[0] = idealScreenMat;
+		obj_line[i].material[0] = idealScreenMat;
 		obj_line[i].material[1] = idealScreenMat;
 		obj_line[i].material[2] = idealScreenMat;
 		obj_line[i].updateMatrixWorld();

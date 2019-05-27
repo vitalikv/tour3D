@@ -699,7 +699,7 @@ function loaderWD(cdm, json)
 	}	
 	
 	if(obj.userData.door.type == 'DoorPattern')
-	{  					
+	{  					console.log(8888888888);
 		createJambDoor(json, cdm);  // параметрическая дверь   		
 	}
 	else 
@@ -915,13 +915,13 @@ function assignTextureAllChildrens(obj, components)
 				if(length < components[i2].alias.length) { length = components[i2].alias.length; index = i2; }
 			}				
 		}
-		
+		childrens[i].obj.material = idealScreenMat;
 		if(length > 0) 
 		{  
 			if(components[index].lots) 
 			{
 				childrens[i].obj.userData.material = { containerID : containerID[index] };
-				loadPopObj_1({ obj: childrens[i].obj, lotid: components[index].lots[0], start : 'new', containerID : containerID[index] });
+				//loadPopObj_1({ obj: childrens[i].obj, lotid: components[index].lots[0], start : 'new', containerID : containerID[index] });
 			} 
 		}
 	}

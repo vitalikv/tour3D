@@ -14,6 +14,8 @@ function listCubePanorama360()
 	list[0] = { p : new THREE.Vector3(0.7945, 1.3500, 3.9354), t : getTextureCube('') };
 	list[1] = { p : new THREE.Vector3(1.1068, 1.3500, 2.1951), t : getTextureCube('_2') };
 	list[2] = { p : new THREE.Vector3(1.3020, 1.3500, 0.1601), t : getTextureCube('_3') };
+	list[3] = { p : new THREE.Vector3(-1.0904, 1.3500, 1.8717), t : getTextureCube('_4') };
+	list[4] = { p : new THREE.Vector3(4.2564, 1.3500, 2.0684), t : getTextureCube('_5') };
 	
 	return list;
 }
@@ -122,22 +124,8 @@ function moveOnPoint()
 	camera3D.position.lerp(tour3D.pos, 0.04);
 
 	var d = camera3D.position.distanceTo( tour3D.pos );
-		
-	
-	if(tour3D.keyCode == 51)
-	{		
-		idealScreenMat.uniforms['mixAlpha'].value = 1-d/tour3D.dist;
-	}
-	if(tour3D.keyCode == 52)
-	{		
-		idealScreenMat.uniforms['mixAlpha'].value = 1-d/tour3D.dist;
-	}
-	if(tour3D.keyCode == 53)
-	{		
-		idealScreenMat.uniforms['mixAlpha'].value = 1-d/tour3D.dist;
-	}	
-	
-	idealScreenMat.needsUpdate = true;
+
+	idealScreenMat.uniforms['mixAlpha'].value = 1-d/tour3D.dist;	
 	
 	console.log(idealScreenMat.uniforms['mixAlpha'].value);
 	
@@ -163,69 +151,82 @@ function wallCamToCam(e)
 	{
 		tour3D.pos.copy(listTextureCube[0].p);	// куда идем
 		tour3D.dist = camera.position.distanceTo( tour3D.pos );
-
 		
 		idealScreenMat.uniforms[ "tCube1" ].value = listTextureCube[0].t;	// куда идем
 		idealScreenMat.uniforms.tCubePosition1.value = listTextureCube[0].p;
-
-		if(tour3D.keyCode == 52)
-		{
-			idealScreenMat.uniforms[ "tCube0" ].value = listTextureCube[1].t;
-			idealScreenMat.uniforms.tCubePosition0.value = listTextureCube[1].p;	// откуда идем
-		}
-		if(tour3D.keyCode == 53)
-		{
-			idealScreenMat.uniforms[ "tCube0" ].value = listTextureCube[2].t;
-			idealScreenMat.uniforms.tCubePosition0.value = listTextureCube[2].p;	// откуда идем
-		}
-	}
-	
-	if(e.keyCode == 52)
+	}	
+	else if(e.keyCode == 52)
 	{
 		tour3D.pos.copy(listTextureCube[1].p);
-		tour3D.dist = camera.position.distanceTo( tour3D.pos );
-		
+		tour3D.dist = camera.position.distanceTo( tour3D.pos );		
 		
 		idealScreenMat.uniforms[ "tCube1" ].value = listTextureCube[1].t;		
 		idealScreenMat.uniforms.tCubePosition1.value = listTextureCube[1].p;	// куда идем
-
-
-		if(tour3D.keyCode == 51)
-		{
-			idealScreenMat.uniforms[ "tCube0" ].value = listTextureCube[0].t;
-			idealScreenMat.uniforms.tCubePosition0.value = listTextureCube[0].p;	// откуда идем
-		}
-		if(tour3D.keyCode == 53)
-		{
-			idealScreenMat.uniforms[ "tCube0" ].value = listTextureCube[2].t;
-			idealScreenMat.uniforms.tCubePosition0.value = listTextureCube[2].p;	// откуда идем
-		}
 	}
-
-	if(e.keyCode == 53)
+	else if(e.keyCode == 53)
 	{		
 		tour3D.pos.copy(listTextureCube[2].p);
-		tour3D.dist = camera.position.distanceTo( tour3D.pos );
-		
+		tour3D.dist = camera.position.distanceTo( tour3D.pos );		
 		
 		idealScreenMat.uniforms[ "tCube1" ].value = listTextureCube[2].t;
-		idealScreenMat.uniforms.tCubePosition1.value = listTextureCube[2].p;	// куда идем
-
-		if(tour3D.keyCode == 52)
-		{
-			idealScreenMat.uniforms[ "tCube0" ].value = listTextureCube[1].t;
-			idealScreenMat.uniforms.tCubePosition0.value = listTextureCube[1].p;	// откуда идем
-		}
-		if(tour3D.keyCode == 51)
-		{
-			idealScreenMat.uniforms[ "tCube0" ].value = listTextureCube[0].t;
-			idealScreenMat.uniforms.tCubePosition0.value = listTextureCube[0].p;	// откуда идем
-		}				
+		idealScreenMat.uniforms.tCubePosition1.value = listTextureCube[2].p;	// куда идем	
 	}
+	else if(e.keyCode == 54)
+	{		
+		tour3D.pos.copy(listTextureCube[3].p);
+		tour3D.dist = camera.position.distanceTo( tour3D.pos );		
+		
+		idealScreenMat.uniforms[ "tCube1" ].value = listTextureCube[3].t;
+		idealScreenMat.uniforms.tCubePosition1.value = listTextureCube[3].p;	// куда идем	
+	}
+	else if(e.keyCode == 55)
+	{		
+		tour3D.pos.copy(listTextureCube[4].p);
+		tour3D.dist = camera.position.distanceTo( tour3D.pos );		
+		
+		idealScreenMat.uniforms[ "tCube1" ].value = listTextureCube[4].t;
+		idealScreenMat.uniforms.tCubePosition1.value = listTextureCube[4].p;	// куда идем	
+	}	
+	else 
+	{
+		return;
+	}
+	
+	setUniformsCube0();
 	
 	idealScreenMat.uniforms['mixAlpha'].value = 0;
 	tour3D.o = true;
 	tour3D.keyCode = e.keyCode;	
+}
+
+
+// откуда идем
+function setUniformsCube0()
+{
+
+	if(tour3D.keyCode == 51)
+	{
+		idealScreenMat.uniforms[ "tCube0" ].value = listTextureCube[0].t;
+		idealScreenMat.uniforms.tCubePosition0.value = listTextureCube[0].p;	
+	}
+	if(tour3D.keyCode == 52)
+	{
+		idealScreenMat.uniforms[ "tCube0" ].value = listTextureCube[1].t;
+		idealScreenMat.uniforms.tCubePosition0.value = listTextureCube[1].p;	
+	}
+	if(tour3D.keyCode == 53)
+	{
+		idealScreenMat.uniforms[ "tCube0" ].value = listTextureCube[2].t;
+		idealScreenMat.uniforms.tCubePosition0.value = listTextureCube[2].p;	
+	}
+	if(tour3D.keyCode == 54)
+	{
+		idealScreenMat.uniforms[ "tCube0" ].value = listTextureCube[3].t;
+		idealScreenMat.uniforms.tCubePosition0.value = listTextureCube[3].p;	
+	}	
+	
 }	
+ 
+ 
  
 
