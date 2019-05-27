@@ -139,13 +139,15 @@ function moveOnPoint()
 	
 	idealScreenMat.needsUpdate = true;
 	
+	console.log(idealScreenMat.uniforms['mixAlpha'].value);
+	
 	if(comparePos(camera3D.position, tour3D.pos)) 
 	{ 
 		camera.updateMatrixWorld();
 		idealScreenMat.uniforms['mixAlpha'].value = 1;
 		idealScreenMat.needsUpdate = true;
 		
-		tour3D = resetTour(); 
+		tour3D.o = false; 
 		console.log('STOP'); 
 	};
 	
@@ -160,7 +162,6 @@ function wallCamToCam(e)
 	if(e.keyCode == 51)
 	{
 		tour3D.pos.copy(listTextureCube[0].p);	// куда идем
-		tour3D.type = 1;
 		tour3D.dist = camera.position.distanceTo( tour3D.pos );
 
 		
@@ -177,14 +178,11 @@ function wallCamToCam(e)
 			idealScreenMat.uniforms[ "tCube0" ].value = listTextureCube[2].t;
 			idealScreenMat.uniforms.tCubePosition0.value = listTextureCube[2].p;	// откуда идем
 		}
-
-		console.log(3, idealScreenMat.uniforms);
 	}
 	
 	if(e.keyCode == 52)
 	{
 		tour3D.pos.copy(listTextureCube[1].p);
-		tour3D.type = 1;
 		tour3D.dist = camera.position.distanceTo( tour3D.pos );
 		
 		
@@ -202,14 +200,11 @@ function wallCamToCam(e)
 			idealScreenMat.uniforms[ "tCube0" ].value = listTextureCube[2].t;
 			idealScreenMat.uniforms.tCubePosition0.value = listTextureCube[2].p;	// откуда идем
 		}
-		
-		console.log(4, idealScreenMat.uniforms);
 	}
 
 	if(e.keyCode == 53)
 	{		
 		tour3D.pos.copy(listTextureCube[2].p);
-		tour3D.type = 1;
 		tour3D.dist = camera.position.distanceTo( tour3D.pos );
 		
 		
@@ -225,11 +220,10 @@ function wallCamToCam(e)
 		{
 			idealScreenMat.uniforms[ "tCube0" ].value = listTextureCube[0].t;
 			idealScreenMat.uniforms.tCubePosition0.value = listTextureCube[0].p;	// откуда идем
-		}		
-
-		console.log(5, idealScreenMat.uniforms);		
+		}				
 	}
 	
+	idealScreenMat.uniforms['mixAlpha'].value = 0;
 	tour3D.o = true;
 	tour3D.keyCode = e.keyCode;	
 }	
