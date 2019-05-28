@@ -232,33 +232,37 @@ function setUniformsCube0()
 // находим ближайшую точку (позицию камеры) при перемещение 
 function getNearPositionCam360()
 {
-	var lineHelper_1 = new THREE.ArrowHelper(new THREE.Vector3( 1, 0, 0 ), new THREE.Vector3( 0, 0, 0 ), 5, 0x00ff00 );
-	scene.add( lineHelper_1 );
-	
 	var x = Math.sin( camera.rotation.y );
 	var z = Math.cos( camera.rotation.y );
-	var dir = new THREE.Vector3( -x, 0, -z ).normalize();		
+	var dir = new THREE.Vector3( -x, 0, -z ).normalize();
 	
-	lineHelper_1.position.copy( camera.position );
-	lineHelper_1.position.y = 0.2; 
-	lineHelper_1.setDirection( dir );
+	var lineHelper_1 = new THREE.ArrowHelper(dir, camera.position, 5, 0x00ff00 );
+	lineHelper_1.position.y = 0.2;
+	scene.add( lineHelper_1 );
 	
 	var A = camera.position.clone(); 
-	var B = camera.position.clone().add( new THREE.Vector3().addScaledVector( dir, 20 ) );	
+	var B = camera.position.clone().add( new THREE.Vector3().addScaledVector( dir, 20 ) );		
 	
 	for ( var i = 0; i < listTextureCube.length; i++ )
 	{
-		var C = spPoint(A, B, listTextureCube[i].p);	// точка пересечния с направлением камеры
+		listTextureCube[i].dist = 999999;
 		
-		var lineHelper_2 = new THREE.ArrowHelper(new THREE.Vector3( 0, 0, 1 ), new THREE.Vector3( 0, 0, 0 ), 5, 0xff0000 );
-		scene.add( lineHelper_2 );	
-
-		lineHelper_2.position.copy( listTextureCube[i].p );
+		if(comparePos(camera.position, listTextureCube[i].p)) continue;
+			
+		var C = spPoint(A, B, listTextureCube[i].p);	// точка пересечния с направлением камеры
+		var pos = listTextureCube[i].p.clone();
+		pos.y = 0;
+		
+		var dir = new THREE.Vector3( C.x - pos.x, 0, C.z - pos.z ).normalize();
+		
+		listTextureCube[i].dist = pos.distanceTo( C );
+		
+		var lineHelper_2 = new THREE.ArrowHelper(dir, listTextureCube[i].p, listTextureCube[i].dist, 0xff0000 );
 		lineHelper_2.position.y = 0.2;
-		lineHelper_2.setDirection( new THREE.Vector3( C.x - listTextureCube[i].p.x, 0, C.z - listTextureCube[i].p.z ).normalize() );			
+		scene.add( lineHelper_2 );			
 	}
 
-	
+	console.log( listTextureCube.sort(function (a, b) { return a.dist - b.dist }) );
 }
 	
 
