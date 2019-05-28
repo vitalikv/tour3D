@@ -111,6 +111,9 @@ if(1==2)
 	scene.add( cube2 ); 	
 }
 
+
+
+
 var selectedObjects = [];
 
 //----------- render
@@ -1406,6 +1409,18 @@ var openFileImage = function (strData, filename)
 		location.replace(uri);
 	}
 } 
+ 
+
+
+for ( var i = 0; i < listTextureCube.length; i++ )
+{
+	var cube = new THREE.Mesh( createGeometryCube(0.2, 0.2, 0.2), new THREE.MeshLambertMaterial( { color : 0xffff00 } ) );
+	scene.add( cube ); 
+	
+	cube.position.copy(listTextureCube[i].p);
+	cube.position.y = 0;
+}
+
  
 
 

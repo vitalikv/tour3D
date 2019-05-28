@@ -699,7 +699,7 @@ function loaderWD(cdm, json)
 	}	
 	
 	if(obj.userData.door.type == 'DoorPattern')
-	{  					console.log(8888888888);
+	{  					
 		createJambDoor(json, cdm);  // параметрическая дверь   		
 	}
 	else 

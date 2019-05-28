@@ -29,7 +29,7 @@ document.body.addEventListener("keydown", function (e)
 	if (e.keyCode == 72 && e.ctrlKey) { showHash(); }	
 	
 	wallCamToCam(e);	// прогулка 360
-	
+	if(e.keyCode == 13) getNearPositionCam360()
 	if(UI.activeInput) 
 	{  
 		if(e.keyCode == 13)
