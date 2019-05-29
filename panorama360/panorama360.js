@@ -112,8 +112,10 @@ function rotateCanvasImagePanorame(img)
 var tour3D = resetTour();
 function resetTour()
 {
-	return { o : false, pos : new THREE.Vector3(), keyCode : 51 };
+	return { o : false, pos : new THREE.Vector3(), keyCode : 51, speed : 0.04 };
 }
+
+
 
 
 // плавное перемещение от точки к точки
@@ -121,21 +123,20 @@ function moveOnPoint()
 {
 	if ( !tour3D.o ) return;
 	
-	camera3D.position.lerp(tour3D.pos, 0.08);
+	camera3D.position.lerp(tour3D.pos, tour3D.speed);
 
 	var d = camera3D.position.distanceTo( tour3D.pos );
 
-	idealScreenMat.uniforms['mixAlpha'].value = 1-d/tour3D.dist;	
+	idealScreenMat.uniforms['mixAlpha'].value = getInterpolationsFloat( 1-d/tour3D.dist, 0, 0.8, 1 );
 	
 	//console.log(idealScreenMat.uniforms['mixAlpha'].value);
 	
 	if(comparePos(camera3D.position, tour3D.pos)) 
 	{ 
-		camera.updateMatrixWorld();
 		idealScreenMat.uniforms['mixAlpha'].value = 1;
-		idealScreenMat.needsUpdate = true;
 		
-		tour3D.o = false; 
+		tour3D.o = false;
+		tour3D.speed = 0.04;		
 		console.log('STOP'); 
 	};
 	
@@ -192,18 +193,8 @@ function wallCamToCam(e)
 		return;
 	}
 	
-	setUniformsCube0();
 	
-	idealScreenMat.uniforms['mixAlpha'].value = 0;
-	tour3D.o = true;
-	tour3D.keyCode = e.keyCode;	
-}
-
-
-// откуда идем
-function setUniformsCube0()
-{
-
+	// откуда идем
 	if(tour3D.keyCode == 51)
 	{
 		idealScreenMat.uniforms[ "tCube0" ].value = listTextureCube[0].t;
@@ -223,66 +214,114 @@ function setUniformsCube0()
 	{
 		idealScreenMat.uniforms[ "tCube0" ].value = listTextureCube[3].t;
 		idealScreenMat.uniforms.tCubePosition0.value = listTextureCube[3].p;	
-	}	
+	}
 	
-}	
+	
+	idealScreenMat.uniforms['mixAlpha'].value = 0;
+	tour3D.o = true;
+	tour3D.keyCode = e.keyCode;	
+}
+
+
+
+// интерполяция чисел 0-1
+function getInterpolationsFloat(t, p0, p1, p2)
+{
+	function QuadraticBezierP0( t, p ) { var k = 1 - t; return k * k * p; }
+	function QuadraticBezierP1( t, p ) { return 2 * ( 1 - t ) * t * p; }
+	function QuadraticBezierP2( t, p ) { return t * t * p; }
+
+	return QuadraticBezierP0( t, p0 ) + QuadraticBezierP1( t, p1 ) + QuadraticBezierP2( t, p2 );		
+}
+
+
  
  
 
 // находим ближайшую точку (позицию камеры) при перемещение 
-function getNearPositionCam360()
+function getNearPositionCam360(keyCode)
 {
-	var x = Math.sin( camera.rotation.y );
-	var z = Math.cos( camera.rotation.y );
-	var dir = new THREE.Vector3( -x, 0, -z ).normalize();
+	if (tour3D.o) { tour3D.speed = 0.1; return; }
 	
-	var lineHelper_1 = new THREE.ArrowHelper(dir, camera.position, 5, 0x00ff00 );
-	lineHelper_1.position.y = 0.2;
-	scene.add( lineHelper_1 );
+	if(keyCode == 87 || keyCode == 38)
+	{
+		var x = Math.sin( camera.rotation.y );
+		var z = Math.cos( camera.rotation.y );
+		var dir = new THREE.Vector3( -x, 0, -z ).normalize();		
+	}
+	else if(keyCode == 83 || keyCode == 40)
+	{
+		var x = Math.sin( camera.rotation.y );
+		var z = Math.cos( camera.rotation.y );
+		var dir = new THREE.Vector3( x, 0, z );		
+	}
+	else if (keyCode == 65 || keyCode == 37) 
+	{
+		var x = Math.sin( camera.rotation.y - 1.5707963267948966 );
+		var z = Math.cos( camera.rotation.y - 1.5707963267948966 );
+		var dir = new THREE.Vector3( x, 0, z );
+	}
+	else if (keyCode == 68 || keyCode == 39) 
+	{
+		var x = Math.sin( camera.rotation.y + 1.5707963267948966 );
+		var z = Math.cos( camera.rotation.y + 1.5707963267948966 );
+		var dir = new THREE.Vector3( x, 0, z );
+	}
+	else 
+	{
+		return;
+	}
 	
-	var A = camera.position.clone(); 
-	var B = camera.position.clone().add( new THREE.Vector3().addScaledVector( dir, 20 ) );		
+	if(1==2)
+	{
+		var lineHelper_1 = new THREE.ArrowHelper(dir, camera.position, 5, 0x00ff00 );
+		lineHelper_1.position.y = 0.2;
+		scene.add( lineHelper_1 );		
+	}			
 	
 	for ( var i = 0; i < listTextureCube.length; i++ )
 	{
-		listTextureCube[i].dist = 999999;
+		listTextureCube[i].dist = 9999;
 		listTextureCube[i].angle = 0;
 		
-		if(comparePos(camera.position, listTextureCube[i].p)) continue;
+		var pos = listTextureCube[i].p;
 		
-		var dir_1 = new THREE.Vector3( listTextureCube[i].p.x - camera.position.x, 0, listTextureCube[i].p.z - camera.position.z ).normalize();
+		// точка на которой стоим
+		if(comparePos(camera.position, pos)) 
+		{
+			listTextureCube[i].dist = 999999;	// ставим max значение, чтобы после sort, был в конце
+			continue;
+		}			
+		
+		// угол между направление движения и новой позиции камеры
+		var dir_1 = new THREE.Vector3( pos.x - camera.position.x, 0, pos.z - camera.position.z ).normalize();
 		listTextureCube[i].angle = THREE.Math.radToDeg( Math.acos(dir.x * dir_1.x + dir.z * dir_1.z) );
-		if(listTextureCube[i].angle > 20) continue;
-			
-		var C = spPoint(A, B, listTextureCube[i].p);	// точка пересечния с направлением камеры
-		var pos = listTextureCube[i].p.clone();
-		pos.y = 0;
+		if(listTextureCube[i].angle > 20) continue;			
+
 		
-		var dir_2 = new THREE.Vector3( C.x - pos.x, 0, C.z - pos.z ).normalize();
-		
-		listTextureCube[i].dist = pos.distanceTo( C );	
-		
-		var lineHelper_2 = new THREE.ArrowHelper(dir_2, listTextureCube[i].p, listTextureCube[i].dist, 0xff0000 );
-		lineHelper_2.position.y = 0.2;
-		scene.add( lineHelper_2 );			
+		// расстояние до позиции камеры, нужно для sort
+		listTextureCube[i].dist = new THREE.Vector3(pos.x, 0, pos.z).distanceTo( new THREE.Vector3(camera.position.x, 0, camera.position.z) );			
 	}
 
 	listTextureCube.sort(function (a, b) { return a.dist - b.dist });
 	
 	console.log(listTextureCube);
 	
-	// куда идем
-	tour3D.pos.copy(listTextureCube[0].p);	
-	tour3D.dist = camera.position.distanceTo( tour3D.pos );		
-	idealScreenMat.uniforms[ "tCube1" ].value = listTextureCube[0].t;	
-	idealScreenMat.uniforms.tCubePosition1.value = listTextureCube[0].p;	
-	
-	// откуда идем
-	idealScreenMat.uniforms[ "tCube0" ].value = listTextureCube[listTextureCube.length - 1].t;
-	idealScreenMat.uniforms.tCubePosition0.value = listTextureCube[listTextureCube.length - 1].p;
+	if(listTextureCube[0].angle < 20)
+	{
+		// куда идем
+		tour3D.pos.copy(listTextureCube[0].p);	
+		tour3D.dist = camera.position.distanceTo( tour3D.pos );		
+		idealScreenMat.uniforms[ "tCube1" ].value = listTextureCube[0].t;	
+		idealScreenMat.uniforms.tCubePosition1.value = listTextureCube[0].p;	
+		
+		// откуда идем
+		idealScreenMat.uniforms[ "tCube0" ].value = listTextureCube[listTextureCube.length - 1].t;
+		idealScreenMat.uniforms.tCubePosition0.value = listTextureCube[listTextureCube.length - 1].p;
 
-	idealScreenMat.uniforms['mixAlpha'].value = 0;
-	tour3D.o = true;	
+		idealScreenMat.uniforms['mixAlpha'].value = 0;
+		tour3D.o = true;			
+	}
 }
 	
 
