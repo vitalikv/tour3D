@@ -11,11 +11,11 @@ function listCubePanorama360()
 {
 	var list = [];
 	
-	list[0] = { p : new THREE.Vector3(0.7945, 1.3500, 3.9354), t : getTextureCube('') };
-	list[1] = { p : new THREE.Vector3(1.1068, 1.3500, 2.1951), t : getTextureCube('_2') };
-	list[2] = { p : new THREE.Vector3(1.3020, 1.3500, 0.1601), t : getTextureCube('_3') };
-	list[3] = { p : new THREE.Vector3(-1.0904, 1.3500, 1.8717), t : getTextureCube('_4') };
-	list[4] = { p : new THREE.Vector3(4.2564, 1.3500, 2.0684), t : getTextureCube('_5') };
+	list[0] = { n : 3, p : new THREE.Vector3(0.7945, 1.3500, 3.9354), t : getTextureCube('') };
+	list[1] = { n : 4, p : new THREE.Vector3(1.1068, 1.3500, 2.1951), t : getTextureCube('_2') };
+	list[2] = { n : 5, p : new THREE.Vector3(1.3020, 1.3500, 0.1601), t : getTextureCube('_3') };
+	list[3] = { n : 6, p : new THREE.Vector3(-1.0904, 1.3500, 1.8717), t : getTextureCube('_4') };
+	list[4] = { n : 7, p : new THREE.Vector3(4.2564, 1.3500, 2.0684), t : getTextureCube('_5') };
 	
 	return list;
 }
@@ -121,13 +121,13 @@ function moveOnPoint()
 {
 	if ( !tour3D.o ) return;
 	
-	camera3D.position.lerp(tour3D.pos, 0.04);
+	camera3D.position.lerp(tour3D.pos, 0.08);
 
 	var d = camera3D.position.distanceTo( tour3D.pos );
 
 	idealScreenMat.uniforms['mixAlpha'].value = 1-d/tour3D.dist;	
 	
-	console.log(idealScreenMat.uniforms['mixAlpha'].value);
+	//console.log(idealScreenMat.uniforms['mixAlpha'].value);
 	
 	if(comparePos(camera3D.position, tour3D.pos)) 
 	{ 
@@ -246,23 +246,43 @@ function getNearPositionCam360()
 	for ( var i = 0; i < listTextureCube.length; i++ )
 	{
 		listTextureCube[i].dist = 999999;
+		listTextureCube[i].angle = 0;
 		
 		if(comparePos(camera.position, listTextureCube[i].p)) continue;
+		
+		var dir_1 = new THREE.Vector3( listTextureCube[i].p.x - camera.position.x, 0, listTextureCube[i].p.z - camera.position.z ).normalize();
+		listTextureCube[i].angle = THREE.Math.radToDeg( Math.acos(dir.x * dir_1.x + dir.z * dir_1.z) );
+		if(listTextureCube[i].angle > 20) continue;
 			
 		var C = spPoint(A, B, listTextureCube[i].p);	// точка пересечния с направлением камеры
 		var pos = listTextureCube[i].p.clone();
 		pos.y = 0;
 		
-		var dir = new THREE.Vector3( C.x - pos.x, 0, C.z - pos.z ).normalize();
+		var dir_2 = new THREE.Vector3( C.x - pos.x, 0, C.z - pos.z ).normalize();
 		
-		listTextureCube[i].dist = pos.distanceTo( C );
+		listTextureCube[i].dist = pos.distanceTo( C );	
 		
-		var lineHelper_2 = new THREE.ArrowHelper(dir, listTextureCube[i].p, listTextureCube[i].dist, 0xff0000 );
+		var lineHelper_2 = new THREE.ArrowHelper(dir_2, listTextureCube[i].p, listTextureCube[i].dist, 0xff0000 );
 		lineHelper_2.position.y = 0.2;
 		scene.add( lineHelper_2 );			
 	}
 
-	console.log( listTextureCube.sort(function (a, b) { return a.dist - b.dist }) );
+	listTextureCube.sort(function (a, b) { return a.dist - b.dist });
+	
+	console.log(listTextureCube);
+	
+	// куда идем
+	tour3D.pos.copy(listTextureCube[0].p);	
+	tour3D.dist = camera.position.distanceTo( tour3D.pos );		
+	idealScreenMat.uniforms[ "tCube1" ].value = listTextureCube[0].t;	
+	idealScreenMat.uniforms.tCubePosition1.value = listTextureCube[0].p;	
+	
+	// откуда идем
+	idealScreenMat.uniforms[ "tCube0" ].value = listTextureCube[listTextureCube.length - 1].t;
+	idealScreenMat.uniforms.tCubePosition0.value = listTextureCube[listTextureCube.length - 1].p;
+
+	idealScreenMat.uniforms['mixAlpha'].value = 0;
+	tour3D.o = true;	
 }
 	
 
