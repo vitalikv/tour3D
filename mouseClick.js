@@ -414,7 +414,8 @@ function onDocumentMouseMove( event )
 	}
 
 	clickButton( event );
-
+	mouseRayPanorama360(event);
+	
 	if ( !long_click ) { long_click = ( lastClickTime - new Date().getTime() < catchTime ) ? true : false; }
 
 	var obj = obj_selected;

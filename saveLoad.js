@@ -1099,6 +1099,8 @@ function createWallsNewFile(arr)
 
 	for ( var i = 0; i < obj_line.length; i++ )
 	{
+		obj_line[i].geometry.computeFaceNormals();
+		obj_line[i].geometry.computeVertexNormals();
 		obj_line[i].material[0] = idealScreenMat;
 		obj_line[i].material[1] = idealScreenMat;
 		obj_line[i].material[2] = idealScreenMat;
@@ -1109,7 +1111,9 @@ function createWallsNewFile(arr)
 	{
 		room[i].material = idealScreenMat;
 		ceiling[i].material = idealScreenMat;
-	}			
+	}	
+
+	arrRayObjsP360 = arrRayObjsPanorama360();
 
 	return { json : wall, obj : arrW };
 }

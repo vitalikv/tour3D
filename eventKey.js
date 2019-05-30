@@ -28,7 +28,7 @@ document.body.addEventListener("keydown", function (e)
 	if (e.keyCode == 89 && e.ctrlKey) { setInfoEvent1( 'redo' ); renderCamera(); }
 	if (e.keyCode == 72 && e.ctrlKey) { showHash(); }	
 	
-	wallCamToCam(e);	// прогулка 360
+	
 	
 	getNearPositionCam360(e.keyCode);
 

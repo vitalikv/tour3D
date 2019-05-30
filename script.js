@@ -1422,8 +1422,8 @@ for ( var i = 0; i < listTextureCube.length; i++ )
 }
 
  
-
-
+var cursorP360 = createCursorP360();
+var arrRayObjsP360 = arrRayObjsPanorama360();
 
 	 
 //https://catalog.planoplan.com/api/v2.1/search/?keys[0]=92da6c1f72c1ebca456a86d978af1dfc7db1bcb24d658d710c5c8ae25d98ba52&id[0]=13256&lang=ru
