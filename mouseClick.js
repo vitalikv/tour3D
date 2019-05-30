@@ -115,18 +115,22 @@ function onDocumentMouseDown( event )
 	clickO.obj = null; 
 	clickO.rayhit = null;	
 	
-	clickRayHit( detectRayHit( event, 'click' ) );  
 	
-	
-	if(clickO.last_obj)
+	if(1==2)
 	{
-		if(clickO.last_obj != clickO.obj) { sendMessage('EDITOR.OBJECT_UNPICK'); UIInvokeFunction('Click'); }
-	}		
+		clickRayHit( detectRayHit( event, 'click' ) );  
+		
+		
+		if(clickO.last_obj)
+		{
+			if(clickO.last_obj != clickO.obj) { sendMessage('EDITOR.OBJECT_UNPICK'); UIInvokeFunction('Click'); }
+		}		
 
 
-	if ( camera == cameraTop ) { hideMenuObjUI_2D( clickO.last_obj ); showMenuObjUI_2D( clickO.obj ); }
-	else if ( camera == camera3D ) { hideMenuObjUI_3D( clickO.last_obj ); }
-	else if ( camera == cameraWall ) { hideMenuObjUI_Wall(clickO.last_obj); showMenuObjUI_Wall(clickO.obj); }
+		if ( camera == cameraTop ) { hideMenuObjUI_2D( clickO.last_obj ); showMenuObjUI_2D( clickO.obj ); }
+		else if ( camera == camera3D ) { hideMenuObjUI_3D( clickO.last_obj ); }
+		else if ( camera == cameraWall ) { hideMenuObjUI_Wall(clickO.last_obj); showMenuObjUI_Wall(clickO.obj); }		
+	}
 	
 	renderCamera();
 }

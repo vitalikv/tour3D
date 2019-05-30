@@ -233,11 +233,14 @@ function cameraMove3D( event )
 		if(isMouseDown2)
 		{
 			newCameraPosition = null;
-			var y = ( ( event.clientX - onMouseDownPosition.x ) * 0.006 );
-			var x = ( ( event.clientY - onMouseDownPosition.y ) * 0.006 );
+			var y = ( ( event.clientX - onMouseDownPosition.x ) * 0.001 );
+			var x = ( ( event.clientY - onMouseDownPosition.y ) * 0.001 );
+			
+			var y_2 = event.clientX - onMouseDownPosition.x;
+			var x_2 = event.clientY - onMouseDownPosition.y;			
 
-			camera.rotation.x -= x;
-			camera.rotation.y -= y;
+			camera.rotation.x += x;
+			camera.rotation.y += y;
 			onMouseDownPosition.x = event.clientX;
 			onMouseDownPosition.y = event.clientY;
 
@@ -252,28 +255,6 @@ function cameraMove3D( event )
 			
 			centerCam.copy( dir ); 
 
-			if(1==2)
-			{
-				var x = Math.sin( camera.rotation.y );
-				var z = Math.cos( camera.rotation.y );
-				var dir = new THREE.Vector3( -x, 0, -z ).normalize();
-					
-				//cube2.position.copy( camera.position.clone().add( dir ) );
-				//cube2.position.y = 0;
-				
-				arrowHelper.position.copy( camera.position );
-				arrowHelper.position.y = 0.2; 
-				arrowHelper.setDirection( dir );
-				
-				var pos1 = camera.position.clone(); 
-				var pos2 = camera.position.clone().add( new THREE.Vector3().addScaledVector( dir, 20 ) );
-				
-				var pos3 = spPoint(pos1, pos2, listTextureCube[3].p);	// точка пересечния
-				
-				arrowHelper2.position.copy( listTextureCube[3].p );
-				arrowHelper2.position.y = 0.2;
-				arrowHelper2.setDirection( new THREE.Vector3( pos3.x - listTextureCube[3].p.x, 0, pos3.z - listTextureCube[3].p.z ).normalize() );							
-			}
 		}
 	}
 	updateObjectControlRotation(); 		
