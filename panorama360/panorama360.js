@@ -6,6 +6,22 @@
 var listTextureCube = [];
 var idealScreenMat = createShaderPanorama360();
 
+getXmlPanorama360('https://files.planoplan.com/upload/userdata/1/31/projects/1475967/tour/floor_4/data.xml?1559141924');
+
+function getXmlPanorama360(file) 
+{
+
+	$.ajax
+	({
+		url: 'panorama360/xmlToJsonPanorama360.php',
+		type: 'POST',
+		data: { file: file },
+		dataType: 'json',
+		success: function(json){ console.log(22222, json); },
+		error: function(json) { console.log(5555, json); }
+	});	
+}
+
 
 function listCubePanorama360()
 {

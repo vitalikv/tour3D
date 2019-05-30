@@ -552,10 +552,7 @@ function loaderObjPop(cdm, json)
 				}	
 			}
 
-			popChangeMaxAnisotropy(obj);
-			
-			
-			console.log(333333, obj);
+			popChangeMaxAnisotropy(obj);			
 	
 			obj3D.material = idealScreenMat;
 			//obj3D.material = new THREE.MeshLambertMaterial( { color : 0xff0000, lightMap : lightMap_1 } )
@@ -1102,9 +1099,7 @@ function getJsonModel_A2(url, num, cdm, pool_xml)
 
 // сохраняем массив json  в хранилище
 function loadPopObj_XML_2(cdm, pool_xml)
-{	
-	console.log(formatSizeUnits(roughSizeOfObject(pool_xml)));
-	
+{		
 	// добавляем массив json  в хранилище
 	for ( var i = 0; i < pool_xml.length; i++ ) { pool_pop[pool_pop.length] = pool_xml[i]; }
 	

@@ -245,7 +245,7 @@ $('[data-action]').on('keyup', function (e) {
 //Экшены
 function emitAction(action, value, $source, stage) {
   var targetName = ($source) ? $source[0].className : false;
-  console.log('target: ' + targetName + '\r\n' + 'action: ' + action + '\r\n' + 'value: ' + value + '\r\n' + 'stage: ' + stage);
+  //console.log('target: ' + targetName + '\r\n' + 'action: ' + action + '\r\n' + 'value: ' + value + '\r\n' + 'stage: ' + stage);
   if (typeof stage === 'undefined') {
 
 
