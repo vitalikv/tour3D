@@ -1228,8 +1228,11 @@ function loadFilePL(arr, cdm)
 	//centerStartCamera3D();
 	
 	EditorInvokeFunction('SetView', '3d');
-	UI.setViewMode('man');
+	
+	camera3D.userData.camera.type = 'first';
+	newCameraPosition = { positionFirst: listTextureCube[0].p };
 	camera3D.position.copy(listTextureCube[0].p);
+	showAllWallRender();
 	
 	if(param_ugol.camera)
 	{

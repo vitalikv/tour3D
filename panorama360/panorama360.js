@@ -294,8 +294,6 @@ function getNearMousePositionCam360(event)
 
 	listTextureCube.sort(function (a, b) { return a.dist - b.dist });
 	
-	console.log(listTextureCube);
-	
 	// куда идем
 	tour3D.pos.copy(listTextureCube[0].p);	
 	tour3D.dist = camera.position.distanceTo( tour3D.pos );		
