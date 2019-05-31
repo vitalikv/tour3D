@@ -178,7 +178,7 @@ function getInterpolationsFloat(t, p0, p1, p2)
  
  
 
-// находим ближайшую точку (позицию камеры) при перемещение 
+// находим ближайшую точку (позицию камеры) при перемещение с клавиатуры 
 function getNearPositionCam360(keyCode)
 {
 	//if (tour3D.o) { tour3D.speed = 0.1; return; }
@@ -245,8 +245,6 @@ function getNearPositionCam360(keyCode)
 
 	listTextureCube.sort(function (a, b) { return a.dist - b.dist });
 	
-	console.log(listTextureCube);
-	
 	if(listTextureCube[0].angle < 25)
 	{
 		// куда идем
@@ -265,9 +263,56 @@ function getNearPositionCam360(keyCode)
 }
 	
 
+// находим ближайшую точку (позицию камеры) при перемещение с клика
+function getNearMousePositionCam360(event)
+{
+	var intersects = rayIntersect( event, arrRayObjsP360, 'arr' );
+
+	if(intersects.length == 0) return;
+
+	var pos = intersects[ 0 ].point.clone();
+	pos.y = 0;
+	
+
+	for ( var i = 0; i < listTextureCube.length; i++ )
+	{
+		listTextureCube[i].dist = 9999;
+		listTextureCube[i].angle = 0;
+		
+		var pos2 = listTextureCube[i].p;
+		
+		// точка на которой стоим
+		if(comparePos(tour3D.pos, pos2)) 
+		{
+			listTextureCube[i].dist = 999999;	// ставим max значение, чтобы после sort, был в конце
+			continue;
+		}					
+		
+		// расстояние до позиции камеры, нужно для sort
+		listTextureCube[i].dist = new THREE.Vector3(pos2.x, 0, pos2.z).distanceTo( pos );			
+	}
+
+	listTextureCube.sort(function (a, b) { return a.dist - b.dist });
+	
+	console.log(listTextureCube);
+	
+	// куда идем
+	tour3D.pos.copy(listTextureCube[0].p);	
+	tour3D.dist = camera.position.distanceTo( tour3D.pos );		
+	idealScreenMat.uniforms[ "tCube1" ].value = listTextureCube[0].t;	
+	idealScreenMat.uniforms.tCubePosition1.value = listTextureCube[0].p;	
+	
+	// откуда идем
+	idealScreenMat.uniforms[ "tCube0" ].value = listTextureCube[listTextureCube.length - 1].t;
+	idealScreenMat.uniforms.tCubePosition0.value = listTextureCube[listTextureCube.length - 1].p;
+
+	idealScreenMat.uniforms['mixAlpha'].value = 0;
+	tour3D.o = true;			
+}
 
 
 
+// создаем круг для курсора
 function createCursorP360()
 {	
 	var circle = createCircleSpline();
@@ -325,7 +370,7 @@ function createCursorP360()
 
 
 
-
+// объекты на которые будет реагировать луч 
 function arrRayObjsPanorama360()
 {
 	var arrDp = [];
@@ -341,6 +386,7 @@ function arrRayObjsPanorama360()
 
 
 
+// при перемещение курсора перетаскивается круг
 function mouseRayPanorama360(event)
 { 
 	var intersects = rayIntersect( event, arrRayObjsP360, 'arr' );
@@ -355,7 +401,6 @@ function mouseRayPanorama360(event)
 	
 	cursorP360.lookAt( normal );
 	cursorP360.position.copy( intersects[ 0 ].point );		
-
 }
 
 

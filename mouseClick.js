@@ -464,7 +464,11 @@ function onDocumentMouseMove( event )
 function onDocumentMouseUp( event )  
 {
 
-	if ( !long_click && camera == camera3D ) { showMenuObjUI_3D( clickO.obj ); }
+	if ( !long_click && camera == camera3D ) 
+	{ 
+		getNearMousePositionCam360(event);
+		showMenuObjUI_3D( clickO.obj ); 
+	}
 	
 	var obj = obj_selected;	
 	
