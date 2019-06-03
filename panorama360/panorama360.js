@@ -6,7 +6,7 @@
 var listTextureCube = [];
 var idealScreenMat = createShaderPanorama360();
 
-getXmlPanorama360('https://files.planoplan.com/upload/userdata/1/31/projects/1475967/tour/floor_4/data.xml?1559141924');
+getXmlPanorama360('https://files.planoplan.com/upload/userdata/1/31/projects/1480030/widget/tour/floor_4/data.xml?1559468366');
 
 function getXmlPanorama360(file) 
 {
@@ -17,9 +17,34 @@ function getXmlPanorama360(file)
 		type: 'POST',
 		data: { file: file },
 		dataType: 'json',
-		success: function(json){ console.log(22222, json); },
+		success: function(json){ console.log(readerJson(json)); },
 		error: function(json) {  }
 	});	
+	
+	// забираем из json только нужную инфу
+	function readerJson(json)
+	{
+		var array = [];
+		
+		for (i = 0; i < json.scene.length; i++)
+		{
+			var name = json.scene[i]["@attributes"].name;
+			
+			array[i] = { id : name.split('scene_')[1] };
+			
+			var img = [];
+			img[0] = json.scene[i].image.left["@attributes"].url;
+			img[1] = json.scene[i].image.right["@attributes"].url;
+			img[2] = json.scene[i].image.up["@attributes"].url;
+			img[3] = json.scene[i].image.down["@attributes"].url;
+			img[4] = json.scene[i].image.back["@attributes"].url;
+			img[5] = json.scene[i].image.front["@attributes"].url;
+			
+			array[i].img = img;
+		}
+		
+		return array;
+	}
 }
 
 
