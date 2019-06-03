@@ -6,11 +6,12 @@
 var listTextureCube = [];
 var idealScreenMat = createShaderPanorama360();
 
-getXmlPanorama360('https://files.planoplan.com/upload/userdata/1/31/projects/1480030/widget/tour/floor_4/data.xml?1559468366');
+
 
 function getXmlPanorama360(file) 
 {
-
+	var countReadyCam = 0;		// кол-во загруженных панорам
+	
 	$.ajax
 	({
 		url: 'panorama360/xmlToJsonPanorama360.php',
@@ -25,6 +26,7 @@ function getXmlPanorama360(file)
 	function readerJson(json)
 	{
 		var array = [];
+		var loader = new THREE.CubeTextureLoader();
 		
 		for (i = 0; i < json.scene.length; i++)
 		{
@@ -40,12 +42,77 @@ function getXmlPanorama360(file)
 			img[4] = json.scene[i].image.back["@attributes"].url;
 			img[5] = json.scene[i].image.front["@attributes"].url;
 			
-			array[i].img = img;
+			array[i].tCube = loader.load(img, function(texture)
+			{ 
+				texture.image[2] = rotateCanvasImagePanorame(texture.image[2]);
+				texture.image[3] = rotateCanvasImagePanorame(texture.image[3]);	
+				
+				countReadyCam++;
+				
+				console.log(countReadyCam, json.scene.length);
+				if(countReadyCam == json.scene.length) { goTour360(); }
+			});						
 		}
-		
+
 		return array;
 	}
+	
+	
+	// выполняем скрипт после загрузки всех панорам
+	function goTour360()
+	{
+		if(1==1)
+		{
+			camera3D.userData.camera.type = 'first';
+			newCameraPosition = { positionFirst: listTextureCube[0].p };
+			camera3D.position.copy(listTextureCube[0].p);
+			showAllWallRender();			
+		}
+
+		for ( var i = 0; i < obj_line.length; i++ )
+		{
+			obj_line[i].geometry.computeFaceNormals();
+			obj_line[i].geometry.computeVertexNormals();
+			obj_line[i].material[0] = idealScreenMat;
+			obj_line[i].material[1] = idealScreenMat;
+			obj_line[i].material[2] = idealScreenMat;
+			obj_line[i].updateMatrixWorld();
+		}
+
+		for ( var i = 0; i < room.length; i++ )
+		{
+			room[i].material = idealScreenMat;
+			ceiling[i].material = idealScreenMat;
+		}
+		
+		for ( var i = 0; i < arr_door.length; i++ ){ textureChild360(arr_door[i]); } 
+		for ( var i = 0; i < arr_window.length; i++ ){ textureChild360(arr_window[i]); } 
+		for ( var i = 0; i < arr_obj.length; i++ )
+		{ 
+			arr_obj[i].material = idealScreenMat;
+			arr_obj[i].geometry.computeFaceNormals();	
+		}		
+
+		arrRayObjsP360 = arrRayObjsPanorama360();
+		
+		// назначаем текстуру всем объектам входящие в родительский (объект из сцены)
+		function textureChild360(obj)
+		{
+			if(obj.userData.door)
+			{
+				if(obj.userData.door.type == 'DoorEmpty') return;
+			}
+			
+			var childrens = getAllChildrenObj(obj, []);	
+			for ( var i = 0; i < childrens.length; i++ ) { childrens[i].obj.material = idealScreenMat; }
+		}		
+	}
+	
+	
 }
+
+
+
 
 
 function listCubePanorama360()
@@ -107,8 +174,8 @@ function getTextureCube(str)
 	//loader.setCrossOrigin('');
 	var textureCube = loader.load(urls, function(texture)
 	{ 
-		textureCube.image[2] = rotateCanvasImagePanorame(textureCube.image[2]);
-		textureCube.image[3] = rotateCanvasImagePanorame(textureCube.image[3]);	
+		texture.image[2] = rotateCanvasImagePanorame(texture.image[2]);
+		texture.image[3] = rotateCanvasImagePanorame(texture.image[3]);	
 	});
 	
 

@@ -1096,25 +1096,6 @@ function createWallsNewFile(arr)
 	}
 
 
-
-	for ( var i = 0; i < obj_line.length; i++ )
-	{
-		obj_line[i].geometry.computeFaceNormals();
-		obj_line[i].geometry.computeVertexNormals();
-		obj_line[i].material[0] = idealScreenMat;
-		obj_line[i].material[1] = idealScreenMat;
-		obj_line[i].material[2] = idealScreenMat;
-		obj_line[i].updateMatrixWorld();
-	}
-
-	for ( var i = 0; i < room.length; i++ )
-	{
-		room[i].material = idealScreenMat;
-		ceiling[i].material = idealScreenMat;
-	}	
-
-	arrRayObjsP360 = arrRayObjsPanorama360();
-
 	return { json : wall, obj : arrW };
 }
 
@@ -1229,10 +1210,10 @@ function loadFilePL(arr, cdm)
 	
 	EditorInvokeFunction('SetView', '3d');
 	
-	camera3D.userData.camera.type = 'first';
-	newCameraPosition = { positionFirst: listTextureCube[0].p };
-	camera3D.position.copy(listTextureCube[0].p);
-	showAllWallRender();
+	
+	getXmlPanorama360('https://files.planoplan.com/upload/userdata/1/31/projects/1480030/widget/tour/floor_4/data.xml?1559468366');
+	
+
 	
 	if(param_ugol.camera)
 	{

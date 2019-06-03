@@ -554,8 +554,6 @@ function loaderObjPop(cdm, json)
 
 			popChangeMaxAnisotropy(obj);			
 	
-			obj3D.material = idealScreenMat;
-			obj3D.geometry.computeFaceNormals();
 			arrRayObjsP360[arrRayObjsP360.length] = obj3D;
 			//obj3D.material = new THREE.MeshLambertMaterial( { color : 0xff0000, lightMap : lightMap_1 } )
 	
@@ -916,7 +914,7 @@ function assignTextureAllChildrens(obj, components)
 				if(length < components[i2].alias.length) { length = components[i2].alias.length; index = i2; }
 			}				
 		}
-		childrens[i].obj.material = idealScreenMat;
+		
 		if(length > 0) 
 		{  
 			if(components[index].lots) 
