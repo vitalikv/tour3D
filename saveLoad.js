@@ -706,7 +706,7 @@ function loadTotalLotid(arr)
 	}
 		
 	
-	for ( var i = 0; i < obj_pop.length; i++ ) { arrPop[arrPop.length] = obj_pop[i].lotid; }
+	//for ( var i = 0; i < obj_pop.length; i++ ) { arrPop[arrPop.length] = obj_pop[i].lotid; }
 	
 	for ( var i = 0; i < arrPop.length; i++ ) { arrPop[i] = Number(arrPop[i]); }
 	
@@ -1192,7 +1192,7 @@ function loadFilePL(arr, cdm)
 			arr.cams[i].position.z *= -1;
 			arr.cams[i].target_position.z *= -1;
 			
-			arrRenderCams[i] = { posCam : arr.cams[i].position, posTarget : arr.cams[i].target_position };
+			arrRenderCams[i] = { id : arr.cams[i].id, posCam : arr.cams[i].position, posTarget : arr.cams[i].target_position };
 		}		
 	}
 	

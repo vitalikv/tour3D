@@ -1,10 +1,11 @@
 
 
 
-
+var cursorP360 = null;
+var arrRayObjsP360 = [];	// объекты на которые будет реагировать луч
 
 var listTextureCube = [];
-var idealScreenMat = createShaderPanorama360();
+var idealScreenMat = null;
 
 
 
@@ -50,7 +51,22 @@ function getXmlPanorama360(file)
 				countReadyCam++;
 				
 				console.log(countReadyCam, json.scene.length);
-				if(countReadyCam == json.scene.length) { goTour360(); }
+				
+				// все понарамы загрузились, запускаем финиш
+				if(countReadyCam == json.scene.length) 
+				{ 
+					listTextureCube = listCubePanorama360();
+					
+					for ( var i2 = 0; i2 < arrRenderCams.length; i2++ )
+					{
+						
+						//arrRenderCams[i] = { id : arr.cams[i].id, posCam : arr.cams[i].position, posTarget : arr.cams[i].target_position };
+					}
+
+					idealScreenMat = createShaderPanorama360();
+				
+					goTour360(); 
+				}
 			});						
 		}
 
@@ -61,7 +77,18 @@ function getXmlPanorama360(file)
 	// выполняем скрипт после загрузки всех панорам
 	function goTour360()
 	{
-		if(1==1)
+		cursorP360 = createCursorP360();		
+		
+		for ( var i = 0; i < listTextureCube.length; i++ )
+		{
+			var cube = new THREE.Mesh( createGeometryCube(0.2, 0.2, 0.2), new THREE.MeshLambertMaterial( { color : 0xffff00 } ) );
+			scene.add( cube ); 
+			
+			cube.position.copy(listTextureCube[i].p);
+			cube.position.y = 0;
+		}		
+		
+		if(1==2)
 		{
 			camera3D.userData.camera.type = 'first';
 			newCameraPosition = { positionFirst: listTextureCube[0].p };
@@ -69,6 +96,7 @@ function getXmlPanorama360(file)
 			showAllWallRender();			
 		}
 
+		// накладываем текстуру панорамы и добавляем объект в массив (реагировать на луч)
 		for ( var i = 0; i < obj_line.length; i++ )
 		{
 			obj_line[i].geometry.computeFaceNormals();
@@ -77,23 +105,36 @@ function getXmlPanorama360(file)
 			obj_line[i].material[1] = idealScreenMat;
 			obj_line[i].material[2] = idealScreenMat;
 			obj_line[i].updateMatrixWorld();
+			
+			arrRayObjsP360[arrRayObjsP360.length] = obj_line[i];	// объекты на которые будет реагировать луч
 		}
 
 		for ( var i = 0; i < room.length; i++ )
 		{
 			room[i].material = idealScreenMat;
 			ceiling[i].material = idealScreenMat;
+			
+			arrRayObjsP360[arrRayObjsP360.length] = room[i];
+			arrRayObjsP360[arrRayObjsP360.length] = ceiling[i];
 		}
 		
-		for ( var i = 0; i < arr_door.length; i++ ){ textureChild360(arr_door[i]); } 
-		for ( var i = 0; i < arr_window.length; i++ ){ textureChild360(arr_window[i]); } 
+		for ( var i = 0; i < arr_door.length; i++ )
+		{ 
+			textureChild360(arr_door[i]); 
+		} 
+		for ( var i = 0; i < arr_window.length; i++ )
+		{ 
+			textureChild360(arr_window[i]); 
+		} 
 		for ( var i = 0; i < arr_obj.length; i++ )
 		{ 
 			arr_obj[i].material = idealScreenMat;
-			arr_obj[i].geometry.computeFaceNormals();	
+			arr_obj[i].geometry.computeFaceNormals();
+				
+			arrRayObjsP360[arrRayObjsP360.length] = arr_obj[i];
 		}		
 
-		arrRayObjsP360 = arrRayObjsPanorama360();
+		
 		
 		// назначаем текстуру всем объектам входящие в родительский (объект из сцены)
 		function textureChild360(obj)
@@ -104,8 +145,13 @@ function getXmlPanorama360(file)
 			}
 			
 			var childrens = getAllChildrenObj(obj, []);	
-			for ( var i = 0; i < childrens.length; i++ ) { childrens[i].obj.material = idealScreenMat; }
-		}		
+			for ( var i = 0; i < childrens.length; i++ ) 
+			{ 
+				childrens[i].obj.material = idealScreenMat; 
+			}
+		}
+
+		renderCamera();
 	}
 	
 	
@@ -135,7 +181,7 @@ function createShaderPanorama360()
 	var fragmentShader = document.getElementById('2d-fragment-shader').text;
 	var vertexShader = document.getElementById('2d-vertex-shader').text;
 	
-	listTextureCube = listCubePanorama360();
+	
 	
 	var uniforms = 
 	{ 
@@ -459,20 +505,6 @@ function createCursorP360()
 }
 
 
-
-// объекты на которые будет реагировать луч 
-function arrRayObjsPanorama360()
-{
-	var arrDp = [];
-	for ( var i = 0; i < obj_line.length; i++ ){ arrDp[arrDp.length] = obj_line[i]; } 
-	//for ( var i = 0; i < arr_door.length; i++ ){ arrDp[arrDp.length] = arr_door[i]; } 
-	//for ( var i = 0; i < arr_window.length; i++ ){ arrDp[arrDp.length] = arr_window[i]; } 
-	//for ( var i = 0; i < arr_obj.length; i++ ){ arrDp[arrDp.length] = arr_obj[i]; }
-	for ( var i = 0; i < room.length; i++ ){ arrDp[arrDp.length] = room[i]; }
-	for ( var i = 0; i < ceiling.length; i++ ){ arrDp[arrDp.length] = ceiling[i]; }	
-
-	return arrDp;
-}
 
 
 

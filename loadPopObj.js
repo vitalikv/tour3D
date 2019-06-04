@@ -554,7 +554,6 @@ function loaderObjPop(cdm, json)
 
 			popChangeMaxAnisotropy(obj);			
 	
-			arrRayObjsP360[arrRayObjsP360.length] = obj3D;
 			//obj3D.material = new THREE.MeshLambertMaterial( { color : 0xff0000, lightMap : lightMap_1 } )
 	
 	
@@ -736,9 +735,7 @@ function loaderWD(cdm, json)
 			popObj.scale.set( size.x / dX, size.y / dY, 1 );	 				
 
 			assignTextureAllChildrens(popObj, json.components);		
-			obj.add( popObj );
-
-			arrRayObjsP360[arrRayObjsP360.length] = popObj;
+			obj.add( popObj ); 
 		}
 		else 
 		{

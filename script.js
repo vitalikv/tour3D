@@ -184,8 +184,6 @@ function drawRender()
 	} 
 	else 
 	{  	
-		idealScreenMat.needsUpdate = true;
-
 		renderer.autoClear = true;
 		renderer.clear();
 		renderer.render(scene, camera);
@@ -1412,18 +1410,7 @@ var openFileImage = function (strData, filename)
  
 
 
-for ( var i = 0; i < listTextureCube.length; i++ )
-{
-	var cube = new THREE.Mesh( createGeometryCube(0.2, 0.2, 0.2), new THREE.MeshLambertMaterial( { color : 0xffff00 } ) );
-	scene.add( cube ); 
-	
-	cube.position.copy(listTextureCube[i].p);
-	cube.position.y = 0;
-}
 
- 
-var cursorP360 = createCursorP360();
-var arrRayObjsP360 = arrRayObjsPanorama360();
 
 	 
 //https://catalog.planoplan.com/api/v2.1/search/?keys[0]=92da6c1f72c1ebca456a86d978af1dfc7db1bcb24d658d710c5c8ae25d98ba52&id[0]=13256&lang=ru

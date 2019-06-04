@@ -356,7 +356,7 @@ if($xml["cams"]["PCamera"])
 
 	for ($i = 0; $i < count($cams); $i++)
 	{
-		$arrC["cams"][$i]["id"] = $cams[$i]["name"];
+		$arrC["cams"][$i]["id"] = (int)$cams[$i]["name"];
 		$arrC["cams"][$i]["position"]["x"] = (isset($cams[$i]["position"]["x"])) ? intToFloat($cams[$i]["position"]["x"]) : 0; 
 		$arrC["cams"][$i]["position"]["y"] = (isset($cams[$i]["position"]["x"])) ? intToFloat($cams[$i]["position"]["y"]) : 0;
 		$arrC["cams"][$i]["position"]["z"] = (isset($cams[$i]["position"]["x"])) ? intToFloat($cams[$i]["position"]["z"]) : 0;	
