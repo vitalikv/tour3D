@@ -706,7 +706,7 @@ function loadTotalLotid(arr)
 	}
 		
 	
-	//for ( var i = 0; i < obj_pop.length; i++ ) { arrPop[arrPop.length] = obj_pop[i].lotid; }
+	for ( var i = 0; i < obj_pop.length; i++ ) { arrPop[arrPop.length] = obj_pop[i].lotid; }
 	
 	for ( var i = 0; i < arrPop.length; i++ ) { arrPop[i] = Number(arrPop[i]); }
 	
@@ -1083,8 +1083,9 @@ function createWallsNewFile(arr)
 	}		
 	// восстанавливаем пол 	
 
-	centerCamera2D(false);
+	centerCamera2D(false);	
 	centerStartCamera3D();
+	
 	
 	if(param_ugol.camera)
 	{

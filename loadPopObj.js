@@ -789,7 +789,7 @@ function loaderWD(cdm, json)
 // создаем один объект из нескольких дочерних (объединяем)
 function createCopyPopForm(objPop)
 { 
-	var obj = new THREE.Mesh( new THREE.Geometry() );
+	var obj = new THREE.Mesh( new THREE.Geometry(), new THREE.MeshLambertMaterial({ color : 0xff0000, transparent: true, opacity: 0.0, side: THREE.DoubleSide }) );
 	
 	var childrens = getAllChildrenObj(objPop, []);
 	
@@ -948,8 +948,148 @@ function getAllChildrenObj(obj, arr)
 // загрузка материала 
 function loadPopMaterial(cdm, json) 
 {
+	var obj = cdm.obj; 
+	var lotid = json.id;  
+	var scale = json.size; 
+	var mat_color = json.color; 
+	var filters = json.filters; 
+	var preview = json.preview; 
+	var caption = json.caption; 
+	var catalog = cdm.catalog;
+	var offset = new THREE.Vector2(0,0);
+	var color = null;		
+	var type = null;
+	
+	if(cdm.start == 'new') 
+	{ 
+		color = (json.sourceImageURL) ? new THREE.Color( 0xffffff ) : new THREE.Color('#'+json.color);		
+		if(obj.userData.tag == 'wall' || obj.userData.tag == 'room') { getInfoEvent22( cdm, { id : lotid, size : scale, color : color } ) } 
+		
+		type = json.props;	
+	}
+	else 
+	{   
+		if(cdm.color) color = (!cdm.color.isColor) ? new THREE.Color('rgb('+cdm.color.r+'%,'+cdm.color.g+'%,'+cdm.color.b+'%)') : new THREE.Color(cdm.color);
+		if(cdm.scale) scale = cdm.scale;
+		if(cdm.type) type = cdm.type;
+	}
 
+	
+	
+	var userData = null;
+	
+	if(obj.userData.tag == 'wall') 
+	{ 
+		var material = obj.material[cdm.index];
+		var userData = obj.userData.material[cdm.index];
+	}
+	else 
+	{ 
+		var material = obj.material; 
+		var userData = obj.userData.material;
+	}
+
+
+	// загрузка текстуры
+	if(json.sourceImageURL) 
+	{  
+		new THREE.TextureLoader().load(json.sourceImageURL, function ( image ) 
+		{ 
+			var inf = {obj : obj, image : image, scale : scale};
+			
+			if(cdm.offset) { inf.offset = cdm.offset; offset = cdm.offset; } 
+			if(cdm.rotation) { inf.rotation = cdm.rotation; }
+			if(obj.userData.tag == 'wall') { inf.index = cdm.index; }
+			
+			setMultyMaterialSide3(inf); 
+			material.color = color;  
+			renderCamera();
+		}); 
+	}
+	else 
+	{ 
+		material.map = null; 
+		material.color = color; 
+		material.needsUpdate = true; 
+	}
+	
+	 
+	
+	if((/type=Mirror/i).test( type )) 
+	{ 
+		//obj.material.color.setHex(0xffffff);
+		//obj.material.needsUpdate = true;
+		
+		var color_2 = obj.material.color.clone();			
+		obj.material = new THREE.MeshPhongMaterial( { color: color_2, envMap: cubeCamera.renderTarget, lightMap : lightMap_1 } );		
+	}	
+	
+	
+	if(obj.userData.tag != 'wall')
+	{	
+		if(json.preview == '') { preview = '#'+json.color; }
+		
+		obj.pr_containerID = (cdm.containerID) ? cdm.containerID : null;
+		obj.pr_matScale = scale;  
+		obj.pr_filters = filters;
+		obj.pr_preview = preview;
+		obj.pr_catalog = Object.assign({}, catalog);
+	}
+	
+	var inf = { lotid : lotid, caption : caption, color : color, offset : offset, scale : scale, filters : filters, preview : preview, catalog : catalog };
+	inf.type = type;
+	
+	if(userData)
+	{
+		inf.containerID = userData.containerID;
+	}
+	
+
+	if(obj.userData.tag == 'wall') { obj.userData.material[cdm.index] = inf; }
+	else { obj.userData.material = inf; }
+		
+
+	resetMenuUI();	
+	
+	
+	if(cdm.replace)
+	{
+		clickO.obj = obj;
+		
+		var parent = getParent(obj);
+		
+		if(parent)
+		{
+			if(parent.userData.tag == 'obj')
+			{
+				clickO.obj = parent;
+				clickO.rayhit.object = parent;
+			}			
+		}		
+		
+		function getParent(obj)
+		{
+			var parent = obj.parent;
+			
+			if(parent == scene || parent == null) return obj;
+			
+			return getParent(parent);
+		}
+		
+		if ( camera == cameraTop ) { clickRayHit( clickO.rayhit ); showMenuObjUI_2D( clickO.obj, true ); } 
+		else if ( camera == camera3D ) { showMenuObjUI_3D( clickO.obj, true ); }
+		else if ( camera == cameraWall ) { clickRayHit( clickO.rayhit ); showMenuObjUI_Wall(clickO.obj, true); }	
+		
+		obj_selected = null; 
+
+		
+		if(clickO.last_obj.userData.tag == 'obj')
+		{
+			showMenuTextureObjPop(clickO.last_obj);
+		}				
+	}
 }
+
 
 
 

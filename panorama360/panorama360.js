@@ -30,10 +30,11 @@ function getXmlPanorama360(file)
 		var loader = new THREE.CubeTextureLoader();
 		
 		for (i = 0; i < json.scene.length; i++)
+		//for (i = 0; i < 2; i++)
 		{
 			var name = json.scene[i]["@attributes"].name;
 			
-			array[i] = { id : name.split('scene_')[1] };
+			array[i] = { id : Number(name.split('scene_')[1]) };
 			
 			var img = [];
 			img[0] = json.scene[i].image.left["@attributes"].url;
@@ -55,15 +56,30 @@ function getXmlPanorama360(file)
 				// все понарамы загрузились, запускаем финиш
 				if(countReadyCam == json.scene.length) 
 				{ 
-					listTextureCube = listCubePanorama360();
+					listTextureCube = [];
 					
 					for ( var i2 = 0; i2 < arrRenderCams.length; i2++ )
 					{
-						
-						//arrRenderCams[i] = { id : arr.cams[i].id, posCam : arr.cams[i].position, posTarget : arr.cams[i].target_position };
+						for ( var i3 = 0; i3 < array.length; i3++ )
+						{
+							if(arrRenderCams[i2].id == array[i3].id)
+							{
+								listTextureCube[listTextureCube.length] = { n : arrRenderCams[i2].id, p : arrRenderCams[i2].posCam, t : array[i3].tCube };	
+								break;
+							}
+						}						
 					}
 
-					idealScreenMat = createShaderPanorama360();
+					for ( var i = 0; i < listTextureCube.length; i++ )
+					{
+						var cube = new THREE.Mesh( createGeometryCube(0.2, 0.2, 0.2), new THREE.MeshLambertMaterial( { color : 0xffff00 } ) );
+						scene.add( cube ); 
+						
+						cube.position.copy(listTextureCube[i].p); 	
+						cube.position.y = 0;
+					}					
+					
+					idealScreenMat = createShaderPanorama360(listTextureCube);
 				
 					goTour360(); 
 				}
@@ -79,14 +95,7 @@ function getXmlPanorama360(file)
 	{
 		cursorP360 = createCursorP360();		
 		
-		for ( var i = 0; i < listTextureCube.length; i++ )
-		{
-			var cube = new THREE.Mesh( createGeometryCube(0.2, 0.2, 0.2), new THREE.MeshLambertMaterial( { color : 0xffff00 } ) );
-			scene.add( cube ); 
-			
-			cube.position.copy(listTextureCube[i].p);
-			cube.position.y = 0;
-		}		
+		showAllWallRender();
 		
 		if(1==2)
 		{
@@ -176,7 +185,7 @@ function listCubePanorama360()
 
 
 // создаем шейдер биганто
-function createShaderPanorama360()
+function createShaderPanorama360(listTextureCube)
 {
 	var fragmentShader = document.getElementById('2d-fragment-shader').text;
 	var vertexShader = document.getElementById('2d-vertex-shader').text;
@@ -281,7 +290,7 @@ function moveOnPoint()
 
 	var d = camera3D.position.distanceTo( tour3D.pos );
 
-	idealScreenMat.uniforms['mixAlpha'].value = getInterpolationsFloat( 1-d/tour3D.dist, 0, 0.8, 1 );
+	idealScreenMat.uniforms['mixAlpha'].value = 1-d/tour3D.dist;
 	
 	//console.log(idealScreenMat.uniforms['mixAlpha'].value);
 	
@@ -404,6 +413,8 @@ function getNearPositionCam360(keyCode)
 // находим ближайшую точку (позицию камеры) при перемещение с клика
 function getNearMousePositionCam360(event)
 {
+	camera3D.userData.camera.type = 'first';
+	
 	var intersects = rayIntersect( event, arrRayObjsP360, 'arr' );
 
 	if(intersects.length == 0) return;
